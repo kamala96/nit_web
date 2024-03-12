@@ -1,0 +1,89 @@
+<section>
+  <nav
+    x-data="{
+        navigationMenuOpen: false,
+        navigationMenu: '',
+        navigationMenuCloseDelay: 200,
+        navigationMenuCloseTimeout: null,
+        navigationMenuLeave() {
+            let that = this;
+            this.navigationMenuCloseTimeout = setTimeout(() => {
+                that.navigationMenuClose();
+            }, this.navigationMenuCloseDelay);
+        },
+        navigationMenuReposition(navElement) {
+            this.navigationMenuClearCloseTimeout();
+            this.$refs.navigationDropdown.style.left = navElement.offsetLeft + 'px';
+            this.$refs.navigationDropdown.style.marginLeft = (navElement.offsetWidth / 2) + 'px';
+        },
+        navigationMenuClearCloseTimeout() {
+            clearTimeout(this.navigationMenuCloseTimeout);
+        },
+        navigationMenuClose() {
+            this.navigationMenuOpen = false;
+            this.navigationMenu = '';
+        }
+    }"
+    class="relative z-50 w-auto"
+  >
+    <div class="relative bg-laravel shadow-md">
+      <ul
+        class="flex items-center justify-center flex-1 p-1 space-x-1 list-none text-white group border-neutral-200/80"
+      >
+        {% for main_menu in menus %}
+        <li
+          @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{ main_menu.slug }}'"
+          @mouseleave="navigationMenuLeave()"
+        >
+          <button
+            :class="{ 'bg-neutral-100': navigationMenu==main_menu.slug, 'hover:bg-neutral-100': navigationMenu!=main_menu.slug }"
+            class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none group w-max"
+          >
+            <span>{{ main_menu.title }}</span>
+            <svg
+              :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == main_menu.slug }"
+              class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <template x-if="navigationMenu == '{{ main_menu.slug }}'">
+            {% if main_menu.submenus.all %}
+            <ul class="submenu">
+              {% for submenu in main_menu.submenus.all %}
+              <li><a href="{{ submenu.url }}">{{ submenu.title }}</a></li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </template>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div
+      x-ref="navigationDropdown"
+      x-show="navigationMenuOpen"
+      x-transition:enter="transition ease-out duration-100"
+      x-transition:enter-start="opacity-0 scale-90"
+      x-transition:enter-end="opacity-100 scale-100"
+      x-transition:leave="transition ease-in duration-100"
+      x-transition:leave-start="opacity-100 scale-100"
+      x-transition:leave-end="opacity-0 scale-90"
+      @mouseover="navigationMenuClearCloseTimeout()"
+      @mouseleave="navigationMenuLeave()"
+      class="absolute top-0 pt-3 duration-200 ease-out -translate-x-1/2 translate-y-11"
+      x-cloak
+    >
+      <!-- Dropdown content -->
+      <!-- ... -->
+    </div>
+  </nav>
+</section>
