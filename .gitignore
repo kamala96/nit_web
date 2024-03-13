@@ -16,3 +16,4 @@ static_root/
 *.pot
 *.pyc
 __pycache__
+media
