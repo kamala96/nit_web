@@ -1,0 +1,19 @@
+<section class="flex flex-col md:flex-row mt-2 bg-gray-100">
+  <!-- Left column (20%) -->
+  <div class="w-full md:w-2/6 bg-blue-100 p-4 shadow-md m-2">
+    {% include 'announcements.html' with announcements=announcements %}
+  </div>
+
+
+  <!-- Middle column (60%) -->
+  <div class="w-full md:w-2/6 bg-gray-100 p-4 mt-4 md:mt-0">
+    {% include 'events.html' with events=events %}
+    <!-- End Leading Icon Two Line List -->
+  </div>
+
+  <!-- Right column (20%) -->
+  <div class="w-full md:w-2/6 bg-gray-100 p-4 mt-4 md:mt-0">
+    {% include 'quick_links.html' with links=links %}
+    <!-- End Leading Icon Two Line List -->
+  </div>
+</section>

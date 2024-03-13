@@ -3,3 +3,4 @@ python-decouple
 django-widget-tweaks
 mysqlclient
 gunicorn
+Pillow
