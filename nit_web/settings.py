@@ -152,3 +152,5 @@ SITE_NAME = 'NIT WEBSITE'
 #     ('Rodrick Mero', 'rodrick.mero@nit.ac.tz'),
 #     ('Jovin Kamala', 'jovinkamalajohn@gmail.com')
 # ]
+
+CSRF_TRUSTED_ORIGINS = ['https://41.188.149.75:85']

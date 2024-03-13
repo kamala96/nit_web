@@ -1,11 +1,21 @@
 # Ignore the virtual environment directory
-/venv/
+venv/
 
 # Ignore the .env file
+.env
 **/.env
+nit_web/.env
 
 # Ignore the settings.py file
 **/settings.py
+nit_web/settings.py
 
 # Ignore the static_root folder
-/static_root/
+static_root/
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+media/
