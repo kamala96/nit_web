@@ -11,3 +11,4 @@ nit_web/settings.py
 
 # Ignore the static_root folder
 static_root/
+nit_web/.env
