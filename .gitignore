@@ -5,7 +5,7 @@ venv/
 .env
 
 # Ignore the settings.py file
-settings.py
+nit_web/settings.py
 
 # Ignore the static_root folder
 static_root/
