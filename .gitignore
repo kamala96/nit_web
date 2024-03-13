@@ -2,10 +2,10 @@
 venv/
 
 # Ignore the .env file
-*.env
+.env
 
 # Ignore the settings.py file
-nit_web/settings.py
+settings.py
 
 # Ignore the static_root folder
 static_root/
