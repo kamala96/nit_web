@@ -1,4 +1,11 @@
-venv/
-nit_web/.env
-nit_web/settings.py
-static_root/
+# Ignore the virtual environment directory
+/venv/
+
+# Ignore the .env file
+**/.env
+
+# Ignore the settings.py file
+**/settings.py
+
+# Ignore the static_root folder
+/static_root/
