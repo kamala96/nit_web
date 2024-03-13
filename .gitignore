@@ -1,4 +1,4 @@
 /venv
 nit_web/.env
 nit_web/settings.py
-/static_root
+static_root/
