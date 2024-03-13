@@ -2,3 +2,4 @@ Django
 python-decouple
 django-widget-tweaks
 mysqlclient
+gunicorn
