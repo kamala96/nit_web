@@ -1,3 +1,8 @@
 /venv
+<<<<<<< HEAD
+nit_web/.env
+nit_web/settings.py
+=======
+/settings.py
 .env
-settings.py
+>>>>>>> 93d7d2c52a05d84dc9464aa0ff1d81690125c752
