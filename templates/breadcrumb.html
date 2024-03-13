@@ -1,4 +1,4 @@
-<section>
+{% comment %} <section>
   <nav
     x-data="{
       navigationMenuOpen: false,
@@ -39,7 +39,7 @@
           class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max"
         >
           <span>Home</span>
-          {% comment %} <svg
+          <svg
             :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '' }"
             class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +50,7 @@
             stroke-linecap="round"
             stroke-linejoin="round"
             aria-hidden="true"
-          > {% endcomment %}
+          > 
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </button>
@@ -58,14 +58,14 @@
       <li>
        
           <button
-            :class="{ 'bg-neutral-100': navigationMenu=='xxxxx', 'hover:bg-neutral-100': navigationMenu!='xxxxx' }"
-            @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='xxxxx'"
+            :class="{ 'bg-neutral-100': navigationMenu=='{{ menu.top_menu.slug }}', 'hover:bg-neutral-100': navigationMenu!='{{ menu.top_menu.slug }}' }"
+            @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{ menu.top_menu.slug }}'"
             @mouseleave="navigationMenuLeave()"
             class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max"
           >
             <span>Academics Units</span>
             <svg
-              :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == 'xxxxx' }"
+              :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '{{ menu.top_menu.slug }}' }"
               class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -102,7 +102,7 @@
       >
        
         <div
-          x-show="navigationMenu == 'xxxxx'"
+          x-show="navigationMenu == '{{ menu.top_menu.slug }}'"
           class="flex items-stretch justify-center w-full p-6"
         >
           <div class="w-72">
@@ -165,33 +165,11 @@
       </div>
     </div>
   </nav>
-</section>
+</section> {% endcomment %}
 
-{% comment %} <nav>
-  <ul>
-      {% for menu in menus %}
-          <li>
-              <a href="{{ menu.url }}">{{ menu.title }}</a>
-              {% if menu.parent_menu %}
-                  <!-- Debugging output -->
-                  <p>Parent Menu: {{ menu.parent_menu }}</p>
-                  <p>Submenus: {{ menu.parent_menu.menu_set.all }}</p>
 
-                  <!-- Render submenus -->
-                  <ul>
-                      {% for submenu in menu.parent_menu.menu_set.all %}
-                          <li><a href="{{ submenu.url }}">{{ submenu.title }}</a></li>
-                      {% endfor %}
-                  </ul>
-              {% endif %}
-          </li>
-      {% endfor %}
-  </ul>
-</nav> {% endcomment %}
-
-{% comment %} 
-
-<nav
+<section>
+  <nav
     x-data="{
       navigationMenuOpen: false,
       navigationMenu: '',
@@ -218,21 +196,23 @@
   }"
     class="relative z-50 w-auto"
   >
-    <div class="relative bg-primary shadow-md">
-      
+    <div class="relative bg-white shadow-md">
       <ul
-        class="flex items-center justify-center flex-1 p-1 space-x-1 list-none text-white group border-neutral-200/80"
+        class="flex items-center justify-center flex-1 p-1 space-x-1 list-none text-primary group border-neutral-200/80"
       >
       {% for menu in menus %}
+      <li>
+       
           <button
-            :class="{ 'bg-neutral-100': navigationMenu=='xxxxx', 'hover:bg-neutral-100': navigationMenu!='xxxxx' }"
-            @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='xxxxx'"
+            :class="{ 'bg-neutral-100': navigationMenu=='{{ menu.top_menu.slug }}', 'hover:bg-neutral-100': navigationMenu!='{{ menu.top_menu.slug }}' }"
+            @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{ menu.top_menu.slug }}'"
             @mouseleave="navigationMenuLeave()"
             class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max"
           >
-            <span>{{ menu.title }}</span>
+            <span> {{ menu.top_menu.title }}</span>
+            {% if menu.submenus %}
             <svg
-              :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == 'xxxxx' }"
+              :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '{{ menu.top_menu.slug }}' }"
               class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -245,11 +225,14 @@
             >
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
+            {% endif %}
           </button>
         </li>
         {% endfor %}
       </ul>
     </div>
+
+    
     <div
       x-ref="navigationDropdown"
       x-show="navigationMenuOpen"
@@ -264,42 +247,126 @@
       class="absolute top-0 pt-3 duration-200 ease-out -translate-x-1/2 translate-y-11"
       x-cloak
     >
+    
       <div
         class="flex justify-center w-auto h-auto overflow-hidden bg-white border rounded-md shadow-sm border-neutral-200/70"
       >
-     {% if menu.parent_menu%} 
-       
+      {% comment %} {% for menu in menus %}
+    {% if menu.submenus %}
+     
         <div
-          x-show="navigationMenu == 'xxxxx'"
+          x-show="navigationMenu == '{{ menu.top_menu.slug }}'"
           class="flex items-stretch justify-center w-full p-6"
         >
-       {% for submenu in menu.parent_menu.menu_set.all %} 
           <div class="w-72">
+           
+            <p class="block px-3.5 py-2 text-primary text-md ">Title</p>
+            {% for submenu in menu.submenus %}
             <a
               href="#_"
               @click="navigationMenuClose()"
               class="block px-3.5  text-sm rounded hover:bg-neutral-100"
             >
               <span class="block mb-1 font-medium text-black"
-                >Tailwind CSS</span
-              >
-              <span class="block font-light leading-5 opacity-50"
-                >A utility first CSS framework for building amazing
-                websites.</span
-              >
+                >{{ submenu.title }}</span>
+           
             </a>
-            
+            {% endfor %}
             
           </div>
+         
 
-         {% endfor %} 
-          
+
         </div>
+       
+        {% endif %}
+        {% endfor %} {% endcomment %}
 
-     {% endif %}
-      </div>
+        {% comment %} {% for menu in menus %}
+  {% if menu.submenus %}
+    <div
+      x-show="navigationMenu == '{{ menu.top_menu.slug }}'"
+      class="flex items-stretch justify-center w-full p-6"
+    >
+ 
+      {% for submenu_chunk in menu.submenus.all|slice:":3" %}
+        <div class="w-72">
+          <p class="block px-3.5 py-2 text-primary text-md ">Title</p>
+          {% for submenu in submenu_chunk.all %}
+            <a
+              href="#_"
+              @click="navigationMenuClose()"
+              class="block px-3.5  text-sm rounded hover:bg-neutral-100"
+            >
+              <span class="block mb-1 font-medium text-black">{{ submenu.title }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      {% endfor %}
     </div>
+  {% endif %}
+{% endfor %} {% endcomment %}
+
+
+{% comment %} {% for menu in menus %}
+  {% if menu.submenu_chunks %}
+    <div
+      x-show="navigationMenu == '{{ menu.top_menu.slug }}'"
+      class="flex items-stretch justify-center w-full p-6"
+    >
+      {% for submenu_chunk in menu.submenu_chunks %}
+        <div class="w-72">
+          <p class="block px-3.5 py-2 text-primary text-md">Title</p>
+          {% for submenu in submenu_chunk %}
+            <a
+              href="#_"
+              @click="navigationMenuClose()"
+              class="block px-3.5 text-sm rounded hover:bg-neutral-100"
+            >
+              <span class="block mb-1 font-medium text-black">{{ submenu.title }}</span>
+              <span class="block font-light leading-5 opacity-50">{{ submenu.submenu_head }}</span>
+            </a>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %} {% endcomment %}
+
+ {% for menu in menus %}
+  {% if menu.submenu_chunks %}
+    <div
+      x-show="navigationMenu == '{{ menu.top_menu.slug }}'"
+      class="flex items-stretch justify-center w-full p-6"
+    >
+      {% for submenu_chunk in menu.submenu_chunks %}
+        <div class="w-72">
+          {% if submenu_chunk.0.submenu_head %}
+            <p class="block px-3.5 py-2 text-primary text-md">{{ submenu_chunk.0.submenu_head }}</p>
+          {% endif %}
+          {% for submenu in submenu_chunk %}
+            <a
+              href="#_"
+              @click="navigationMenuClose()"
+              class="block px-3.5 text-sm rounded hover:bg-neutral-100"
+            >
+              <span class="block mb-1 font-medium text-black">{{ submenu.title }}</span>
+            
+            </a>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endfor %} 
+
+
+
+      </div>
+     
+    </div>
+  
+  
   </nav>
 </section>
- {% endcomment %}
 
