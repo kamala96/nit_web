@@ -2,7 +2,7 @@
 /venv/
 
 # Ignore the .env file
-/nit_web/.env
+nit_web/.env
 
 # Ignore the settings.py file
 /nit_web/settings.py
