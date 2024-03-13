@@ -1,1 +1,3 @@
 /venv
+nit_web/.env
+nit_web/settings.py
