@@ -10,3 +10,9 @@ nit_web/settings.py
 
 # Ignore the static_root folder
 static_root/
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
