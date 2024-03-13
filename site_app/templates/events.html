@@ -1,0 +1,56 @@
+<div class="p-6 flex justify-between items-center">
+    <header>
+        <h3 class="text-xl font-medium text-laravel">Events</h3>
+    </header>
+
+    <!-- View All Button -->
+    <a href="/view-all" class="text-white bg-sky-500 hover:bg-sky-600 px-4 py-2 rounded transition-colors duration-100">
+        View All
+    </a>
+</div>
+
+
+
+{% if events %}
+<ul class="divide-y divide-slate-100">
+
+    {% for event in events %}
+    <div class="block hover:shadow-md hover:bg-yellow-100 transition-colors duration-100">
+        <a href="/event/{{ event.id }}">
+            <li class="flex items-start gap-4 px-4 py-3">
+                <div class="flex items-center text-sky-500 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                    </svg>
+
+                    <div class="rounded-full text-laravel p-2 ml-2">
+                        <!-- Round date, you can replace this with actual date data -->
+                        <div class="flex items-center justify-center h-6 overflow-hidden">
+                            <div class="text-sm uppercase font-bold">01</div>
+                        </div>
+                        <div class="flex items-center justify-center h-6 overflow-hidden">
+                            <div class="text-base uppercase font-bold">Jan</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
+                    <h4 class="text-lg text-slate-700">{{ event.title }}</h4>
+                    <p class="w-full text-xs truncate text-slate-500">{{ event.start_date }}</p>
+                    <p class="w-full text-xs truncate text-slate-500">
+                        <a href="/" class="hover:text-green-600 transition-colors duration-100">
+                            <i class="fa-solid fa-map-marker"></i>
+                            {{ event.address }}
+                        </a>
+                    </p>
+                </div>
+            </li>
+        </a>
+    </div>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No any event found</p>
+{% endif %}
