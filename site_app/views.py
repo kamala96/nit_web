@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from .models import Download, Event, Menu, Post
 from site_app.models import Menu
 
@@ -19,14 +19,35 @@ def index(request):
 
 
 def handle_nav_menu_click(request, menu_slug):
-    menu_item = get_object_or_404(Menu, slug=menu_slug)
+    menu = get_object_or_404(Menu, slug=menu_slug)
+
+    if menu.slug in ['home']:
+        return redirect('index')
+
+    # Get all MenuItem objects for the clicked menu
+    menu_items = menu.menu_items.all()
+
+    # Create a dictionary to store MenuItemContent for each MenuItem
+    menu_item_contents = {}
+
+    # Iterate through each MenuItem and retrieve its associated MenuItemContent
+    # for item in menu_items:
+    #     if item.content:
+    #         menu_item_contents[item] = item.content
 
     template_name = ''
-    if menu_item.menu_type == 'A':
+    if menu.menu_type == 'A':
         template_name = 'menu_a_template.html'
-    elif menu_item.menu_type == 'B':
+    elif menu.menu_type == 'B':
         template_name = 'menu_b_template.html'
-    elif menu_item.menu_type == 'C':
+    elif menu.menu_type == 'C':
         template_name = 'menu_c_template.html'
 
-    return render(request, f'nav_menus/{template_name}', {'menu_item': menu_item})
+    context = {
+        'menu': menu,
+        'menu_items': menu_items,
+        'menu_item_contents': menu_item_contents,
+    }
+    print(context)
+
+    return render(request, f'nav_menus/{template_name}', context)

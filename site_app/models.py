@@ -17,7 +17,6 @@ class Menu(models.Model):
     order = models.DecimalField(max_digits=5, decimal_places=4)
     parent_menu = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='submenus')
-    # submenu_head = models.CharField(max_length=200, null=True, blank=True)
     menu_type = models.CharField(max_length=1, choices=menu_type_choices)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -30,6 +29,38 @@ class Menu(models.Model):
 
     def has_children(self):
         return self.submenus.exists()
+
+
+class MenuItem(models.Model):
+    heading = models.ForeignKey(
+        Menu, on_delete=models.CASCADE, related_name='menu_items')
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Menu Item"
+        verbose_name_plural = "Menu Items"
+        ordering = ['heading', 'name',]
+
+    def __str__(self):
+        return self.name
+
+
+class MenuItemContent(models.Model):
+    menu_item = models.OneToOneField(
+        MenuItem, on_delete=models.CASCADE, related_name='content')
+    content = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Menu Item Content"
+        verbose_name_plural = "Menu Items Content"
+        ordering = ['menu_item', 'created_at',]
+
+    def __str__(self):
+        return f"Content for {self.menu_item.name}"
 
 
 class Event(models.Model):
