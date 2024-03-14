@@ -48,8 +48,7 @@ class MenuItem(models.Model):
 
 
 class MenuItemContent(models.Model):
-    menu_item = models.OneToOneField(
-        MenuItem, on_delete=models.CASCADE, related_name='content')
+    menu_item = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -85,7 +84,8 @@ class Post(models.Model):
     post_type_choices = [
         ('A', 'Announcements'),
         ('B', 'News'),
-        ('C', 'Quick Links')
+        ('C', 'Quick Links'),
+        ('D', 'News Flash')
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post_type = models.CharField(max_length=1, choices=post_type_choices)
