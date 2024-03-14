@@ -54,7 +54,8 @@ class Post(models.Model):
     post_type_choices = [
         ('A', 'Announcements'),
         ('B', 'News'),
-        ('C', 'Quick Links')
+        ('C', 'Quick Links'),
+        ('D', 'News Flash')
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post_type = models.CharField(max_length=1, choices=post_type_choices)

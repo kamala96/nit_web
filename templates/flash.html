@@ -1,128 +1,34 @@
 {% load static %}
-<!-- news falsh  -->
-    <div class="flex flex-col sm:flex-row justify-between h-full bg-gray-200">
-       
-        <div class="w-full sm:w-2/3 p-4 border-2 border-primary-100 m-2 rounded-sm"> 
-            
-            {% comment %} <header class="flex justify-center items-center relative mb-8">
-                <span class="absolute left-0.5 h-0.5 bg-primary w-2/5 top-1/2 transform -translate-y-1/2"></span>
-                <h3 class="text-xl font-medium text-primary">News Flash</h3>
-                <span class="absolute right-0.5 h-0.5 bg-primary w-2/5 top-1/2 transform -translate-y-1/2"></span>
-            </header> {% endcomment %}
-            
-            <div class="mr-2 ml-2 mb-2 flex justify-between items-center">
-                <header>
-                    <h3 class="text-xl font-medium text-primary">News Flash</h3>
-                </header>
-            
-                <!-- View All Button -->
-                <a href="/view-all" class="text-primary bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded transition-colors duration-100">
-                    View All
-                </a>
-            </div>
-           
-     <div class="flex justify-center  flex-col  sm:flex-row">
-        <div class=" rounded overflow-hidden shadow-lg mx-2 my-2 ">
-            <img class="w-full" src="{% static 'img/flash-image-2.png' %}" alt="Card image">
-            <div class="px-6 py-4">
-                {% comment %} <div class="font-bold text-xl mb-2">Card 1</div> {% endcomment %}
-                <p class="text-gray-500 text-xs">
-                    February 2, 2024
-                </p>
-            </div>
-        </div>
-        <div class="rounded overflow-hidden shadow-lg mx-2 my-2">
-            <img class="w-full" src="{% static 'img/flash-image-2.png' %}" alt="Card image">
-            <div class="px-6 py-4">
-                {% comment %} <div class="font-bold text-xl mb-2">Card 2</div> {% endcomment %}
-                <p class="text-gray-500 text-xs">
-                    February 2, 2024
-                </p>
-            </div>
-        </div>
-        <div class="rounded overflow-hidden shadow-lg mx-2 my-2">
-            <img class="w-full" src="{% static 'img/flash-image-2.png' %}" alt="Card image">
-            <div class="px-6 py-4">
-                {% comment %} <div class="font-bold text-xl mb-2">Card 3</div> {% endcomment %}
-                <p class="text-gray-500 text-xs">
-                    February 2, 2024
-                </p>
-            </div>
-        </div>
-    </div>
-    
-            
-        </div>
-        <div class="w-full sm:w-1/3 p-4 flex ">
-            <div class="w-full border-2 border-primary-100 m-2 rounded-sm"> 
-            
-                {% comment %} <header class="flex justify-center items-center relative mb-8">
-                    <span class="absolute left-0.5 h-0.5 bg-primary w-1/5 top-1/2 transform -translate-y-1/2"></span>
-                    <h3 class="text-xl font-medium text-primary">Quick Links</h3>
-                    <span class="absolute right-0.5 h-0.5 bg-primary w-1/5 top-1/2 transform -translate-y-1/2"></span>
-                </header> {% endcomment %}
+<div class="mr-2 ml-2 mb-2 flex justify-between items-center">
+    <header>
+        <h3 class="text-xl font-medium text-primary">News Flash</h3>
+    </header>
 
-              <header class="flex justify-center items-center relative mb-8">
-                    <h3 class="text-xl font-medium text-primary">Quick Links</h3>
-            </header> 
-                
-  
-            
-<div class="w-full items-center bg-gray-100 p-4 rounded-sm">
- <ul class="max-w-md space-y-1 text-primary list-inside">
-    <li class="flex items-center">
-        <a href="#" class="flex items-center">
-            <svg class="w-3.5 h-3.5 me-2 text-primary  flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="bg-primary" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-             </svg>
-            At least 10 characters
-        </a>
-    </li>
-    
-    <li class="flex items-center">
-        <a href="#" class="flex items-center">
-            <svg class="w-3.5 h-3.5 me-2 text-primary  flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="bg-primary" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-             </svg>
-            At least 10 characters
-        </a>
-    </li>
-
-    <li class="flex items-center">
-        <a href="#" class="flex items-center">
-            <svg class="w-3.5 h-3.5 me-2 text-primary  flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="bg-primary" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-             </svg>
-            At least 10 characters
-        </a>
-    </li>
-
-
-    <li class="flex items-center">
-        <a href="#" class="flex items-center">
-            <svg class="w-3.5 h-3.5 me-2 text-primary  flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="bg-primary" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-             </svg>
-            At least 10 characters
-        </a>
-    </li>
-
-
-    <li class="flex items-center">
-        <a href="#" class="flex items-center">
-            <svg class="w-3.5 h-3.5 me-2 text-primary  flex-shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="bg-primary" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-             </svg>
-            At least 10 characters
-        </a>
-    </li>
-    
-</ul> 
+    <!-- View All Button -->
+    <a href="/view-all" class="text-primary bg-gray-300 hover:bg-gray-400 px-4 py-2 rounded transition-colors duration-100">
+        View All
+    </a>
 </div>
 
-        </div>
+
+<div class="flex justify-center  flex-col  sm:flex-row">
+{% if news_flash %}
+
+{% for news in news_flash %}
+<a href="{{ news.web_url }}">
+<div class=" rounded overflow-hidden shadow-lg mx-2 my-2 ">
+    <img class="w-full" src="{{ news.image_url.url }}" alt="Card image">
+    <div class="px-6 py-4">
+        {% comment %} <div class="font-bold text-xl mb-2">Card 1</div> {% endcomment %}
+        <p class="text-gray-500 text-xs">
+            {{ news.created_at }}
+        </p>
     </div>
-       
-    
+    </div>
+</a>
+{% endfor %}
+{% else %}
+<p>No any news flash found</p>
+{% endif %}
 </div>
 
