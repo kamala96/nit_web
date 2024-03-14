@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -31,20 +32,6 @@ class Menu(models.Model):
         return self.submenus.exists()
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name.upper()
-
-    class Meta:
-        verbose_name_plural = "categories"
-
-
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
@@ -64,8 +51,13 @@ class Event(models.Model):
 
 
 class Post(models.Model):
+    post_type_choices = [
+        ('A', 'Announcements'),
+        ('B', 'News'),
+        ('C', 'Quick Links')
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post_type = models.CharField(max_length=1, choices=post_type_choices)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     file_url = models.FileField(
@@ -78,3 +70,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title.upper()
+
+
+class Download(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    file = models.FileField(upload_to='uploads/downloads/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+
+    def get_file_extension(self):
+        _, extension = os.path.splitext(self.file.name)
+        return extension.lower()

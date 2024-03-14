@@ -1,6 +1,6 @@
 <div class="p-6 flex justify-between items-center">
   <header>
-    <h3 class="text-xl font-medium text-primary">Quick Links</h3>
+    <h3 class="text-xl font-medium text-primary">Downloads</h3>
   </header>
 
   <!-- View All Button -->
@@ -10,11 +10,16 @@
 </div>
 
 
-{% if links %}
+{% if downloads %}
 <ul class="divide-y divide-slate-100">
-  {% for link in links %}
+  {% for download in downloads %}
+
+  <!-- {f% with icon=site_app.FILE_ICONS.get(download.get_file_extension(), 'default-icon.png') %}
+  <img src="{f% static 'icons/' %}{ff{ icon }}" alt="File Icon">
+  {f% endwith %} -->
+
   <div class="block hover:shadow-md hover:bg-yellow-100 transition-colors duration-100">
-    <a href="{{ link.web_url }}">
+    <a href="{{ download.file.url }}">
       <li class="flex items-start gap-4 px-4 py-3">
         <div class="flex items-center text-sky-500">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -24,7 +29,7 @@
           </svg>
         </div>
         <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
-          <h4 class="text-base text-slate-700">{{ link.title }}</h4>
+          <h4 class="text-base text-slate-700">{{ download.title }}</h4>
         </div>
       </li>
     </a>
@@ -32,5 +37,5 @@
   {% endfor %}
 </ul>
 {% else %}
-<p>No any quick links found</p>
+<p>No any download found</p>
 {% endif %}
