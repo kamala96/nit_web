@@ -25,3 +25,7 @@ media/
 
 requirement.txt
 .idea
+
+migrations/
+**/migrations/
+site_app/migrations/
