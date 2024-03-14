@@ -16,14 +16,13 @@
 
 {% for news in news_flash %}
 <a href="{{ news.web_url }}">
-<div class=" rounded overflow-hidden shadow-lg mx-2 my-2 ">
-    <img class="w-full" src="{{ news.image_url.url }}" alt="Card image">
-    <div class="px-6 py-4">
-        {% comment %} <div class="font-bold text-xl mb-2">Card 1</div> {% endcomment %}
-        <p class="text-gray-500 text-xs">
-            {{ news.created_at }}
-        </p>
-    </div>
+    <div class="relative rounded overflow-hidden shadow-lg mx-2 my-2">
+        <img class="w-full" src="{{ news.image_url.url }}" alt="Card image">
+        <div class="absolute bottom-0 w-full bg-primary bg-opacity-90 text-white px-6 py-4">
+            <p class="text-white text-xs">
+                {{ news.created_at }}
+            </p>
+        </div>
     </div>
 </a>
 {% endfor %}
