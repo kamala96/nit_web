@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import Category, Event, Menu, Post
+from site_app.models import Download, Event, Menu, Post
 
 # Register your models here.
 
@@ -8,18 +8,10 @@ from site_app.models import Category, Event, Menu, Post
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'url', 'order',
-                    'parent_menu', 'created_at', 'updated_at']
-    list_per_page = 10
+                    'parent_menu', 'menu_type', 'created_at', 'updated_at']
+    list_per_page = 50
     list_filter = ['parent_menu']
     search_fields = ['title', 'slug',]
-
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'description', 'created_at', 'updated_at']
-    list_per_page = 10
-    list_filter = ['name']
-    search_fields = ['name',]
 
 
 @admin.register(Event)
@@ -33,8 +25,16 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'description',
-                    'file_url', 'image_url', 'web_url', 'user', 'created_at', 'updated_at']
+    list_display = ['title', 'post_type', 'description',  'file_url',
+                    'image_url', 'web_url', 'user', 'created_at', 'updated_at']
     list_per_page = 10
-    list_filter = ['title', 'category']
+    list_filter = ['title', 'post_type']
+    search_fields = ['title',]
+
+
+@admin.register(Download)
+class DownloadAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description',
+                    'file', 'user', 'created_at', 'updated_at']
+    list_per_page = 10
     search_fields = ['title',]

@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -5,33 +6,30 @@ from django.contrib.auth.models import User
 
 
 class Menu(models.Model):
-    
+    menu_type_choices = [
+        ('A', 'Link'),
+        ('B', 'Single Column Child'),
+        ('C', 'Multi Column Child')
+    ]
     title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=100, unique=True)
     url = models.CharField(max_length=255)
     order = models.DecimalField(max_digits=5, decimal_places=4)
     parent_menu = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='submenus')
-    submenu_head = models.CharField(max_length=200, null=True, blank=True)  
+    # submenu_head = models.CharField(max_length=200, null=True, blank=True)
+    menu_type = models.CharField(max_length=1, choices=menu_type_choices)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['order',]
 
     def __str__(self):
         return self.title
 
-
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name.upper()
-
-    class Meta:
-        verbose_name_plural = "categories"
+    def has_children(self):
+        return self.submenus.exists()
 
 
 class Event(models.Model):
@@ -53,8 +51,13 @@ class Event(models.Model):
 
 
 class Post(models.Model):
+    post_type_choices = [
+        ('A', 'Announcements'),
+        ('B', 'News'),
+        ('C', 'Quick Links')
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post_type = models.CharField(max_length=1, choices=post_type_choices)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     file_url = models.FileField(
@@ -67,3 +70,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title.upper()
+
+
+class Download(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(null=True, blank=True)
+    file = models.FileField(upload_to='uploads/downloads/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+
+    def get_file_extension(self):
+        _, extension = os.path.splitext(self.file.name)
+        return extension.lower()

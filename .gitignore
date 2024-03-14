@@ -3,6 +3,7 @@ venv/
 
 # Ignore the .env file
 .env
+nit_web/.env
 
 # Ignore the settings.py file
 nit_web/settings.py
@@ -10,3 +11,10 @@ media/
 
 # Ignore the static_root folder
 static_root/
+
+# Django #
+*.log
+*.pot
+*.pyc
+__pycache__
+media/

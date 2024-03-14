@@ -1,23 +1,25 @@
-from django.shortcuts import render
-from itertools import groupby
-from operator import itemgetter
-from .models import Menu
+from django.shortcuts import get_object_or_404, render
+from .models import Download, Event, Menu, Post
 from site_app.models import Menu
 
 
 def index(request):
     top_menus = Menu.objects.filter(parent_menu__isnull=True)
-    chunk_len = 4
-    
-    menu_data = []
-    for top_menu in top_menus:
-        submenus = top_menu.submenus.all()
-        # Sort by submenu_head, treating None as an empty string
-        submenus = sorted(submenus, key=lambda x: x.submenu_head or '')
-        submenu_chunks = [list(group) for _, group in groupby(submenus, key=lambda x: x.submenu_head)]
-        menu_data.append({'top_menu': top_menu, 'submenu_chunks': submenu_chunks})
-    
+    posts = Post.objects.all()
+    events = Event.objects.all()
+    downloads = Download.objects.all()
+
     context = {
-        'menus': menu_data,
+        'menus': top_menus,
+        'announcements': posts.filter(post_type='A'),
+        'events': events,
+        'downloads': downloads,
+        'news': posts.filter(post_type='B'),
+        'quick_links': posts.filter(post_type='C'),
     }
     return render(request, 'index.html', context)
+
+
+def handle_nav_menu_click(request, menu_slug):
+    menu_item = get_object_or_404(Menu, slug=menu_slug)
+    print(menu_item)
