@@ -8,8 +8,8 @@ from site_app.models import Category, Event, Menu, Post
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'url', 'order',
-                    'parent_menu', 'created_at', 'updated_at']
-    list_per_page = 10
+                    'parent_menu', 'menu_type', 'created_at', 'updated_at']
+    list_per_page = 50
     list_filter = ['parent_menu']
     search_fields = ['title', 'slug',]
 

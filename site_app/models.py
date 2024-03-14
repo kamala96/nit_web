@@ -5,19 +5,30 @@ from django.contrib.auth.models import User
 
 
 class Menu(models.Model):
-    
+    menu_type_choices = [
+        ('A', 'Link'),
+        ('B', 'Single Column Child'),
+        ('C', 'Multi Column Child')
+    ]
     title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=255)
+    slug = models.SlugField(max_length=100, unique=True)
     url = models.CharField(max_length=255)
     order = models.DecimalField(max_digits=5, decimal_places=4)
     parent_menu = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='submenus')
-    submenu_head = models.CharField(max_length=200, null=True, blank=True)  
+    # submenu_head = models.CharField(max_length=200, null=True, blank=True)
+    menu_type = models.CharField(max_length=1, choices=menu_type_choices)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['order',]
+
     def __str__(self):
         return self.title
+
+    def has_children(self):
+        return self.submenus.exists()
 
 
 class Category(models.Model):
