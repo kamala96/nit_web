@@ -1,5 +1,6 @@
 # Ignore the virtual environment directory
 venv/
+my_venv/
 
 # Ignore the .env file
 **.env
@@ -25,3 +26,4 @@ media/
 
 requirement.txt
 .idea
+site_app/migrations
