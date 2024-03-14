@@ -15,7 +15,7 @@
                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 target="_blank"> {{ item.title }}</a>
               {% else %}
-              <a href="{% url 'handle_nav_menu_click' item.id %}"
+              <a href="{% url 'handle_nav_menu_click' item.slug %}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                 {{ item.title }}</a>
               {% endif %}
@@ -33,7 +33,7 @@
                       {% if child.url|is_url %}
                       <a href="{{ child.url }}" class="block px-4 py-2 text-sm" target="_blank">{{ child.title }}</a>
                       {% else %}
-                      <a href="{% url 'handle_nav_menu_click' child.id %}" class="block px-4 py-2 text-sm">
+                      <a href="{% url 'handle_nav_menu_click' child.slug %}" class="block px-4 py-2 text-sm">
                         {{ child.title }}</a>
                       {% endif %}
                     </li>
@@ -60,7 +60,7 @@
                           <a href="{{ subchild.url }}" class="block px-2 py-1 text-s" target="_blank">
                             {{ subchild.title }}</a>
                           {% else %}
-                          <a href="{% url 'handle_nav_menu_click' child.id %}" class="block px-2 py-1 text-s">
+                          <a href="{% url 'handle_nav_menu_click' subchild.slug %}" class="block px-2 py-1 text-s">
                             {{ subchild.title }}</a>
                           {% endif %}
                         </li>
