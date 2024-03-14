@@ -2,6 +2,7 @@
 venv/
 
 # Ignore the .env file
+**.env
 .env
 **/.env
 nit_web/.env
@@ -20,4 +21,8 @@ static_root/
 **/__pycache__/
 __pycache__/
 media/
+
+
 requirement.txt
+
+.idea/
