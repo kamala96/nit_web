@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Download, Event, Menu, Post
+from .models import Download, Event, Menu, MenuItem, MenuItemContent, Post
 from site_app.models import Menu
 
 
@@ -27,15 +27,18 @@ def handle_nav_menu_click(request, menu_slug):
         return redirect('index')
 
     # Get all MenuItem objects for the clicked menu
-    menu_items = menu.menu_items.all()
+    menu_items = MenuItem.objects.filter(heading=menu)
 
     # Create a dictionary to store MenuItemContent for each MenuItem
     menu_item_contents = {}
 
     # Iterate through each MenuItem and retrieve its associated MenuItemContent
-    # for item in menu_items:
-    #     if item.content:
-    #         menu_item_contents[item] = item.content
+    for item in menu_items:
+        try:
+            menu_item_content = MenuItemContent.objects.get(menu_item=item)
+            menu_item_contents[item] = menu_item_content
+        except MenuItemContent.DoesNotExist:
+            pass
 
     template_name = ''
     if menu.menu_type == 'A':
@@ -50,6 +53,5 @@ def handle_nav_menu_click(request, menu_slug):
         'menu_items': menu_items,
         'menu_item_contents': menu_item_contents,
     }
-    print(context)
 
     return render(request, f'nav_menus/{template_name}', context)

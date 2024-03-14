@@ -48,8 +48,7 @@ class MenuItem(models.Model):
 
 
 class MenuItemContent(models.Model):
-    menu_item = models.OneToOneField(
-        MenuItem, on_delete=models.CASCADE, related_name='content')
+    menu_item = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
     content = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
