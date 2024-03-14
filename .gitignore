@@ -18,10 +18,11 @@ static_root/
 *.log
 *.pot
 *.pyc
-**/__pycache__
-__pycache__
+**/__pycache__/
+__pycache__/
 media/
+
 
 requirement.txt
 
-.idea
+.idea/
