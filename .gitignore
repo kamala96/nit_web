@@ -6,6 +6,7 @@ venv/
 
 # Ignore the settings.py file
 nit_web/settings.py
+media/
 
 # Ignore the static_root folder
 static_root/
