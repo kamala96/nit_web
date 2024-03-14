@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import Download, Event, Menu, Post
+from site_app.models import Download, Event, Menu, MenuItem, MenuItemContent, Post
 
 # Register your models here.
 
@@ -12,6 +12,21 @@ class MenuAdmin(admin.ModelAdmin):
     list_per_page = 50
     list_filter = ['parent_menu']
     search_fields = ['title', 'slug',]
+
+
+@admin.register(MenuItem)
+class MenuItemAdmin(admin.ModelAdmin):
+    list_display = ['heading', 'name']
+    list_filter = ['heading']
+    search_fields = ['heading', 'name']
+    list_per_page = 50
+
+
+@admin.register(MenuItemContent)
+class MenuItemContentAdmin(admin.ModelAdmin):
+    list_display = ['menu_item', 'content']
+    list_filter = ['menu_item']
+    list_per_page = 50
 
 
 @admin.register(Event)
