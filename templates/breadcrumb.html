@@ -1,5 +1,6 @@
-<section>
+{% load custom_tags %}
 
+<section>
   <nav class="bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
@@ -8,9 +9,16 @@
             <div class="ml-10 flex items-baseline space-x-4">
               {% for item in menus %}
               {% if item.menu_type == 'A' %}
+
+              {% if item.url|is_url %}
               <a href="{{ item.url }}"
+                class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                target="_blank"> {{ item.title }}</a>
+              {% else %}
+              <a href="{% url 'handle_nav_menu_click' item.id %}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                 {{ item.title }}</a>
+              {% endif %}
               {% elif item.menu_type == 'B' %}
               <div class="relative group">
                 <button
@@ -21,7 +29,14 @@
                   class="absolute z-10 hidden bg-gray-800 text-white rounded-md group-hover:block min-w-max transform -translate-x-1/2 left-1/2">
                   <ul class="py-1 ">
                     {% for child in item.submenus.all %}
-                    <li><a href="{{ child.url }}" class="block px-4 py-2 text-sm">{{ child.title }}</a></li>
+                    <li>
+                      {% if child.url|is_url %}
+                      <a href="{{ child.url }}" class="block px-4 py-2 text-sm" target="_blank">{{ child.title }}</a>
+                      {% else %}
+                      <a href="{% url 'handle_nav_menu_click' child.id %}" class="block px-4 py-2 text-sm">
+                        {{ child.title }}</a>
+                      {% endif %}
+                    </li>
                     {% endfor %}
                   </ul>
                 </div>
@@ -40,7 +55,15 @@
                       <p class="py-1 px-2 text-gray-200 text-sm font-semibold">{{ child.title }}</p>
                       <ul class="py-1">
                         {% for subchild in child.submenus.all %}
-                        <li><a href="{{ subchild.url }}" class="block px-2 py-1 text-sm">{{ subchild.title }}</a></li>
+                        <li>
+                          {% if subchild.url|is_url %}
+                          <a href="{{ subchild.url }}" class="block px-2 py-1 text-s" target="_blank">
+                            {{ subchild.title }}</a>
+                          {% else %}
+                          <a href="{% url 'handle_nav_menu_click' child.id %}" class="block px-2 py-1 text-s">
+                            {{ subchild.title }}</a>
+                          {% endif %}
+                        </li>
                         {% endfor %}
                       </ul>
                     </div>

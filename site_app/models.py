@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -64,8 +65,13 @@ class Event(models.Model):
 
 
 class Post(models.Model):
+    post_type_choices = [
+        ('A', 'Announcements'),
+        ('B', 'News'),
+        ('C', 'Quick Links')
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    post_type = models.CharField(max_length=1, choices=post_type_choices)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     file_url = models.FileField(
@@ -78,3 +84,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title.upper()
+
+
+class Download(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    file = models.FileField(upload_to='uploads/downloads/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+
+    def get_file_extension(self):
+        _, extension = os.path.splitext(self.file.name)
+        return extension.lower()
