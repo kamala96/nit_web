@@ -2,6 +2,7 @@
 venv/
 
 # Ignore the .env file
+**.env
 .env
 nit_web/.env
 
