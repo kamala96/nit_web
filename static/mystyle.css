@@ -5,7 +5,7 @@
     color: #0e789d;
     font: 700 24px/24px poppins, Quattrocento_old;
     text-transform: uppercase;
-    padding: 5px 0 10px;
+    padding: 5px 0 5px;
     position: relative; /* Added for positioning pseudo-elements */
 }
 
