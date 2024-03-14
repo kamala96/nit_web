@@ -32,20 +32,6 @@ class Menu(models.Model):
         return self.submenus.exists()
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
-    description = models.CharField(max_length=100, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name.upper()
-
-    class Meta:
-        verbose_name_plural = "categories"
-
-
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
@@ -88,7 +74,7 @@ class Post(models.Model):
 
 class Download(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     file = models.FileField(upload_to='uploads/downloads/')
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

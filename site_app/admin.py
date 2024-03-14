@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import Category, Download, Event, Menu, Post
+from site_app.models import Download, Event, Menu, Post
 
 # Register your models here.
 
