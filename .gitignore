@@ -10,6 +10,7 @@ nit_web/.env
 # Ignore the settings.py file
 **/settings.py
 nit_web/settings.py
+media/
 
 # Ignore the static_root folder
 static_root/
@@ -19,10 +20,8 @@ static_root/
 *.pot
 *.pyc
 **/__pycache__/
-__pycache__/
+__pycache__
 media/
 
-
 requirement.txt
-
-.idea/
+.idea

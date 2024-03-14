@@ -14,6 +14,8 @@ def index(request):
         'downloads': downloads,
         'news': posts.filter(post_type='B'),
         'quick_links': posts.filter(post_type='C'),
+        'news_flash': posts.filter(post_type='D')
+   
     }
     return render(request, 'index.html', context)
 
