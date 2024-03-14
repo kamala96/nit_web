@@ -1,12 +1,7 @@
-<div class="p-6 flex justify-between items-center">
-    <header>
-        <h3 class="text-xl font-medium text-laravel">Announcements</h3>
-    </header>
-
-    <!-- View All Button -->
-    <a href="/view-all" class="text-white bg-sky-500 hover:bg-sky-600 px-4 py-2 rounded transition-colors duration-100">
-        View All
-    </a>
+<div class="p-2 relative flex justify-center items-center">
+    <span class="h-1 w-10 bg-[#0e789d] "></span>
+    <h1 class="text1 mx-2">Announcements</h1>
+    <span class="h-1 w-10 bg-[#0e789d] "></span>
 </div>
 
 {% if announcements %}
@@ -16,12 +11,9 @@
         <a href="/post/{{ announcement.id }}">
             <li class="flex items-start gap-4 px-4 py-3">
                 <div class="flex items-center text-sky-500">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"></path>
                     </svg>
-
                 </div>
                 <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
                     <h4 class="text-base text-slate-700">{{ announcement.title }}</h4>
@@ -34,3 +26,11 @@
 {% else %}
 <p>No any announcement found</p>
 {% endif %}
+
+<div class="text-right pt-4">
+   <!-- View All Button -->
+    <a href="/view-all" class="text-white bg-sky-500 hover:bg-sky-600 px-4 py-2  transition-colors duration-100">
+        <span>VIEW ALL </span> <i class="fa fa-long-arrow-right ml-2"></i>
+    </a>
+    
+</div>

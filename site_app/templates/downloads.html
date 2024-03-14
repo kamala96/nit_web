@@ -1,12 +1,7 @@
-<div class="p-6 flex justify-between items-center">
-  <header>
-    <h3 class="text-xl font-medium text-primary">Downloads</h3>
-  </header>
-
-  <!-- View All Button -->
-  <a href="/view-all" class="text-white bg-sky-500 hover:bg-sky-600 px-4 py-2 rounded transition-colors duration-100">
-    View All
-  </a>
+<div class="p-2 relative flex justify-center items-center">
+    <span class="h-1 w-10 bg-[#0e789d] "></span>
+    <h1 class="text1 mx-2">Downloads</h1>
+    <span class="h-1 w-10 bg-[#0e789d] "></span>
 </div>
 
 
@@ -39,3 +34,11 @@
 {% else %}
 <p>No any download found</p>
 {% endif %}
+
+<div class="text-right pt-4">
+   <!-- View All Button -->
+    <a href="/view-all" class="text-white bg-sky-500 hover:bg-sky-600 px-4 py-2  transition-colors duration-100">
+        <span>VIEW ALL </span> <i class="fa fa-long-arrow-right ml-2"></i>
+    </a>
+    
+</div>
