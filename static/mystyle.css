@@ -62,7 +62,6 @@
     font-size: 14px;
 }
 .nit-footer .nit-footer-widget h2 {
-    font-weight: 400;
     margin-bottom: 10px;
     font-size: 16px;
     font-weight: 700;
@@ -74,11 +73,14 @@
     padding: 5px 0;
     position: relative;
 }
-.zoom-on-hover {
-    transition: transform 0.2s ease-in-out;
+.nit-heading-2::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    background-color: #ff0000;
+    bottom: 0;
 }
-
-
 
 /*.text1:before,*/
 /*.text1:after {*/
