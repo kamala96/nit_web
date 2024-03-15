@@ -1,9 +1,16 @@
 
-<div class="p-2 relative flex justify-center items-center">
-    <span class="h-1 w-10 bg-primary"></span>
+
+<div class="mr-2 ml-2 mb-2 flex justify-between items-center">
+    <header>
+        <span class="h-1 w-10 bg-primary"></span>
             <h1 class="text-primary text-2xl mx-2">Events</h1>
        
             <span class="h-1 w-10 bg-primary "></span>
+    </header>
+    <!-- View All Button -->
+    <a href="/view-all" class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
+        View All
+    </a>
 </div>
 
 {% if events %}
@@ -49,11 +56,3 @@
 {% else %}
 <p>No any event found</p>
 {% endif %}
-
-<div class="text-right pt-4">
-   <!-- View All Button -->
-    <a href="/view-all" class="text-white bg-sky-500 hover:bg-sky-600 px-4 py-2  transition-colors duration-100">
-        <span>VIEW ALL </span> <i class="fa fa-long-arrow-right ml-2"></i>
-    </a>
-    
-</div>

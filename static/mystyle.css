@@ -50,6 +50,44 @@ secondary: "#EA0606", */
     left: 3.5%;
 }
 
+<<<<<<< HEAD
+
+.footer {
+            position: relative;
+
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            z-index: 999; /* Ensure the footer is above other content */
+        }
+.nit-footer {
+    font-size: 14px;
+}
+.nit-footer .nit-footer-widget h2 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.nit-heading-2 {
+    font: 900 36px / 36px Poppins, Quattrocento_old;
+    text-transform: uppercase;
+    padding: 5px 0;
+    position: relative;
+}
+.nit-heading-2::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 5px;
+    background-color: #ff0000;
+    bottom: 0;
+}
+
+=======
+>>>>>>> 237e8d0e9272d512f4adede9887bcc4bc801cfec
 /*.text1:before,*/
 /*.text1:after {*/
 /*    content: "";*/
