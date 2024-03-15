@@ -23,6 +23,11 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+def catch_non_existing_paths(request):
+    # return HttpResponseNotFound("Page not found")
+    return render(request, 'errors/html/error404.html')
+
+
 def ajax_handler(request, action):
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         if request.method == 'GET':
