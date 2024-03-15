@@ -29,3 +29,4 @@ requirement.txt
 migrations/
 **/migrations/
 site_app/migrations/
+site_app/_pycache_/
