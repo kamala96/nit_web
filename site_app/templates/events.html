@@ -18,7 +18,7 @@
 
     {% for event in events %}
     <div class="block bg-white hover:shadow-md hover:bg-sky-100 transition-colors duration-100 shadow-md card">
-        <a href="/event/{{ event.id }}">
+        <a href="{% url "handle_event_click" event.id %}">
             <li class="flex items-start gap-4 px-4 py-3">
                 <div class="flex items-center text-secondary ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

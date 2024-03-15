@@ -76,3 +76,24 @@ def handle_nav_menu_click(request, menu_slug):
     }
 
     return render(request, f'nav_menus/{template_name}', context)
+
+
+
+
+def handle_news_click(request, news_id):
+    news = get_object_or_404(Post, pk=news_id)
+
+    context = {
+        'news': news
+    }
+
+    return render(request, 'pages/news_details.html', context)
+
+def handle_event_click(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+
+    context = {
+        'event': event
+    }
+
+    return render(request, 'pages/event_details.html', context)
