@@ -36,6 +36,22 @@ def resize_and_save_cover_image(sender, instance, created, **kwargs):
         instance.save(update_fields=['cover_image'])
 
 
+@receiver(pre_save, sender=Slider)
+def resize_slider_image(sender, instance, **kwargs):
+    if instance.image:  # Check if image exists
+        # Get the accepted dimensions from settings
+        accepted_width = settings.REQUIRED_SLIDER_IMAGE_WIDTH
+        accepted_height = settings.REQUIRED_SLIDER_IMAGE_HEIGHT
+        # Open the uploaded image
+        img = Image.open(instance.image.path)
+        # Check if the image dimensions match the accepted dimensions
+        if img.width != accepted_width or img.height != accepted_height:
+            # Resize the image to the accepted dimensions
+            img.thumbnail((accepted_width, accepted_height))
+            # Save the resized image back to the original file path
+            img.save(instance.image.path)
+
+
 @receiver(post_save, sender=Slider)
 def delete_old_files(sender, instance, **kwargs):
     # Delete old files if more than five sliders exist

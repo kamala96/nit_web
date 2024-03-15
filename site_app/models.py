@@ -172,20 +172,3 @@ class Slider(models.Model):
 
     def __str__(self):
         return self.caption
-
-    def save(self, *args, **kwargs):
-        """Override the save method to resize the image if its dimensions do not match the accepted dimensions."""
-        super().save(*args, **kwargs)
-        if self.image:
-            # Get the accepted dimensions from settings
-            accepted_width = settings.REQUIRED_IMAGE_WIDTH
-            accepted_height = settings.REQUIRED_IMAGE_HEIGHT
-            # Open the uploaded image
-            img = Image.open(self.image.path)
-            # Check if the image dimensions match the accepted dimensions
-            if img.width != accepted_width or img.height != accepted_height:
-                # Resize the image to the accepted dimensions
-                img = img.thumbnail(
-                    (accepted_width, accepted_height))
-                # Save the resized image back to the original file path
-                img.save(self.image.path)
