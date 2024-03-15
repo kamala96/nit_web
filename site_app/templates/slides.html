@@ -48,75 +48,82 @@
 
     </div>
 
-   
+
 
 </section>
 
 
-    <!-- End Chip notification with leading button -->
+<!-- End Chip notification with leading button -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.0.2/glide.js"></script>
 
-    <script>
-        var glide01 = new Glide('.glide-01', {
-            type: 'carousel',
-            focusAt: 'center',
-            perView: 1,
-            autoplay: 3000,
-            animationDuration: 700,
-            gap: 0,
-            classes: {
-                activeNav: '[&>*]:bg-slate-700',
+{% block custom_js_files %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.0.2/glide.js"></script>
+{% endblock custom_js_files %}
+
+
+{% block scripts %}
+<script>
+    var glide01 = new Glide('.glide-01', {
+        type: 'carousel',
+        focusAt: 'center',
+        perView: 1,
+        autoplay: 3000,
+        animationDuration: 700,
+        gap: 0,
+        classes: {
+            activeNav: '[&>*]:bg-slate-700',
+        },
+        breakpoints: {
+            1024: {
+                perView: 2
             },
-            breakpoints: {
-                1024: {
-                    perView: 2
-                },
-                640: {
-                    perView: 1
-                }
-            },
+            640: {
+                perView: 1
+            }
+        },
+    });
+
+    glide01.mount();
+</script>
+<!-- End Carousel with indicators & controls inside -->
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all elements with class 'description'
+        let descriptions = document.querySelectorAll('.description');
+
+        descriptions.forEach(function (description) {
+            // Set a character limit
+            let charLimit = 100;
+
+            // Get the text content of the description
+            let content = description.textContent;
+
+            // Check if the content exceeds the character limit
+            if (content.length > charLimit) {
+                // Display only the first 'charLimit' characters
+                let truncatedContent = content.substring(0, charLimit);
+
+                // Create a 'Read More' link
+                let readMoreLink = document.createElement('a');
+                readMoreLink.href = '#';
+                readMoreLink.textContent = ' Read More';
+                readMoreLink.classList.add('text-blue-500', 'underline');
+
+                // Set up a click event listener on the 'Read More' link
+                readMoreLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    // Show the full content
+                    description.textContent = content;
+                });
+
+                // Append the 'Read More' link to the description
+                description.innerHTML = truncatedContent;
+                description.appendChild(readMoreLink);
+            }
         });
+    });
+</script>
 
-        glide01.mount();
-    </script>
-    <!-- End Carousel with indicators & controls inside -->
-
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Select all elements with class 'description'
-            let descriptions = document.querySelectorAll('.description');
-
-            descriptions.forEach(function (description) {
-                // Set a character limit
-                let charLimit = 100;
-
-                // Get the text content of the description
-                let content = description.textContent;
-
-                // Check if the content exceeds the character limit
-                if (content.length > charLimit) {
-                    // Display only the first 'charLimit' characters
-                    let truncatedContent = content.substring(0, charLimit);
-
-                    // Create a 'Read More' link
-                    let readMoreLink = document.createElement('a');
-                    readMoreLink.href = '#';
-                    readMoreLink.textContent = ' Read More';
-                    readMoreLink.classList.add('text-blue-500', 'underline');
-
-                    // Set up a click event listener on the 'Read More' link
-                    readMoreLink.addEventListener('click', function (event) {
-                        event.preventDefault();
-                        // Show the full content
-                        description.textContent = content;
-                    });
-
-                    // Append the 'Read More' link to the description
-                    description.innerHTML = truncatedContent;
-                    description.appendChild(readMoreLink);
-                }
-            });
-        });
-    </script>
+{% endblock scripts %}
