@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import Download, Event, Menu, MenuItem, MenuItemContent, Post
+from site_app.models import Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
 
 # Register your models here.
 
@@ -53,3 +53,10 @@ class DownloadAdmin(admin.ModelAdmin):
                     'file', 'user', 'created_at', 'updated_at']
     list_per_page = 10
     search_fields = ['title',]
+
+
+@admin.register(Slider)
+class SliderAdmin(admin.ModelAdmin):
+    list_display = ['caption', 'image', 'link', 'created_at', 'updated_at']
+    list_per_page = 10
+    search_fields = ['caption',]
