@@ -1,6 +1,11 @@
 import os
+from uuid import uuid4
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
+
+from site_app.validators import validate_image_dimensions, validate_pdf_file
 
 # Create your models here.
 
@@ -106,10 +111,11 @@ class Post(models.Model):
 class Download(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
-    file = models.FileField(upload_to='uploads/downloads/')
+    file = models.FileField(upload_to='uploads/downloads/',
+                            validators=[validate_pdf_file])
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['-created_at']
@@ -117,6 +123,47 @@ class Download(models.Model):
     def __str__(self):
         return self.title
 
+    @property
     def get_file_extension(self):
         _, extension = os.path.splitext(self.file.name)
         return extension.lower()
+
+
+def custom_image_filename(instance, filename):
+    """Generate a unique filename for the uploaded image."""
+    ext = filename.split('.')[-1]  # Get the file extension
+    new_filename = f"{uuid4().hex}.{ext}"  # Generate a random filename
+    # Return the new filename with the appropriate path
+    return os.path.join('uploads/slider_images', new_filename)
+
+
+class Slider(models.Model):
+    image = models.ImageField(
+        upload_to=custom_image_filename)
+    caption = models.CharField(max_length=100)
+    link = models.URLField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.caption
+
+    def save(self, *args, **kwargs):
+        """Override the save method to resize the image if its dimensions do not match the accepted dimensions."""
+        super().save(*args, **kwargs)
+        if self.image:
+            # Get the accepted dimensions from settings
+            accepted_width = settings.REQUIRED_IMAGE_WIDTH
+            accepted_height = settings.REQUIRED_IMAGE_HEIGHT
+            # Open the uploaded image
+            img = Image.open(self.image.path)
+            # Check if the image dimensions match the accepted dimensions
+            if img.width != accepted_width or img.height != accepted_height:
+                # Resize the image to the accepted dimensions
+                img = img.resize(
+                    (accepted_width, accepted_height))
+                # Save the resized image back to the original file path
+                img.save(self.image.path)

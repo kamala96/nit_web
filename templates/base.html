@@ -15,8 +15,8 @@
   <meta content="" name="keywords" />
 
   <!-- Favicons -->
-  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}" />
-  <link rel="stylesheet" href="{% static 'mystyle.css' %}"/>
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/nit_favicon.ico' %}" />
+  <link rel="stylesheet" href="{% static 'mystyle.css' %}" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
     integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
@@ -24,6 +24,7 @@
   <script src="//unpkg.com/alpinejs" defer></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+  
   <script>
     tailwind.config = {
       theme: {
@@ -57,6 +58,32 @@
 
   <!-- Template Main JS File -->
   <!-- <script src="{f% static 'js/main.js' %}"></script> -->
+
+
+  <!-- Include the JQuery library -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Include the Cookies library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.1/js.cookie.min.js"></script>
+
+
+  {% block custom_js_files %} {% endblock %}
+  <script type="text/javascript">
+
+    // ajax_setup with CSRF TOKEN
+    $(function () {
+
+      // Configure the beforeSend function for all AJAX requests
+      $.ajaxSetup({
+        beforeSend: function (xhr) {
+          // Include the CSRF token in the request headers
+          var csrftoken = Cookies.get('csrftoken'); // You need to include the Cookies library for this
+          xhr.setRequestHeader('X-CSRFToken', csrftoken);
+        }
+      });
+    });
+
+  </script>
 
   {% block scripts %} {% endblock %}
 </body>

@@ -1,5 +1,8 @@
 from django import template
 from django.utils import timezone
+import re
+
+from site_app.icons import FILE_ICONS
 
 register = template.Library()
 
@@ -45,3 +48,17 @@ def title_first(value):
 @register.filter
 def is_url(value):
     return value.startswith('http://') or value.startswith('https://')
+
+
+@register.filter
+def get_icon_filenames(file_extension):
+    """
+    Custom template filter to get the icon filenames for a given file extension.
+    """
+    return FILE_ICONS.get(file_extension.lower())
+
+
+@register.filter(name='wordcount')
+def wordcount(value):
+    words = re.findall(r'\w+', value)
+    return len(words)

@@ -1,5 +1,6 @@
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Download, Event, Menu, MenuItem, MenuItemContent, Post
+from .models import Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
 from site_app.models import Menu
 
 
@@ -7,17 +8,41 @@ def index(request):
     posts = Post.objects.all()
     events = Event.objects.all()
     downloads = Download.objects.all()
+    sliders = Slider.objects.order_by('-created_at')[:5]
 
     context = {
+        'sliders': sliders,
         'announcements': posts.filter(post_type='A'),
         'events': events,
         'downloads': downloads,
         'news': posts.filter(post_type='B'),
         'quick_links': posts.filter(post_type='C'),
         'news_flash': posts.filter(post_type='D')
-   
+
     }
     return render(request, 'index.html', context)
+
+
+def ajax_handler(request, action):
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        if request.method == 'GET':
+            # Handle GET request
+            if action == 'get_sliders':
+                # Limit to 5 latest sliders
+                sliders = Slider.objects.order_by('-created_at')[:5]
+                sliders_data = [{'image': slider.image.url, 'caption': slider.caption,
+                                'link': slider.link} for slider in sliders]
+                return JsonResponse({'sliders': sliders_data})
+            else:
+                return JsonResponse({'error': 'Invalid action'}, status=400)
+        elif request.method == 'POST':
+            # Handle POST request
+            # Implement logic based on the action
+            pass
+        else:
+            return JsonResponse({'error': 'Unsupported method'}, status=405)
+    else:
+        return JsonResponse({'error': 'No service'}, status=405)
 
 
 def handle_nav_menu_click(request, menu_slug):
@@ -40,13 +65,9 @@ def handle_nav_menu_click(request, menu_slug):
         except MenuItemContent.DoesNotExist:
             pass
 
-    template_name = ''
-    if menu.menu_type == 'A':
-        template_name = 'menu_a_template.html'
-    elif menu.menu_type == 'B':
-        template_name = 'menu_b_template.html'
-    elif menu.menu_type == 'C':
-        template_name = 'menu_c_template.html'
+    template_name = '_default.html'
+    if menu.slug in ['about-nit']:
+        template_name = 'about_nit.html'
 
     context = {
         'menu': menu,
