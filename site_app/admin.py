@@ -41,7 +41,7 @@ class EventAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'post_type', 'description',  'file_url',
-                    'image_url', 'web_url', 'user', 'created_at', 'updated_at']
+                    'image_url', 'cover_image', 'web_url', 'user', 'created_at', 'updated_at']
     list_per_page = 10
     list_filter = ['title', 'post_type']
     search_fields = ['title',]

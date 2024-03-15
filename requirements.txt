@@ -4,3 +4,4 @@ django-widget-tweaks
 mysqlclient
 gunicorn
 Pillow
+django-cleanup

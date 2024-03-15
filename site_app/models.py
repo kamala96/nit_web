@@ -10,6 +10,30 @@ from site_app.validators import validate_image_dimensions, validate_pdf_file
 # Create your models here.
 
 
+def generate_unique_filename(instance, filename, folder):
+    """Generate a unique filename for the uploaded file."""
+    ext = filename.split('.')[-1]  # Get the file extension
+    new_filename = f"{uuid4().hex}.{ext}"  # Generate a random filename
+    # Return the new filename with the appropriate path
+    return os.path.join(folder, new_filename)
+
+
+def custom_slider_image_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/slider_images/')
+
+
+def custom_cover_image_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/images/covers/')
+
+
+def images_general_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/images/')
+
+
+def files_general_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/files/')
+
+
 class Menu(models.Model):
     menu_type_choices = [
         ('A', 'Link'),
@@ -97,12 +121,18 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     file_url = models.FileField(
-        upload_to='uploads/files/', null=True, blank=True)
+        upload_to=files_general_upload_to, max_length=255, verbose_name='File', null=True, blank=True)
+
     image_url = models.ImageField(
-        upload_to='uploads/images/', null=True, blank=True)
+        upload_to=images_general_upload_to, max_length=255, verbose_name='Image', null=True, blank=True)
+    cover_image = models.ImageField(
+        upload_to=custom_cover_image_upload_to, verbose_name='Cover Image', max_length=255, null=True, blank=True)
     web_url = models.URLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
 
     def __str__(self):
         return self.title.upper()
@@ -129,17 +159,9 @@ class Download(models.Model):
         return extension.lower()
 
 
-def custom_image_filename(instance, filename):
-    """Generate a unique filename for the uploaded image."""
-    ext = filename.split('.')[-1]  # Get the file extension
-    new_filename = f"{uuid4().hex}.{ext}"  # Generate a random filename
-    # Return the new filename with the appropriate path
-    return os.path.join('uploads/slider_images', new_filename)
-
-
 class Slider(models.Model):
     image = models.ImageField(
-        upload_to=custom_image_filename)
+        upload_to=custom_slider_image_upload_to, max_length=255)
     caption = models.CharField(max_length=100)
     link = models.URLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -163,7 +185,7 @@ class Slider(models.Model):
             # Check if the image dimensions match the accepted dimensions
             if img.width != accepted_width or img.height != accepted_height:
                 # Resize the image to the accepted dimensions
-                img = img.resize(
+                img = img.thumbnail(
                     (accepted_width, accepted_height))
                 # Save the resized image back to the original file path
                 img.save(self.image.path)
