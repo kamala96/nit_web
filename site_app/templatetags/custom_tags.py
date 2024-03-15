@@ -1,5 +1,6 @@
 from django import template
 from django.utils import timezone
+import re
 
 register = template.Library()
 
@@ -45,3 +46,9 @@ def title_first(value):
 @register.filter
 def is_url(value):
     return value.startswith('http://') or value.startswith('https://')
+
+
+@register.filter(name='wordcount')
+def wordcount(value):
+    words = re.findall(r'\w+', value)
+    return len(words)
