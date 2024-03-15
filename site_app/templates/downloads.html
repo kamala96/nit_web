@@ -15,11 +15,6 @@
 {% if downloads %}
 <ul class="divide-y divide-slate-100">
   {% for download in downloads %}
-
-  <!-- {f% with icon=site_app.FILE_ICONS.get(download.get_file_extension(), 'default-icon.png') %}
-  <img src="{f% static 'icons/' %}{ff{ icon }}" alt="File Icon">
-  {f% endwith %} -->
-
   <div class="block hover:shadow-md hover:bg-yellow-100 transition-colors duration-100">
     <a href="{{ download.file.url }}">
       <li class="flex items-start gap-4 px-4 py-3">
@@ -29,6 +24,16 @@
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
           </svg>
+
+          <!-- {f% with file_extension=download.get_file_extension %}
+          {f% with icon_filenames=file_extension|get_icon_filenames %}
+          {f% if icon_filenames %}
+          <img src="{f% static 'icons/' %}{f{ icon_filenames.0 }}" alt="Icon" class="w-6 h-6">
+          {f% else %}
+          <img src="{f% static 'default-icon.png' %}" alt="Default Icon" class="w-6 h-6">
+          {f% endif %}
+          {f% endwith %}
+          {f% endwith %} -->
         </div>
         <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
           <h4 class="text-base text-slate-700">{{ download.title }}</h4>

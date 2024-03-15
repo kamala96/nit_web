@@ -1,12 +1,26 @@
-{% load static %} {% load tz %}
+{% load static %}
+{% load tz %}
+
 <section class="bg-white">
     <!-- Component: Carousel with indicators & controls inside -->
     <div class="relative w-full h-1/2 glide-01 bg-red-100">
         <!-- Slides -->
         <div class="overflow-hidden" data-glide-el="track">
-            <ul
+            <ul id="slider-container"
                 class="relative w-full overflow-hidden p-0 whitespace-no-wrap flex flex-no-wrap [backface-visibility: hidden] [transform-style: preserve-3d] [touch-action: pan-Y] [will-change: transform]">
-                <li><img src="{% static 'img/slide1.jpg' %}" class="w-full max-w-full max-h-full m-auto" /></li>
+
+                {% for slider in sliders %}
+                <li>
+                    {% if slider.link %}
+                    <a href="{{ slider.link }}" target="_blank">
+                        {% endif %}
+                        <img src="{{ slider.image.url }}" alt="{{ slider.caption }}"
+                            class="w-full max-w-full max-h-full m-auto">
+                        {% if slider.link %}
+                    </a>
+                    {% endif %}
+                </li>
+                {% endfor %}
             </ul>
         </div>
         <!-- Controls -->
@@ -41,71 +55,124 @@
 
 </section>
 
+<<<<<<< HEAD <section class="bg-blue-500 p-2 pt-4">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-wrap -mx-4">
+            <!-- Column 1: col-4 -->
+            <div class="w-full md:w-1/3 px-4">
+                <div class="bg-white shadow-md rounded-lg p-6">
+                    <!-- User Image -->
+                    <div class="flex justify-center">
+                        <img src="user-image.jpg" alt="User Image" class="w-24 h-24 rounded-full">
+                    </div>
+                    <!-- User Name -->
+                    <div class="text-center mt-4">
+                        <h2 class="text-lg font-semibold">John Doe</h2>
+                        <!-- User Position -->
+                        <p class="text-gray-600">Position</p>
+                    </div>
+                </div>
+            </div>
 
-<!-- End Chip notification with leading button -->
+            <!-- Column 2: col-8 -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.0.2/glide.js"></script>
+            <div class="w-full md:w-2/3 px-4">
+                <div class="bg-white shadow-md  p-6">
 
-<script>
-    var glide01 = new Glide('.glide-01', {
-        type: 'carousel',
-        focusAt: 'center',
-        perView: 1,
-        autoplay: 3000,
-        animationDuration: 700,
-        gap: 0,
-        classes: {
-            activeNav: '[&>*]:bg-slate-700',
-        },
-        breakpoints: {
-            1024: {
-                perView: 2
+                    <div class="p-2 relative flex justify-center items-center">
+                        <span class="h-1 w-10 bg-[#0e789d] "></span>
+                        <h1 class="text1 mx-2">Rector Welcome Note</h1>
+                        <span class="h-1 w-10 bg-[#0e789d] "></span>
+                    </div>
+
+
+
+                    <!-- Content for col-8 -->
+                    <p class="text-gray-800">“We are delighted that you have decided to undertake your studies at
+                        National Institute of Transport or considering to do so.
+                        This website describe the range of our courses and different activities done at the university
+                        which will give a flavour of life in our campus. The National institute of Transport is a unique
+                        community our students and staffs dedicated to bringing out the best in all its members.
+                        Our aim is to provide the best possible environment for teaching, learning, research and public
+                        services, and our track record of success is well known in East Africa, Africa and the rest of
+                        the world.
+                        We will continue to ensure that your years at this university will be filled with excitement an
+                        experiences that you can treasure for a life time.
+                        We also recognize that the quality of students experiences derives from more than academic
+                        study.”</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </section>
+    =======
+
+    <!-- End Chip notification with leading button -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.0.2/glide.js"></script>
+
+    <script>
+        var glide01 = new Glide('.glide-01', {
+            type: 'carousel',
+            focusAt: 'center',
+            perView: 1,
+            autoplay: 3000,
+            animationDuration: 700,
+            gap: 0,
+            classes: {
+                activeNav: '[&>*]:bg-slate-700',
             },
-            640: {
-                perView: 1
-            }
-        },
-    });
-
-    glide01.mount();
-</script>
-<!-- End Carousel with indicators & controls inside -->
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Select all elements with class 'description'
-        let descriptions = document.querySelectorAll('.description');
-
-        descriptions.forEach(function (description) {
-            // Set a character limit
-            let charLimit = 100;
-
-            // Get the text content of the description
-            let content = description.textContent;
-
-            // Check if the content exceeds the character limit
-            if (content.length > charLimit) {
-                // Display only the first 'charLimit' characters
-                let truncatedContent = content.substring(0, charLimit);
-
-                // Create a 'Read More' link
-                let readMoreLink = document.createElement('a');
-                readMoreLink.href = '#';
-                readMoreLink.textContent = ' Read More';
-                readMoreLink.classList.add('text-blue-500', 'underline');
-
-                // Set up a click event listener on the 'Read More' link
-                readMoreLink.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    // Show the full content
-                    description.textContent = content;
-                });
-
-                // Append the 'Read More' link to the description
-                description.innerHTML = truncatedContent;
-                description.appendChild(readMoreLink);
-            }
+            breakpoints: {
+                1024: {
+                    perView: 2
+                },
+                640: {
+                    perView: 1
+                }
+            },
         });
-    });
-</script>
+
+        glide01.mount();
+    </script>
+    <!-- End Carousel with indicators & controls inside -->
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Select all elements with class 'description'
+            let descriptions = document.querySelectorAll('.description');
+
+            descriptions.forEach(function (description) {
+                // Set a character limit
+                let charLimit = 100;
+
+                // Get the text content of the description
+                let content = description.textContent;
+
+                // Check if the content exceeds the character limit
+                if (content.length > charLimit) {
+                    // Display only the first 'charLimit' characters
+                    let truncatedContent = content.substring(0, charLimit);
+
+                    // Create a 'Read More' link
+                    let readMoreLink = document.createElement('a');
+                    readMoreLink.href = '#';
+                    readMoreLink.textContent = ' Read More';
+                    readMoreLink.classList.add('text-blue-500', 'underline');
+
+                    // Set up a click event listener on the 'Read More' link
+                    readMoreLink.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        // Show the full content
+                        description.textContent = content;
+                    });
+
+                    // Append the 'Read More' link to the description
+                    description.innerHTML = truncatedContent;
+                    description.appendChild(readMoreLink);
+                }
+            });
+        });
+    </script>
+    >>>>>>> fc5fe569395ad4f4b6db312b3ab35cb855b079e8
