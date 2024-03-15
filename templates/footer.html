@@ -1,8 +1,103 @@
+<<<<<<< HEAD
 <footer
   class="fixed z-30 bottom-0 left-0 w-full flex items-center justify-start font-bold bg-primary text-white h-24 mt-24 opacity-90 md:justify-center"
 >
+=======
+{% load static %} {% load tz %}
+
+<footer class="nit-footer nit-section col-span-12 px-3 pt-5 text-medium bg-primary bottom-0 left-0 w-full ">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="col-span-1 md:col-span-1 mt-1">
+            <div class="nit-footer-widget">
+                <h2 class="nit-heading-2">CONTACT US</h2>
+                <div class="nit-footer-social list-unstyled row">
+                            <div class="nit-address">
+                                <ul class="list-unstyled ml-4 mb-1">
+                                    <li>
+                                        <span class="icon"><i class="fas fa-home"></i></span><span class="text">National Institute of
+                                            Transport (NIT) </span>
+                                    </li>
+
+                                    <li>
+                                        <span class="icon"><i class="far fa-map"></i></span> <span class="text"> Mabibo Road </span>
+                                    </li>
+
+                                    <li>
+                                        <span class="icon"><i class="fa-solid fa-archive"></i></span> <span class="text">P.O. Box 705.
+                                            Dar es Salaam. Tanzania</span>
+                                    </li>
+
+                                    <li>
+                                        <span class="icon"><i class="fa-solid fa-phone"></i></span> <span class="text">+255-22-2400148
+                                            |
+                                            255-22-2443149</span>
+                                    </li>
+
+                                    <li>
+                                        <span class="icon"><i class="fa-solid fa-envelope"></i></span> <span class="text">rector@nit.ac.tz</span>
+                                    </li>
+                                    <li>
+                                        <span class="icon"><i class="fa-solid fa-envelope"></i></span> <span class="text"> barua@nit.ac.tz
+                                            |
+                                            maoni@nit.ac.tz </span>
+                                    </li>
+                                </ul>
+
+                                <ul class="nit-footer-social list-unstyled pl-2 ml-3">
+
+                                    <li class="nit-animate"><a class="a1" href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                    <li class="nit-animate"><a class="a1" href="#" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                                    <li class="nit-animate"><a class="a1" href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                    <li class="nit-animate"><a class="a1" href="#" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                                </ul>
+
+                            </div>
+                        </div>
+            </div>
+        </div>
+
+
+        <div class="col-span-1 md:col-span-1 mt-1">
+            <div class="nit-footer-widget">
+                <h2 class="nit-heading-2">QUICK LINKS</h2>
+                <ul class="list-none ml-2 text-white">
+                    <li><i class="fa fa-caret-right pl-5 pr-5"></i><a class="a1" href="https://www.nacte.go.tz/" target="_blank">NACTVET</a></li>
+                    <br>
+                    <li><i class="fa fa-caret-right pl-5 pr-5"></i><a class="a1" href="https://www.iucea.org/" target="_blank">Inter-University
+                            Council of East
+                            Africa(IUCEA)</a></li>
+                    <br>
+                    <!-- Add other list items -->
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-span-1 md:col-span-1 mt-1">
+            <div class="nit-footer-widget ml-md-4">
+                <h2 class="nit-heading-2">ICT SERVICES</h2>
+                <!-- Add your ICT services list -->
+            </div>
+{#            <div class="nit-footer-widget ml-md-4">#}
+{#                <h2 class="nit-heading-2">Visitor Counter</h2>#}
+{#                <!-- Add your visitor counter content -->#}
+{#            </div>#}
+        </div>
+
+        <div class="col-span-1 md:col-span-1 mt-1">
+            <div class="nit-footer-widget nit-footer-imgs ml-2">
+                <h2 class="nit-heading-2">LOCATE US.</h2>
+                <a href="https://www.google.com/maps/place/National+Institute+of+Transport/@-6.809058,39.219327,17z/data=!3m1!4b1!4m6!3m5!1s0x185c494ede5f653b:0xd7d47c0dde3bbfcc!8m2!3d-6.8090633!4d39.2219019!16s%2Fg%2F12hlp5r97?entry=ttu" target="_blank">
+                    <img alt="Map" src="{% static 'img/mapping.png' %}">
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+<footer class="bottom-0 left-0 w-full flex items-center justify-start font-bold bg-primary text-white h-10 mt-5 opacity-90 md:justify-center">
+>>>>>>> a355546ac71ec37761d5bc331ce0452cc26b62cb
   <p class="ml-2">
-    {% now "Y" as current_year %} Copyright &copy;{{ current_year }}, All Rights
+    {% now "Y" as current_year %} Copyright &copy;{{ current_year }} , NIT,  All Rights
     reserved
   </p>
 

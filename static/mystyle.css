@@ -50,6 +50,33 @@ secondary: "#EA0606", */
     left: 3.5%;
 }
 
+<<<<<<< HEAD
+=======
+
+
+.nit-footer {
+    font-size: 14px;
+}
+.nit-footer .nit-footer-widget h2 {
+    font-weight: 400;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.nit-heading-2 {
+    font: 900 36px / 36px Poppins, Quattrocento_old;
+    text-transform: uppercase;
+    padding: 5px 0;
+    position: relative;
+}
+.zoom-on-hover {
+    transition: transform 0.2s ease-in-out;
+}
+
+
+
+>>>>>>> a355546ac71ec37761d5bc331ce0452cc26b62cb
 /*.text1:before,*/
 /*.text1:after {*/
 /*    content: "";*/
