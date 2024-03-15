@@ -1,7 +1,8 @@
-<div class="mr-2 ml-2 mb-2 flex justify-between items-center">
+{% load static %} {% load tz %}
+<div class="mb-2 flex justify-between items-center">
   <header>
       <span class="h-1 w-10 bg-primary"></span>
-          <h1 class="text-primary text-2xl mx-2">Downloads</h1>
+          <h1 class="text-primary text-xl mx-2">Downloads</h1>
      
           <span class="h-1 w-10 bg-primary "></span>
   </header>
@@ -15,15 +16,17 @@
 {% if downloads %}
 <ul class="divide-y divide-slate-100">
   {% for download in downloads %}
-  <div class="block hover:shadow-md hover:bg-yellow-100 transition-colors duration-100">
+  <div class="block bg-white hover:shadow-md hover:bg-sky-100 transition-colors duration-100 shadow-md card">
     <a href="{{ download.file.url }}">
       <li class="flex items-start gap-4 px-4 py-3">
-        <div class="flex items-center text-sky-500">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+        <div class="flex items-center text-secondary">
+          {% comment %} <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" />
-          </svg>
+          </svg> {% endcomment %}
+
+          <img src="{% static 'img/pdf_icon.png' %} " class="w-8"/>
 
           <!-- {f% with file_extension=download.get_file_extension %}
           {f% with icon_filenames=file_extension|get_icon_filenames %}
@@ -36,7 +39,7 @@
           {f% endwith %} -->
         </div>
         <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
-          <h4 class="text-base text-slate-700">{{ download.title }}</h4>
+          <h4 class="text-sm text-primary">{{ download.title }}</h4>
         </div>
       </li>
     </a>
