@@ -23,7 +23,7 @@ static_root/
 __pycache__
 media/
 
-requirement.txt
+requirements.txt
 .idea
 
 migrations/
