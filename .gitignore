@@ -19,8 +19,8 @@ static_root/
 *.log
 *.pot
 *.pyc
-**/_pycache_/
-_pycache_
+**/__pycache__/
+__pycache__
 media/
 
 requirement.txt
@@ -29,3 +29,4 @@ requirement.txt
 migrations/
 **/migrations/
 site_app/migrations/
+site_app/__pycache__

@@ -12,21 +12,21 @@
 
               {% if item.url|is_url %}
               <a href="{{ item.url }}"
-                class="text-primary hover:bg-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
+                class="text-primary hover:bg-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
                 target="_blank"> {{ item.title }}</a>
               {% else %}
               <a href="{% url 'handle_nav_menu_click' item.slug %}"
-                class="text-primary hover:bg-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
+                class="text-primary hover:bg-gray-100 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">
                 {{ item.title }}</a>
               {% endif %}
               {% elif item.menu_type == 'B' %}
               <div class="relative group">
                 <button
-                  class="text-primary hover:bg-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium focus:outline-none">
+                  class="text-primary hover:bg-gray-100 hover:text-primary px-3 py-2 rounded-md text-sm font-medium focus:outline-none">
                   {{ item.title }}
                 </button>
                 <div
-                  class="absolute z-10 hidden bg-gray-800 text-primary rounded-md group-hover:block min-w-max transform -translate-x-1/2 left-1/2">
+                  class="absolute z-10 hidden bg-white text-primary rounded-md group-hover:block min-w-max transform -translate-x-1/2 left-1/2">
                   <ul class="py-1 ">
                     {% for child in item.submenus.all %}
                     <li>
@@ -44,15 +44,15 @@
               {% elif item.menu_type == 'C' %}
               <div class="relative group">
                 <button
-                  class="text-primary hover:bg-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium focus:outline-none">
+                  class="text-primary hover:bg-gray-100 hover:text-primary px-3 py-2 rounded-md text-sm font-medium focus:outline-none">
                   {{ item.title }}
                 </button>
                 <div
-                  class="absolute z-10 hidden bg-gray-800 text-primary rounded-md group-hover:block min-w-max transform -translate-x-1/2 left-1/2">
+                  class="absolute z-10 hidden bg-white text-primary rounded-md group-hover:block min-w-max transform -translate-x-1/2 left-1/2">
                   <div class=" grid grid-cols-3 gap-x-8">
                     {% for child in item.submenus.all %}
                     <div>
-                      <p class="py-1 px-2 text-gray-200 text-sm font-semibold">{{ child.title }}</p>
+                      <p class="py-1 px-2 text-gray-600 text-sm font-semibold">{{ child.title }}</p>
                       <ul class="py-1">
                         {% for subchild in child.submenus.all %}
                         <li>
