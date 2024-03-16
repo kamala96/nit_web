@@ -62,3 +62,11 @@ def get_icon_filenames(file_extension):
 def wordcount(value):
     words = re.findall(r'\w+', value)
     return len(words)
+
+
+@register.filter
+def truncate_with_read_more(value, max_length, read_more_url):
+    if len(value) <= max_length:
+        return value
+    truncated_value = value[:max_length].rsplit(' ', 1)[0] + '...'
+    return f'{truncated_value} <a href="{read_more_url}" class="text-blue-500 underline cursor-pointer">Read more</a>'

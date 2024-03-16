@@ -6,21 +6,30 @@ from site_app.models import Menu
 
 def index(request):
     posts = Post.objects.all()
-    events = Event.objects.all()
-    downloads = Download.objects.all()
+    events = Event.objects.order_by('-created_at')[:5]
+    downloads = Download.objects.order_by('-created_at')[:7]
     sliders = Slider.objects.order_by('-created_at')[:5]
 
     context = {
         'sliders': sliders,
-        'announcements': posts.filter(post_type='A'),
+        'announcements': posts.filter(post_type='A').order_by('-created_at')[:5],
         'events': events,
         'downloads': downloads,
-        'news': posts.filter(post_type='B'),
-        'quick_links': posts.filter(post_type='C'),
-        'news_flash': posts.filter(post_type='D')
+        'news': posts.filter(post_type='B').order_by('-created_at')[:4],
+        'quick_links': posts.filter(post_type='C').order_by('-created_at')[:7],
+        'news_flash': posts.filter(post_type='D').order_by('-created_at').first()
 
     }
     return render(request, 'index.html', context)
+
+
+def catch_non_existing_paths(request):
+    # return HttpResponseNotFound("Page not found")
+    return render(request, 'errors/html/error404.html')
+
+
+def custom_500_view(request, exception=None):
+    return render(request, 'errors/html/error500.html', status=500)
 
 
 def ajax_handler(request, action):
