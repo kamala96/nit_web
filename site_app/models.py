@@ -38,6 +38,17 @@ def files_accounting_officer_upload_to(instance, filename):
     return generate_unique_filename(instance, filename, 'uploads/accounting_officers/')
 
 
+def menu_images_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/menu_images/')
+
+
+class MenuImage(models.Model):
+    image = models.ImageField(upload_to=menu_images_upload_to)
+
+    def __str__(self):
+        return self.image.name
+
+
 class Menu(models.Model):
     menu_type_choices = [
         ('A', 'Link'),
@@ -53,6 +64,9 @@ class Menu(models.Model):
     menu_type = models.CharField(max_length=1, choices=menu_type_choices)
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu is visible or not (draft)')
+    description = models.TextField(null=True, blank=True)
+    images = models.ManyToManyField(
+        'MenuImage', related_name='menu_images', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -182,7 +196,21 @@ class Slider(models.Model):
         return self.caption
 
 
-class AccountingOfficer(models.Model):
+class SingletonModel(models.Model):
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def load(cls):
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+
+
+class AccountingOfficer(SingletonModel):
     full_name = models.CharField(max_length=100)
     title = models.CharField(max_length=20)
     welcome_note = models.TextField()
