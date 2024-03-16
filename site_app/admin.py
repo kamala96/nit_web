@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
+from site_app.models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
 
 # Register your models here.
 
@@ -60,3 +60,11 @@ class SliderAdmin(admin.ModelAdmin):
     list_display = ['caption', 'image', 'link', 'created_at', 'updated_at']
     list_per_page = 10
     search_fields = ['caption',]
+
+
+@admin.register(AccountingOfficer)
+class AccountingOfficerAdmin(admin.ModelAdmin):
+    list_display = ['full_name', 'title', 'welcome_note',
+                    'image', 'created_at', 'updated_at']
+    list_per_page = 10
+    search_fields = ['full_name',]
