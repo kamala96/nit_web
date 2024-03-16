@@ -47,6 +47,8 @@ class Menu(models.Model):
     parent_menu = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='submenus')
     menu_type = models.CharField(max_length=1, choices=menu_type_choices)
+    is_visible = models.BooleanField(
+        default=False, help_text='Whether a menu is visible or not (draft)')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -64,6 +66,8 @@ class MenuItem(models.Model):
     heading = models.ForeignKey(
         Menu, on_delete=models.CASCADE, related_name='menu_items')
     name = models.CharField(max_length=100)
+    is_visible = models.BooleanField(
+        default=False, help_text='Whether a menu item is visible or not (draft)')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

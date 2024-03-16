@@ -7,7 +7,7 @@ from nit_web import settings
 from site_app.models import Post, Slider
 
 
-@receiver(pre_save, sender=Post)
+@receiver(post_save, sender=Post)
 def resize_image(sender, instance, **kwargs):
     if instance.post_type == 'D' and instance.image_url:
         accepted_width = settings.NEWS_FLASH_IMAGE_WIDTH
@@ -15,29 +15,41 @@ def resize_image(sender, instance, **kwargs):
         img = Image.open(instance.image_url.path)
         if img.width != accepted_width or img.height != accepted_height:
             # img = img.resize((accepted_width, accepted_height))
-            img = img.thumbnail((accepted_width, accepted_height))
+            img = img.resize((accepted_width, accepted_height))
             img.save(instance.image_url.path)
 
 
 @receiver(post_save, sender=Post)
 def resize_and_save_cover_image(sender, instance, created, **kwargs):
-    if created and instance.post_type == 'B' and instance.image_url and not instance.cover_image:
+    if instance.post_type == 'B' and instance.image_url:
         accepted_cover_width = settings.LATEST_NEWS_COVER_IMAGE_WIDTH
         accepted_cover_height = settings.LATEST_NEWS_COVER_IMAGE_HEIGHT
         img = Image.open(instance.image_url.path)
-        img.thumbnail((accepted_cover_width, accepted_cover_height))
+        img.resize((accepted_cover_width, accepted_cover_height))
         cover_image_directory = os.path.join(
             settings.MEDIA_ROOT, 'uploads/images/covers/')
         os.makedirs(cover_image_directory, exist_ok=True)
         cover_image_path = os.path.join(
             cover_image_directory, instance.image_url.name.split("/")[-1])
-        img.save(cover_image_path)
-        instance.cover_image = cover_image_path
-        instance.save(update_fields=['cover_image'])
+        img = img.save(cover_image_path)
+
+        # Save the cover image path only if it's a new instance or cover image is not set
+        if created or not instance.cover_image:
+            instance.cover_image = cover_image_path
+            instance.save(update_fields=['cover_image'])
+        else:
+            # For existing instances, remove the old cover image file and update the cover_image field
+            old_cover_image_path = instance.cover_image
+            instance.cover_image = cover_image_path
+            Post.objects.filter(pk=instance.pk).update(
+                cover_image=instance.cover_image)
+            # Delete the old cover image file from the filesystem
+            if os.path.exists(old_cover_image_path.path):
+                os.remove(old_cover_image_path.path)
 
 
-@receiver(pre_save, sender=Slider)
-def resize_slider_image(sender, instance, **kwargs):
+@receiver(post_save, sender=Slider)
+def resize_slider_image(sender, instance, created, **kwargs):
     if instance.image:  # Check if image exists
         # Get the accepted dimensions from settings
         accepted_width = settings.REQUIRED_SLIDER_IMAGE_WIDTH
@@ -47,7 +59,7 @@ def resize_slider_image(sender, instance, **kwargs):
         # Check if the image dimensions match the accepted dimensions
         if img.width != accepted_width or img.height != accepted_height:
             # Resize the image to the accepted dimensions
-            img.thumbnail((accepted_width, accepted_height))
+            img = img.resize((accepted_width, accepted_height))
             # Save the resized image back to the original file path
             img.save(instance.image.path)
 

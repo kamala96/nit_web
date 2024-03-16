@@ -7,8 +7,8 @@ from site_app.models import Download, Event, Menu, MenuItem, MenuItemContent, Po
 
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ['title', 'slug', 'url', 'order',
-                    'parent_menu', 'menu_type', 'created_at', 'updated_at']
+    list_display = ['title', 'slug', 'url', 'order', 'parent_menu',
+                    'menu_type', 'is_visible', 'created_at', 'updated_at']
     list_per_page = 50
     list_filter = ['parent_menu']
     search_fields = ['title', 'slug',]
@@ -16,7 +16,7 @@ class MenuAdmin(admin.ModelAdmin):
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ['heading', 'name']
+    list_display = ['heading', 'name', 'is_visible']
     list_filter = ['heading']
     search_fields = ['heading', 'name']
     list_per_page = 50
