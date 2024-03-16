@@ -1,17 +1,12 @@
 {% load static %} {% load tz %}
-<div class="mb-2 flex justify-between items-center">
-  <header>
-      <span class="h-1 w-10 bg-primary"></span>
-          <h1 class="text-primary text-xl mx-2">Downloads</h1>
-     
-          <span class="h-1 w-10 bg-primary "></span>
-  </header>
-  <!-- View All Button -->
-  <a href="/view-all" class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
-      View All
-  </a>
-</div>
 
+<div class="mb-2 flex justify-center items-center">
+  <header>
+      <h1 class="text-primary text-2xl font-bold relative">Downloads</h1>
+ 
+      <div class="relative bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-primary mt-1"></div>
+  </header>
+</div>
 
 {% if downloads %}
 <ul class="divide-y divide-slate-100">
@@ -63,4 +58,11 @@
 {% else %}
 <p>No any download found</p>
 {% endif %}
+<div class="mb-2 flex justify-between items-center">
+  <div></div>
+  <!-- View All Button -->
+  <a href="/view-all" class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
+      View All
+  </a>
+</div>
 
