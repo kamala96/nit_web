@@ -1,145 +1,124 @@
 {% load static %} {% load tz %}
 
-<footer class="footer nit-footer nit-section col-span-12 px-3 pt-5 text-medium bg-primary bottom-0 left-0 w-full ">
+<footer class="footer pl-5 pr-5 nit-footer nit-section col-span-12 px-3 pt-5 text-medium bg-primary bottom-0 left-0 w-full ">
+
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="col-span-1 md:col-span-1 mt-1">
+            <!-- Contact Us section content -->
             <div class="nit-footer-widget">
                 <h2 class="nit-heading-2">CONTACT US</h2>
                 <div class="nit-footer-social list-unstyled row">
-                    <div class="nit-address">
-                        <ul class="list-unstyled ml-4 mb-1">
-                            <li>
-                                <span class="icon"><i class="fas fa-home"></i></span><span class="text">National
-                                    Institute of
-                                    Transport (NIT) </span>
-                            </li>
-
-                            <li>
-                                <span class="icon"><i class="far fa-map"></i></span> <span class="text"> Mabibo Road
-                                </span>
-                            </li>
-
-                            <li>
-                                <span class="icon"><i class="fas fa-archive"></i></span> <span class="text">P.O. Box
-                                    705.
-                                    Dar es Salaam. Tanzania</span>
-                            </li>
-
-                            <li>
-                                <span class="icon"><i class="fas fa-mobile-alt"></i></span> <span
-                                    class="text">+255-22-2400148
-                                    |
-                                    255-22-2443149</span>
-                            </li>
-
-                            <li>
-                                <span class="icon"><i class="fas fa-envelope"></i></span> <span
-                                    class="text">rector@nit.ac.tz</span>
-                            </li>
-                            <li>
-                                <span class="icon"><i class="fas fa-envelope"></i></span> <span class="text">
-                                    barua@nit.ac.tz
-                                    |
-                                    maoni@nit.ac.tz </span>
-                            </li>
-                        </ul>
-                        <ul class="nit-footer-social list-unstyled pl-2 ml-3">
-
-                            <li class="nit-animate"><a class="a1" href="#" target="_blank"><i
-                                        class="fab fa-instagram"></i></a></li>
-                            <li class="nit-animate"><a class="a1" href="#" target="_blank"><i
-                                        class="fab fa-facebook"></i></a></li>
-                            <li class="nit-animate"><a class="a1" href="#" target="_blank"><i
-                                        class="fab fa-twitter"></i></a></li>
-                            <li class="nit-animate"><a class="a1" href="#" target="_blank"><i
-                                        class="fab fa-youtube"></i></a></li>
-                        </ul>
-
-                    </div>
-                </div>
+                            <div class="nit-address">
+                                <ul class="list-unstyled ml-4 mb-1">
+                                    <li>
+                                        <span class="icon"><i class="fas fa-home">  </i> </span><span class="text">National Institute of
+                                            Transport (NIT) </span>
+                                    </li>
+                                        <br>
+                                    <li>
+                                        <span class="icon"><i class="far fa-map">  </i> </span> <span class="text"> Mabibo Road </span>
+                                    </li>
+                                        <br>
+                                    <li>
+                                        <span class="icon"><i class="fas fa-archive">  </i> </span> <span class="text">P.O. Box 705.
+                                            Dar es Salaam. Tanzania</span>
+                                    </li>
+                                        <br>
+                                    <li>
+                                        <span class="icon"><i class="fas fa-mobile-alt">  </i> </span> <span class="text">+255-22-2400148
+                                            |
+                                            255-22-2443149</span>
+                                    </li>
+                                        <br>
+                                    <li>
+                                        <span class="icon"><i class="fas fa-envelope"></i></span>
+                                        <a href="mailto:rector@nit.ac.tz" class="text">rector@nit.ac.tz</a>
+                                    </li>
+                                    <br>
+                                    <li>
+                                        <span class="icon"><i class="fas fa-envelope"></i></span>
+                                        <a href="mailto:barua@nit.ac.tz" class="text">barua@nit.ac.tz</a> |
+                                        <a href="mailto:maoni@nit.ac.tz" class="text">maoni@nit.ac.tz</a>
+                                    </li>
+                                    <br>
+                                </ul>
+                                <ul id="menuList" class="hidden sm:flex flex-col sm:flex-row space-y-2 sm:space-x-6 sm:space-y-0 text-sm ml-auto items-center pl-4">
+                                      <!-- Your navigation items go here -->
+                                    <li class="nit-animate"><a href="#" class="hover:text-blue-900 transition-colors duration-100" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                                    <li class="nit-animate"><a href="#" class="hover:text-blue-900 transition-colors duration-100" target="_blank"><i class="fab fa-facebook"></i></a></li>
+                                    <li class="nit-animate"><a href="#" class="hover:text-blue-900 transition-colors duration-100" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                    <li class="nit-animate"><a href="#" class="hover:text-blue-900 transition-colors duration-100" target="_blank"><i class="fab fa-youtube"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
             </div>
+
         </div>
 
-
         <div class="col-span-1 md:col-span-1 mt-1">
+            <!-- Quick Links section content -->
             <div class="nit-footer-widget">
                 <h2 class="nit-heading-2">QUICK LINKS</h2>
                 <ul class="list-unstyled ml-2" style="color: #ffffff;">
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" href="https://www.nacte.go.tz/"
-                            target="_blank">NACTVET</a></li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" href="https://www.iucea.org/"
-                            target="_blank">Inter-University Council of East Africa(IUCEA)</a></li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" href="https://www.mwt.go.tz/"
-                            target="_blank">Ministry of Transport
-                        </a></li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" href="https://www.tcu.go.tz/"
-                            target="_blank">Tanzania
-                            Commission for Universities
-                            (TCU)</a></li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" href="https://www.tanzania.go.tz/"
-                            target="_blank">Tanzania
-                            Government website</a>
-                    </li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" href="https://www.utumishi.go.tz/"
-                            target="_blank">OR-Utumishi</a></li>
-                </ul>
+                    <li><i class="fa fa-caret-right pl_5 pr_5">  </i>  <a class="hover:text-blue-900 transition-colors duration-100"  href="https://www.nacte.go.tz/" target="_blank">NACTVET</a></li>
+                            <br>
+                    <li><i class="fa fa-caret-right pl_5 pr_5">  </i>  <a class="hover:text-blue-900 transition-colors duration-100"  href="https://www.iucea.org/" target="_blank">Inter-University Council of East Africa(IUCEA)</a></li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">  </i>  <a class="hover:text-blue-900 transition-colors duration-100"  href="https://www.mwt.go.tz/" target="_blank">Ministry of Transport
+                             </a></li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">  </i>  <a class="hover:text-blue-900 transition-colors duration-100"  href="https://www.tcu.go.tz/" target="_blank">Tanzania
+                                    Commission for Universities
+                                    (TCU)</a></li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">  </i>  <a class="hover:text-blue-900 transition-colors duration-100"  href="https://www.tanzania.go.tz/" target="_blank">Tanzania
+                                    Government website</a>
+                            </li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">  </i>  <a class="hover:text-blue-900 transition-colors duration-100"  href="https://www.utumishi.go.tz/" target="_blank">OR-Utumishi</a></li>
+                        </ul>
             </div>
         </div>
 
         <div class="col-span-1 md:col-span-1 mt-1">
+            <!-- ICT Services section content -->
             <div class="nit-footer-widget ml-md-4">
                 <h2 class="nit-heading-2">ICT SERVICES</h2>
                 <!-- ICT services list -->
                 <ul class="list-unstyled ml-2">
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" target="_blank"
-                            href="https://sims.nit.ac.tz/">SIMS</a>
-                    </li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" target="_blank"
-                            href="http://41.93.71.3/saris/">SARIS</a></li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" target="_blank"
-                            href="https://mail.nit.ac.tz/">STAFF
-                            MAIL</a></li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" target=""
-                            href="https://elearning.nit.ac.tz/login/index.php">E-Learning(NIT-LMS)</a>
-                    </li>
-                    <br>
-                    <li><i class="fa fa-caret-right pl_5 pr_5"></i><a class="a1" target="_blank"
-                            href="https://nit.ac.tz/#">KOHA</a>
-                    </li>
-                </ul>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">   </i>  <a class="hover:text-blue-900 transition-colors duration-100" target="_blank" href="https://sims.nit.ac.tz/">SIMS</a>
+                            </li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">   </i>  <a class="hover:text-blue-900 transition-colors duration-100" target="_blank" href="http://41.93.71.3/saris/">SARIS</a></li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">   </i>  <a class="hover:text-blue-900 transition-colors duration-100" target="_blank" href="https://mail.nit.ac.tz/">STAFF
+                                    MAIL</a></li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">   </i>  <a class="hover:text-blue-900 transition-colors duration-100" target="" href="https://elearning.nit.ac.tz/login/index.php">E-Learning(NIT-LMS)</a>
+                            </li>
+                            <br>
+                            <li><i class="fa fa-caret-right pl_5 pr_5">   </i>  <a class="hover:text-blue-900 transition-colors duration-100" target="_blank" href="https://nit.ac.tz/#">KOHA</a>
+                            </li>
+                        </ul>
             </div>
-            {# <div class="nit-footer-widget ml-md-4">#}
-                {# <h2 class="nit-heading-2">Visitor Counter</h2>#}
-                {# <!-- Add your visitor counter content -->#}
-                {# </div>#}
         </div>
 
         <div class="col-span-1 md:col-span-1 mt-1">
+            <!-- Locate Us section content -->
             <div class="nit-footer-widget nit-footer-imgs ml-2">
                 <h2 class="nit-heading-2">LOCATE US.</h2>
-                <a href="https://www.google.com/maps/place/National+Institute+of+Transport/@-6.809058,39.219327,17z/data=!3m1!4b1!4m6!3m5!1s0x185c494ede5f653b:0xd7d47c0dde3bbfcc!8m2!3d-6.8090633!4d39.2219019!16s%2Fg%2F12hlp5r97?entry=ttu"
-                    target="_blank">
-                    <img alt="Map" src="{% static 'img/mapping.png' %}"
-                        class="transition-transform duration-300 transform-gpu hover:scale-110">
+                <a href="https://www.google.com/maps/place/National+Institute+of+Transport/@-6.809058,39.219327,17z/data=!3m1!4b1!4m6!3m5!1s0x185c494ede5f653b:0xd7d47c0dde3bbfcc!8m2!3d-6.8090633!4d39.2219019!16s%2Fg%2F12hlp5r97?entry=ttu" target="_blank">
+                    <img alt="Map" src="{% static 'img/mapping.png' %}" class="transition-transform duration-300 transform-gpu hover:scale-110" >
                 </a>
             </div>
+
         </div>
-
     </div>
-
-    <footer
-        class="bottom-0 left-0 w-full flex items-center justify-start font-bold bg-primary text-white h-10 mt-5 opacity-90 md:justify-center">
-        <p class="ml-2">
-            {% now "Y" as current_year %} Copyright &copy;{{ current_year }} , NIT, All Rights
-            reserved
-        </p>
-
+    <footer class="mt-4 left-0 w-full flex items-center justify-start font-bold bg-primary text-white h-1 opacity-90 md:justify-center">
+      <p class="ml-2">
+        {% now "Y" as current_year %} Copyright &copy;{{ current_year }} , NIT,  All Rights
+        reserved
+      </p>
     </footer>
+
+</footer>

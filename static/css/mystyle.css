@@ -50,21 +50,22 @@ secondary: "#EA0606", */
     left: 3.5%;
 }
 
-<<<<<<< HEAD
-
 .footer {
-            position: relative;
+    position: relative;
 
-            bottom: 0;
-            width: 100%;
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            z-index: 999; /* Ensure the footer is above other content */
-        }
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    z-index: 999;
+    /* Ensure the footer is above other content */
+}
+
 .nit-footer {
     font-size: 14px;
 }
+
 .nit-footer .nit-footer-widget h2 {
     margin-bottom: 10px;
     font-size: 16px;
@@ -77,6 +78,7 @@ secondary: "#EA0606", */
     padding: 5px 0;
     position: relative;
 }
+
 .nit-heading-2::after {
     content: "";
     position: absolute;
@@ -86,8 +88,7 @@ secondary: "#EA0606", */
     bottom: 0;
 }
 
-=======
->>>>>>> 237e8d0e9272d512f4adede9887bcc4bc801cfec
+
 /*.text1:before,*/
 /*.text1:after {*/
 /*    content: "";*/

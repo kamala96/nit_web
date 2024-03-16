@@ -1,15 +1,11 @@
 {% load static %}
-<div class="mr-2 ml-2 mb-2 flex justify-between items-center">
+
+<div class="mb-2 flex justify-center items-center">
     <header>
-        <h3 class="text-xl font-medium text-primary">e-News</h3>
+        <h1 class="text-primary text-2xl font-bold relative">e-News</h1>
+   
+        <div class="relative bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-primary mt-1"></div>
     </header>
-    <!-- View All Button -->
-    {% if news_flash %}
-    <a href="/view-all"
-        class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
-        View All
-    </a>
-    {% endif %}
 </div>
 
 <div class="flex justify-center  flex-col  sm:flex-row">
@@ -56,4 +52,16 @@
     {% else %}
     <p>No any eNews found</p>
     {% endif %}
+
+    {% if news_flash %}
+    <div class="mb-2 flex justify-between items-center">
+        <div></div>
+        <!-- View All Button -->
+        <a href="/view-all" class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
+            View All
+        </a>
+    </div>
+    {% endif %}
+
+   
 </div>
