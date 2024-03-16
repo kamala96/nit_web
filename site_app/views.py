@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
+from .models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
 from site_app.models import Menu
 
 
@@ -9,10 +9,12 @@ def index(request):
     events = Event.objects.order_by('-created_at')[:5]
     downloads = Download.objects.order_by('-created_at')[:7]
     sliders = Slider.objects.order_by('-created_at')[:5]
+    accounting_officer = AccountingOfficer.load()
 
     context = {
         'sliders': sliders,
         'announcements': posts.filter(post_type='A').order_by('-created_at')[:5],
+        'accounting_officer': accounting_officer,
         'events': events,
         'downloads': downloads,
         'news': posts.filter(post_type='B').order_by('-created_at')[:4],
@@ -87,8 +89,6 @@ def handle_nav_menu_click(request, menu_slug):
     return render(request, f'nav_menus/{template_name}', context)
 
 
-
-
 def handle_news_click(request, news_id):
     news = get_object_or_404(Post, pk=news_id)
 
@@ -97,6 +97,7 @@ def handle_news_click(request, news_id):
     }
 
     return render(request, 'pages/news_details.html', context)
+
 
 def handle_event_click(request, event_id):
     event = get_object_or_404(Event, pk=event_id)

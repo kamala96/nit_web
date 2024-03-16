@@ -1,17 +1,31 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
+from site_app.models import AccountingOfficer, Download, Event, Menu, MenuImage, MenuItem, MenuItemContent, Post, Slider
 
 # Register your models here.
+
+
+@admin.register(MenuImage)
+class MenuImageAdmin(admin.ModelAdmin):
+    list_display = ('image',)
 
 
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'url', 'order', 'parent_menu',
-                    'menu_type', 'is_visible', 'created_at', 'updated_at']
+                    'menu_type', 'is_visible', 'get_joined_images', 'created_at', 'updated_at']
     list_per_page = 50
     list_filter = ['parent_menu']
     search_fields = ['title', 'slug',]
+    prepopulated_fields = {'slug': ('title',)}
+
+    def get_joined_images(self, obj):
+        if obj.images.exists():
+            return ', '.join([image.image.url for image in obj.images.all()])
+        else:
+            return 'No images'
+
+    get_joined_images.short_description = 'Images'
 
 
 @admin.register(MenuItem)
