@@ -1,9 +1,9 @@
 
 
-<div class="mr-2 ml-2 mb-2 flex justify-between items-center">
+<div class="mb-2 flex justify-between items-center">
     <header>
         <span class="h-1 w-10 bg-primary"></span>
-            <h1 class="text-primary text-2xl mx-2">Events</h1>
+            <h1 class="text-primary text-xl mx-2">Events</h1>
        
             <span class="h-1 w-10 bg-primary "></span>
     </header>
@@ -17,10 +17,10 @@
 <ul class="divide-y divide-slate-100">
 
     {% for event in events %}
-    <div class="block hover:shadow-md hover:bg-yellow-100 transition-colors duration-100">
-        <a href="/event/{{ event.id }}">
+    <div class="block bg-white hover:shadow-md hover:bg-sky-100 transition-colors duration-100 shadow-md card">
+        <a href="{% url "handle_event_click" event.id %}">
             <li class="flex items-start gap-4 px-4 py-3">
-                <div class="flex items-center text-sky-500 ">
+                <div class="flex items-center text-secondary ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -39,11 +39,11 @@
 
                 </div>
                 <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
-                    <h4 class="text-lg text-slate-700">{{ event.title }}</h4>
-                    <p class="w-full text-xs truncate text-slate-500">{{ event.start_date }}</p>
-                    <p class="w-full text-xs truncate text-slate-500">
-                        <a href="/" class="hover:text-green-600 transition-colors duration-100">
-                            <i class="fa-solid fa-map-marker"></i>
+                    <h4 class="text-sm text-primary">{{ event.title }}</h4>
+                    {% comment %} <p class="w-full text-xs truncate text-slate-500">{{ event.start_date }}</p> {% endcomment %}
+                    <p class="w-full text-xs truncate text-slate-500"><span>{{ event.start_date }}</spna>
+                        <a href="/" class="text-slate-500 hover:text-green-600 transition-colors duration-100">
+                          
                             {{ event.address }}
                         </a>
                     </p>

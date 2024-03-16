@@ -3,11 +3,13 @@ venv/
 my_venv/
 my_env/
 
+
 # Ignore the .env file
 **.env
 .env
 **/.env
 nit_web/.env
+
 
 # Ignore the settings.py file
 **/settings.py
@@ -22,6 +24,7 @@ static_root/
 *.pot
 *.pyc
 **__pycache__/
+**/__pycache__/
 __pycache__
 media/
 
