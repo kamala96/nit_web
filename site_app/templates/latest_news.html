@@ -38,12 +38,12 @@
                 </div>
             </header>
             <p class="text-sm">
-                {% if news_item.description|wordcount > 50 %}
-                {{ news_item.description|slice:":50" }}...
-                <a href="{% url " handle_news_click" news_item.id %}"
-                    class="text-blue-500 underline cursor-pointer">Read more</a>
+                {% if news_item.description|length > 130 %}
+                {{ news_item.description|slice:":130"|safe }}...
+                <a href="{% url 'handle_news_click' news_item.id %}" class="text-blue-500 underline cursor-pointer">Read
+                    more</a>
                 {% else %}
-                {{ news_item.description }}
+                {{ news_item.description|safe }}
                 {% endif %}
             </p>
         </div>
