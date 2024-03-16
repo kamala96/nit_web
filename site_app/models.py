@@ -58,7 +58,7 @@ class Menu(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=100, unique=True)
     url = models.CharField(max_length=255)
-    order = models.DecimalField(max_digits=5, decimal_places=4)
+    order = models.DecimalField(max_digits=10, decimal_places=4)
     parent_menu = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='submenus')
     menu_type = models.CharField(max_length=1, choices=menu_type_choices)
