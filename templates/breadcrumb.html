@@ -9,7 +9,6 @@
             <div class="ml-10 flex items-baseline space-x-4">
               {% for item in menus %}
               {% if item.menu_type == 'A' %}
-
               {% if item.url|is_url %}
               <a href="{{ item.url }}"
                 class="text-primary hover:bg-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium"
