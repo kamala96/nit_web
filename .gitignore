@@ -1,11 +1,14 @@
 # Ignore the virtual environment directory
 venv/
+my_venv/
+
 
 # Ignore the .env file
 **.env
 .env
 **/.env
 nit_web/.env
+
 
 # Ignore the settings.py file
 **/settings.py
