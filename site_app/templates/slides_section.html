@@ -1,21 +1,12 @@
 {% load static %}
 {% load tz %}
-{% comment %} <section class="flex flex-col md:flex-row mt-2">
-    <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5">
-    <div class="w-full bg-white m-2 border-4 border-primary shadow-md">
-      {% include 'slides.html' %}
-    </div>
-    <div class="w-full bg-white">
-      {% include 'latest_news.html' with news_flash=news_flash quick_links=quick_links news=news %}
-    </div>
-  </div>
-</section> {% endcomment %}
 
-<section class="flex flex-col md:flex-row mt-2 pb-2 shadow-md shadow-gray-300">
+
+<section class="flex flex-col md:flex-row">
   <div class="w-full md:w-4/6 lg:w-4/6 xl:w-4/6">
       {% include 'slides.html' %}
   </div>
-  <div class="w-full md:w-2/6 lg:w-2/6 xl:w-2/6 flex justify-center items-center bg-gray-300 p-2">
+  <div class="w-full md:w-2/6 lg:w-2/6 xl:w-2/6 flex justify-center items-center bg-gray-300 p-1">
     <div class="card border-2 border-secondary bg-cyan-500 shadow-lg shadow-primary/50">
         {% include 'hot_news.html' with news_flash=news_flash quick_links=quick_links news=news %} 
     </div> 
