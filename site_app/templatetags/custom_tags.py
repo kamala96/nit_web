@@ -3,6 +3,7 @@ from django.utils import timezone
 import re
 
 from site_app.icons import FILE_ICONS
+from site_app.models import Menu
 
 register = template.Library()
 
@@ -70,3 +71,13 @@ def truncate_with_read_more(value, max_length, read_more_url):
         return value
     truncated_value = value[:max_length].rsplit(' ', 1)[0] + '...'
     return f'{truncated_value} <a href="{read_more_url}" class="text-blue-500 underline cursor-pointer">Read more</a>'
+
+
+@register.simple_tag
+def get_menu_images(slug):
+    try:
+        menu = Menu.objects.get(slug=slug)
+        # return menu.images.all()
+        return menu
+    except Menu.DoesNotExist:
+        return None

@@ -3,7 +3,7 @@ from uuid import uuid4
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from PIL import Image
+from django.core.exceptions import ValidationError
 
 from site_app.validators import validate_image_dimensions, validate_pdf_file
 
@@ -42,11 +42,28 @@ def menu_images_upload_to(instance, filename):
     return generate_unique_filename(instance, filename, 'uploads/menu_images/')
 
 
+def gallery_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/gallery/')
+
+
+def profile_pictures_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/profile_pictures_upload_to/')
+
+
 class MenuImage(models.Model):
     image = models.ImageField(upload_to=menu_images_upload_to)
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return self.image.name
+
+
+class Gallery(models.Model):
+    name = models.ImageField(upload_to=gallery_upload_to)
+    description = models.TextField(blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Menu(models.Model):
@@ -206,7 +223,12 @@ class SingletonModel(models.Model):
 
     @classmethod
     def load(cls):
-        obj, created = cls.objects.get_or_create(pk=1)
+        defaults = {
+            'full_name': 'Default Accounting Officer Name - Click to Edit',
+            'title': 'Default Accounting Officer Title - Click to Edit',
+            'welcome_note': 'Default Welcome Not - Click to Edite',
+        }
+        obj, created = cls.objects.get_or_create(pk=1, defaults=defaults)
         return obj
 
 
@@ -215,9 +237,146 @@ class AccountingOfficer(SingletonModel):
     title = models.CharField(max_length=20)
     welcome_note = models.TextField()
     image = models.ImageField(
-        upload_to=files_accounting_officer_upload_to)
+        upload_to=files_accounting_officer_upload_to, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.full_name + ' - ' + self.title
+
+
+class OrganizationUnit(models.Model):
+    UNIT_TYPE_CHOICES = (
+        ('A', 'Academic'),
+        ('B', 'Administrative'),
+    )
+
+    name = models.CharField(max_length=100)
+    unit_type = models.CharField(max_length=20, choices=UNIT_TYPE_CHOICES)
+    about_note = models.TextField(blank=True)
+    gallery = models.ManyToManyField(
+        'Gallery', related_name='unit_gallery', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Department(models.Model):
+    name = models.CharField(max_length=100)
+    unit = models.ForeignKey(
+        OrganizationUnit, on_delete=models.CASCADE, null=True, blank=True)
+    gallery = models.ManyToManyField(
+        'Gallery', related_name='department_gallery', null=True, blank=True)
+    is_academic = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Staff(models.Model):
+    DESIGNATION_CHOICES = (
+        ('professor', 'Professor'),
+        ('associate-professor', 'Associate Professor'),
+        ('assistant-professor', 'Assistant Professor'),
+        ('lecturer', 'Lecturer'),
+        ('assistant-lecturer', 'Assistant Lecturer'),
+        ('tutor', 'Tutor'),
+        ('researcher', 'Researcher'),
+        ('ict-officer', 'ICT Officer'),
+        ('administrative-staff', 'Administrative Staff'),
+        ('other', 'Other'),
+    )
+    name = models.CharField(max_length=100)
+    designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
+    department = models.ForeignKey(
+        Department, on_delete=models.CASCADE, null=True, blank=True)
+    specialization = models.ManyToManyField(
+        'Specialization', blank=True)
+    profile_picture = models.ImageField(
+        upload_to=profile_pictures_upload_to, blank=True, null=True)
+    is_unit_head = models.BooleanField(default=False)
+    is_department_head = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        if self.is_unit_head and self.is_department_head:
+            raise ValidationError(
+                "A staff member cannot be both a organization unit head and a department head.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # Run full validation
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Specialization(models.Model):
+    name = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Program(models.Model):
+    TIMEFRAME_CHOICES = (
+        ('0.1', '1 Month'),
+        ('0.2', '2 Months'),
+        ('0.3', '3 Months'),
+        ('0.6', '6 Months'),
+        ('1', '1 Year'),
+        ('2', '2 Years'),
+        ('3', '3 Years'),
+        ('4', '4 Years'),
+    )
+    name = models.CharField(max_length=100)
+    description = models.TextField(blank=True)
+    department = models.ForeignKey(
+        'Department', on_delete=models.CASCADE, related_name='programs')
+    time_frame = models.CharField(
+        max_length=100, choices=TIMEFRAME_CHOICES, null=True)
+    is_semester_based = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        if not self.department.is_academic:
+            raise ValidationError(
+                "Programs can only be associated with academic departments.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # Run full validation
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Module(models.Model):
+    SEMESTER_CHOICES = (
+        ('1', 'Semester 1'),
+        ('2', 'Semester 2'),
+        ('3', 'Semester 3'),
+        ('4', 'Semester 4'),
+        ('5', 'Semester 5'),
+        ('6', 'Semester 6'),
+        ('7', 'Semester 7'),
+        ('8', 'Semester 8'),
+    )
+    name = models.CharField(max_length=100)
+    duration = models.PositiveIntegerField(
+        help_text="Duration in weeks", null=True, blank=True)
+    semester = models.CharField(
+        max_length=100, choices=SEMESTER_CHOICES, null=True, blank=True)
+    program = models.ForeignKey(
+        Program, on_delete=models.CASCADE, related_name='modules')
+
+    def __str__(self):
+        return self.name
