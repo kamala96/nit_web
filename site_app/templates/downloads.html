@@ -8,6 +8,7 @@
   </header>
 </div>
 
+<div class="h-96 overflow-y-auto">
 {% if downloads %}
 <ul class="divide-y divide-slate-100">
   {% for download in downloads %}
@@ -58,6 +59,8 @@
 {% else %}
 <p>No any download found</p>
 {% endif %}
+</div>
+
 <div class="m-2 flex justify-between items-center">
   <div></div>
   <!-- View All Button -->

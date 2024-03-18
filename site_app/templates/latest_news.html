@@ -10,6 +10,7 @@
     </header>
 </div>
 
+<div class="h-96 overflow-y-auto">
 {% if news %}
 
 {% for news_item in news %}
@@ -21,21 +22,29 @@
     class="flex flex-col overflow-hidden bg-white rounded shadow-md sm:flex-row text-slate-500 shadow-slate-200 mt-4 mr-2 ml-2">
     <!-- Image -->
 
-    <img class="w-24 h-24" src="{{ news_item.image_url.url }}" alt="card image"
+    <img class="w-24 h-24 m-1 border-2 border-gray-300" src="{{ news_item.image_url.url }}" alt="card image"
         class="object-cover min-h-full aspect-auto" />
 
     <!-- Body-->
     <a a href="{% url 'handle_news_click' news_item.id %}">
         <div class="p-2 sm:mx-6 sm:px-0">
-            <header class="flex gap-4 mb-1">
+            <header class="flex gap-4 mb-0">
                 <div>
-                    <h3 class="text-sm font-bold text-slate-700">{{ news_item.title }}</h3>
+                    <h3 class="text-sm font-bold text-slate-700" caption="kakak">
+                        {% comment %} {% if news_item.title|length > 50 %}
+                        {{ news_item.title|slice:":50"|safe }}...
+                        {% else %}
+                        {{ news_item.title|safe }}
+                        {% endif %} {% endcomment %}
+                        
+                        {{ news_item.title}}
+                        </h3>
                     <p class="text-xs text-slate-400">{{ news_item.created_at }}</p>
                 </div>
             </header>
             <p class="text-sm">
-                {% if news_item.description|length > 130 %}
-                {{ news_item.description|slice:":130"|safe }}...
+                {% if news_item.description|length > 100 %}
+                {{ news_item.description|slice:":100"|safe }}...
                 <a href="{% url 'handle_news_click' news_item.id %}" class="text-blue-500 underline cursor-pointer">Read
                     more</a>
                 {% else %}
@@ -55,6 +64,7 @@
 {% else %}
 <p>No any news flash found</p>
 {% endif %}
+</div>
 
 <div class="m-2 flex justify-between items-center">
     <div></div>

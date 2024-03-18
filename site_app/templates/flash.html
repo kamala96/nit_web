@@ -8,11 +8,12 @@
     </header>
 </div>
 
-<div class="flex justify-center  flex-col  sm:flex-row">
+<div class="flex justify-center  flex-col  sm:flex-row ">
+
     {% if news_flash %}
     <a href="{{ news_flash.file_url.url }}" target="_blank">
         <div class="relative rounded overflow-hidden shadow-lg mx-2 my-2">
-            <img class="w-full" src="{{ news_flash.image_url.url }}" alt="Card image">
+            <img class="w-full h-96" src="{{ news_flash.image_url.url }}" alt="Card image">
             <div class="absolute bottom-0 w-full bg-primary bg-opacity-90 text-white px-6 py-4">
                 <div class="flex justify-between">
                     <!-- Left column -->
@@ -52,6 +53,9 @@
     {% else %}
     <p>No any eNews found</p>
     {% endif %}
+
+
+
 </div>
     {% if news_flash %}
     <div class="m-2 flex justify-between items-center">
