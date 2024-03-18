@@ -1,0 +1,16 @@
+{% load static %} {% load tz %}
+<div class="w-full text-center md:text-left mb-4 md:mb-0">
+    <div class=" pr-10 text-center items-center">
+        <!-- User Image -->
+        <div class="flex justify-center">
+            <img src="{{ accounting_officer.image.url }}" alt="User Image"
+                class="w-80 nit-frame w-full h-auto transition-transform duration-300 transform-gpu hover:scale-110">
+        </div>
+        <!-- User Name -->
+        <div class="text-center mb-2">
+            <h2 class="text-lg font-bold text-primary">{{ accounting_officer.full_name }}</h2>
+            <!-- User Position -->
+            <p class="text-secondary font-semibold">{{ accounting_officer.title }}</p>
+        </div>
+    </div>
+</div>

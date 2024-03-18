@@ -5,8 +5,9 @@
 
 {% block content %}
 
-{% include 'slides.html' with sliders=sliders %}
-{% include 'search.html' %}
+{% include 'slides_section.html' with sliders=sliders news_flash=news_flash quick_links=quick_links news=news %}
+{% comment %} {% include 'slides.html' with sliders=sliders %} {% endcomment %}
+{% comment %} {% include 'search.html' %} {% endcomment %}
 {% include 'rector_note.html' %}
 {% include 'news_segment.html' with announcements=announcements events=events links=links %}
 {% include 'about_us.html' %}
