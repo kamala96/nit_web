@@ -1,11 +1,12 @@
 {% load static %}
 {% load tz %}
 
-<section class="flex flex-col md:flex-row mt-2 pb-2 shadow-md shadow-gray-300">
+
+<section class="flex flex-col md:flex-row">
   <div class="w-full md:w-4/6 lg:w-4/6 xl:w-4/6">
     {% include 'slides.html' %}
   </div>
-  <div class="w-full md:w-2/6 lg:w-2/6 xl:w-2/6 flex justify-center items-center bg-gray-300 p-2">
+  <div class="w-full md:w-2/6 lg:w-2/6 xl:w-2/6 flex justify-center items-center bg-gray-300 p-1">
     <div class="card border-2 border-secondary bg-cyan-500 shadow-lg shadow-primary/50">
       {% include 'hot_news.html' %}
     </div>
