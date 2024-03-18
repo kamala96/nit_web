@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Download, Event, Menu, MenuImage, MenuItem, MenuItemContent, Post, Slider
+from site_app.models import AccountingOfficer, Download, Event, Menu, MenuImage, MenuItem, MenuItemContent, Post, QuickLink, Slider
 
 # Register your models here.
 
@@ -54,11 +54,36 @@ class EventAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'post_type', 'description',  'file_url',
-                    'image_url', 'cover_image', 'web_url', 'user', 'created_at', 'updated_at']
+    list_display = ['short_title', 'post_type', 'short_description',  'file_url',
+                    'image_url', 'cover_image', 'user', 'created_at', 'updated_at']
     list_per_page = 10
-    list_filter = ['title', 'post_type']
+    list_filter = ['post_type']
     search_fields = ['title',]
+
+    @admin.display(description='Title')
+    def short_title(self, obj):
+        # Truncate description to two lines
+        max_length = 60  # Adjust as needed
+        if len(obj.description) > max_length:
+            return obj.description[:max_length] + '...'
+        return obj.description
+
+    @admin.display(description='Description')
+    def short_description(self, obj):
+        # Truncate description to two lines
+        max_length = 60  # Adjust as needed
+        if len(obj.description) > max_length:
+            return obj.description[:max_length] + '...'
+        return obj.description
+
+
+@admin.register(QuickLink)
+class QuickLinkAdmin(admin.ModelAdmin):
+    list_display = ['title', 'title', 'order', 'group',
+                    'description', 'created_at', 'updated_at']
+    list_per_page = 10
+    search_fields = ['title',]
+    list_filter = ['group',]
 
 
 @admin.register(Download)

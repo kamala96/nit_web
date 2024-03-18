@@ -5,71 +5,59 @@
 <div class="mb-2 flex justify-center items-center">
     <header>
         <h1 class="text-primary text-2xl font-bold relative">Latest News</h1>
-   
+
         <div class="relative bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-primary mt-1"></div>
     </header>
 </div>
 
 <div class="h-96 overflow-y-auto">
-{% if news %}
-
-{% for news_item in news %}
-
-<!-- Component: Horizontal card-->
-
-
-<div
-    class="flex flex-col overflow-hidden bg-white rounded shadow-md sm:flex-row text-slate-500 shadow-slate-200 mt-4 mr-2 ml-2">
-    <!-- Image -->
-
-    <img class="w-24 h-24 m-1 border-2 border-gray-300" src="{{ news_item.image_url.url }}" alt="card image"
-        class="object-cover min-h-full aspect-auto" />
-
-    <!-- Body-->
-    <a a href="{% url 'handle_news_click' news_item.id %}">
-        <div class="p-2 sm:mx-6 sm:px-0">
-            <header class="flex gap-4 mb-0">
-                <div>
-                    <h3 class="text-sm font-bold text-slate-700" caption="kakak">
-                        {% comment %} {% if news_item.title|length > 50 %}
-                        {{ news_item.title|slice:":50"|safe }}...
-                        {% else %}
-                        {{ news_item.title|safe }}
-                        {% endif %} {% endcomment %}
-                        
-                        {{ news_item.title}}
+    {% if latest_news %}
+    {% for news_item in latest_news %}
+    <!-- Component: Horizontal card-->
+    <div
+        class="flex flex-col overflow-hidden bg-white rounded shadow-md sm:flex-row text-slate-500 shadow-slate-200 mt-4 mr-2 ml-2">
+        <!-- Image -->
+        <img class="w-24 h-24 m-1 border-2 border-gray-300" src="{{ news_item.image_url.url }}" alt="card image"
+            class="object-cover min-h-full aspect-auto" />
+        <!-- Body-->
+        <a a href="{% url 'handle_news_click' news_item.id %}">
+            <div class="p-2 sm:mx-6 sm:px-0">
+                <header class="flex gap-4 mb-0">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-700" caption="kakak">
+                            {{ news_item.title|capfirst}}
                         </h3>
-                    <p class="text-xs text-slate-400">{{ news_item.created_at }}</p>
-                </div>
-            </header>
-            <p class="text-sm">
-                {% if news_item.description|length > 100 %}
-                {{ news_item.description|slice:":100"|safe }}...
-                <a href="{% url 'handle_news_click' news_item.id %}" class="text-blue-500 underline cursor-pointer">Read
-                    more</a>
-                {% else %}
-                {{ news_item.description|safe }}
-                {% endif %}
-            </p>
-        </div>
-    </a>
+                        <p class="text-xs text-slate-400">{{ news_item.created_at }}</p>
+                    </div>
+                </header>
+                <p class="text-sm">
+                    {% with max_chars=100 %}
+                    {{ news_item.description|truncate_chars:max_chars|safe }}
+                    {% if news_item.description|length > max_chars %} <a
+                        href="{% url 'handle_news_click' news_item.id %}"
+                        class="text-blue-500 underline cursor-pointer">... Read more</a>{% endif %}
+                    {% endwith %}
+                </p>
+            </div>
+        </a>
 
-</div>
+    </div>
 
-<!-- End Horizontal card-->
+    <!-- End Horizontal card-->
 
-{% endfor %}
+    {% endfor %}
 
 
-{% else %}
-<p>No any news flash found</p>
-{% endif %}
+    {% else %}
+    <p>No any news flash found</p>
+    {% endif %}
 </div>
 
 <div class="m-2 flex justify-between items-center">
     <div></div>
     <!-- View All Button -->
-    <a href="/view-all" class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
+    <a href="/view-all"
+        class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
         View All
     </a>
 </div>

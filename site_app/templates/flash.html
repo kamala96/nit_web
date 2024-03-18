@@ -3,7 +3,7 @@
 <div class="mb-2 flex justify-center items-center">
     <header>
         <h1 class="text-primary text-2xl font-bold relative">e-News</h1>
-   
+
         <div class="relative bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-primary mt-1"></div>
     </header>
 </div>
@@ -19,7 +19,7 @@
                     <!-- Left column -->
                     <div class="w-1/2">
                         <p class="text-white text-xs">
-                            {{ news_flash.created_at|date:"F j, Y" }}
+                            Posted: {{ news_flash.created_at|date:"F j, Y" }}
                         </p>
                     </div>
 
@@ -57,14 +57,13 @@
 
 
 </div>
-    {% if news_flash %}
-    <div class="m-2 flex justify-between items-center">
-        <div></div>
-        <!-- View All Button -->
-        <a href="/view-all" class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
-            View All
-        </a>
-    </div>
-    {% endif %}
-
-   
+{% if news_flash %}
+<div class="m-2 flex justify-between items-center">
+    <div></div>
+    <!-- View All Button -->
+    <a href="flash-news/"
+        class="text-primary bg-gray-300 hover:bg-white px-4 py-2 rounded transition-colors duration-100">
+        View All
+    </a>
+</div>
+{% endif %}

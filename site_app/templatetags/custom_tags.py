@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django import template
 from django.utils import timezone
 import re
@@ -66,11 +67,14 @@ def wordcount(value):
 
 
 @register.filter
-def truncate_with_read_more(value, max_length, read_more_url):
+def truncate_chars(value, max_length):
     if len(value) <= max_length:
         return value
-    truncated_value = value[:max_length].rsplit(' ', 1)[0] + '...'
-    return f'{truncated_value} <a href="{read_more_url}" class="text-blue-500 underline cursor-pointer">Read more</a>'
+    else:
+        truncated_value = value[:max_length]
+        words = truncated_value.split(' ')
+        words.pop()  # Remove the incomplete word at the end
+        return ' '.join(words) + '...'
 
 
 @register.simple_tag
@@ -81,3 +85,8 @@ def get_menu_images(slug):
         return menu
     except Menu.DoesNotExist:
         return None
+
+
+@register.filter
+def subtract_timedelta(value, days):
+    return value - timedelta(days=days)

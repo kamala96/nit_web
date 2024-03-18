@@ -50,6 +50,10 @@ def profile_pictures_upload_to(instance, filename):
     return generate_unique_filename(instance, filename, 'uploads/profile_pictures_upload_to/')
 
 
+def downloads_upload_to(instance, filename):
+    return generate_unique_filename(instance, filename, 'uploads/downloads/')
+
+
 class MenuImage(models.Model):
     image = models.ImageField(upload_to=menu_images_upload_to)
     description = models.TextField(blank=True)
@@ -137,8 +141,8 @@ class Event(models.Model):
     address = models.CharField(
         max_length=200, verbose_name="Address/Location/Venue")
     image_url = models.ImageField(upload_to='uploads/events/', null=True)
-    start_date = models.DateField()
-    end_date = models.DateField()
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
     status = models.BooleanField(
         default=False, help_text='Whether it is publishable or not (draft)')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -151,9 +155,9 @@ class Event(models.Model):
 class Post(models.Model):
     post_type_choices = [
         ('A', 'Announcements'),
-        ('B', 'News'),
-        ('C', 'Quick Links'),
-        ('D', 'News Flash')
+        ('B', 'Latest News'),
+        ('C', 'Hot News'),
+        ('D', 'e-News Flash')
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post_type = models.CharField(max_length=1, choices=post_type_choices)
@@ -166,12 +170,58 @@ class Post(models.Model):
         upload_to=images_general_upload_to, max_length=255, verbose_name='Image', null=True, blank=True)
     cover_image = models.ImageField(
         upload_to=custom_cover_image_upload_to, verbose_name='Cover Image', max_length=255, null=True, blank=True)
-    web_url = models.URLField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        if self.post_type == 'A':
+            if not self.file_url:
+                raise ValidationError("For Announcements, file is required.")
+            if self.image_url:
+                raise ValidationError(
+                    "For Announcements, image is not required.")
+        if self.post_type == 'B' and not self.image_url:
+            if self.file_url:
+                raise ValidationError("For Latest News, file is not required.")
+            if not self.image_url:
+                raise ValidationError("For Latest News, image is required.")
+        elif self.post_type == 'C' and (self.image_url or self.file_url or self.cover_image):
+            raise ValidationError(
+                "For Announcements and Hot News, the image and file are not required.")
+        elif self.post_type == 'D' and not (self.image_url and self.file_url):
+            raise ValidationError(
+                "For e-News Flash, both image and file are required.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # Run full validation
+        super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title.upper()
+
+
+class QuickLink(models.Model):
+    GROUP_CHOICES = (
+        ('A', 'Group A'),
+        ('B', 'Group B'),
+    )
+
+    title = models.CharField(max_length=255)
+    url = models.URLField()
+    description = models.TextField(null=True, blank=True)
+    group = models.CharField(max_length=20, choices=GROUP_CHOICES)
+    order = models.PositiveIntegerField(help_text="Arrangement in number")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['order',]
+        unique_together = ['order', 'group',]
+        verbose_name = 'Quick Link'
+        verbose_name_plural = 'Quick Links'
 
     def __str__(self):
         return self.title.upper()
@@ -240,6 +290,10 @@ class AccountingOfficer(SingletonModel):
         upload_to=files_accounting_officer_upload_to, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Accounting Officer"
+        verbose_name_plural = "Accounting Officer"
 
     def __str__(self):
         return self.full_name + ' - ' + self.title

@@ -1,25 +1,28 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, Post, Slider
+from .models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, Post, QuickLink, Slider
 from site_app.models import Menu
 
 
 def index(request):
     posts = Post.objects.all()
-    events = Event.objects.order_by('-created_at')[:5]
-    downloads = Download.objects.order_by('-created_at')[:7]
+    events = Event.objects.filter(status=True).order_by('-created_at')[:6]
+    downloads = Download.objects.order_by('-created_at')[:10]
     sliders = Slider.objects.order_by('-created_at')[:5]
     accounting_officer = AccountingOfficer.load()
+    quick_links = QuickLink.objects.all()
 
     context = {
         'sliders': sliders,
-        'announcements': posts.filter(post_type='A').order_by('-created_at')[:5],
+        'announcements': posts.filter(post_type='A').order_by('-created_at')[:6],
+        'latest_news': posts.filter(post_type='B').order_by('-created_at')[:4],
+        'hot_news': posts.filter(post_type='C').order_by('-created_at')[:6],
+        'news_flash': posts.filter(post_type='D').order_by('-created_at').first(),
         'accounting_officer': accounting_officer,
         'events': events,
         'downloads': downloads,
-        'news': posts.filter(post_type='B').order_by('-created_at')[:4],
-        'quick_links': posts.filter(post_type='C').order_by('-created_at')[:7],
-        'news_flash': posts.filter(post_type='D').order_by('-created_at').first()
+        'quick_links_a': quick_links.filter(group='A')[:7],
+        'quick_links_b': quick_links.filter(group='B')[:7],
 
     }
     return render(request, 'index.html', context)
