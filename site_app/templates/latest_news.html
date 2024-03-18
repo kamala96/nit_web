@@ -31,12 +31,7 @@
             <header class="flex gap-4 mb-0">
                 <div>
                     <h3 class="text-sm font-bold text-slate-700" caption="kakak">
-                        {% comment %} {% if news_item.title|length > 50 %}
-                        {{ news_item.title|slice:":50"|safe }}...
-                        {% else %}
-                        {{ news_item.title|safe }}
-                        {% endif %} {% endcomment %}
-                        
+                      
                         {{ news_item.title}}
                         </h3>
                     <p class="text-xs text-slate-400">{{ news_item.created_at }}</p>
