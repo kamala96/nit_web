@@ -55,7 +55,7 @@
       x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100"
       x-transition:leave-end="opacity-0 scale-90" @mouseover="navigationMenuClearCloseTimeout()"
       @mouseleave="navigationMenuLeave()"
-      class="absolute top-0 pt-3 duration-200 ease-out -translate-x-1/2 translate-y-11" x-cloak>
+      class="absolute top-0 pt-1 duration-200 ease-out -translate-x-1/2 translate-y-11" x-cloak>
       
       <div
           class="flex justify-center w-auto h-auto overflow-hidden bg-sky-200 border rounded-md shadow-sm border-neutral-200/70">
@@ -66,7 +66,7 @@
           <div x-show="navigationMenu == '{{menu.id }}'" class="flex items-stretch justify-center w-full p-6">
               
               {% if menu.menu_type == 'B' %}
-                    <div class="w-72">
+                    <div class="w-auto">
                         {% for child in menu.submenus.all %}
                                 
                                 <a href="{{ child.url }}" @click="navigationMenuClose()"
@@ -80,7 +80,7 @@
 
               {% if menu.menu_type == 'C' %}
                     {% for child in menu.submenus.all %}
-                            <div class="w-72 mr-2">
+                            <div class="w-auto mr-2">
                               
                                 
                                         <p class="block px-3.5 py-2 text-primary text-md font-bold">{{ child.title }}</p>
