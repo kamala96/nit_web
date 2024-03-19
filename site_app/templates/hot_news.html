@@ -9,9 +9,9 @@
     </header>
 </div>
 
-<div class="flex w-full h-80  overflow-y-auto relative" id="scrollable-area-hot-news">
+<div class="flex w-full  overflow-y-auto relative" id="scrollable-area-hot-news" style="height:360px">
     {% if hot_news %}
-    <ul class="divide-y divide-slate-100">
+    <ul class="w-full divide-y divide-slate-100">
         {% for item in hot_news %}
         <div class="block bg-white hover:shadow-md hover:bg-sky-100 transition-colors duration-100 shadow-md card">
             <a href="/hot-news/{{ item.id }}">
@@ -19,7 +19,7 @@
                     <div class="flex items-center text-secondary">
                         {% if item.created_at >= now|subtract_timedelta:7 %}
                         <!-- Post created within the last 7 days -->
-                        <img src="{% static 'img/hot_news_icon.png' %}" class="w-8 animate-bounce">
+                        <img src="{% static 'img/hot_news_icon.png' %}" class="w-8 animate-bounce" >
                         {% endif %}
                     </div>
                     <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
