@@ -1,6 +1,6 @@
 {% load static %}
 
-<div class="mb-2 flex justify-center items-center">
+<div class="mx-2 my-2 flex justify-center items-center">
     <header>
         <h1 class="text-primary text-2xl font-bold relative">e-News</h1>
 
@@ -8,12 +8,12 @@
     </header>
 </div>
 
-<div class="flex justify-center  flex-col  sm:flex-row ">
+<div class="justify-center flex-col sm:flex-row">
 
     {% if news_flash %}
     <a href="{{ news_flash.file_url.url }}" target="_blank">
-        <div class="relative rounded overflow-hidden shadow-lg mx-2 my-2">
-            <img class="w-full h-96" src="{{ news_flash.image_url.url }}" alt="Card image">
+        <div class="relative rounded overflow-hidden shadow-lg mx-2 ">
+            <img class="w-full h-96 hover:border-secondary hover:border-t-2" src="{{ news_flash.image_url.url }}" alt="Card image">
             <div class="absolute bottom-0 w-full bg-primary bg-opacity-90 text-white px-6 py-4">
                 <div class="flex justify-between">
                     <!-- Left column -->
