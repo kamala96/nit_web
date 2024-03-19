@@ -7,7 +7,7 @@ from site_app.models import AccountingOfficer, Department, Download, Event, Gall
 
 @admin.register(MenuImage)
 class MenuImageAdmin(admin.ModelAdmin):
-    list_display = ('image', )
+    list_display = ('image', 'menu')
 
     # @admin.display(description='Associated Menu')
     # def menu_list(self, obj):
@@ -24,8 +24,8 @@ class MenuAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
     def get_joined_images(self, obj):
-        if obj.images.exists():
-            return ', '.join([image.image.url for image in obj.images.all()])
+        if obj.menu_images.exists():
+            return ', '.join([image.image.url for image in obj.menu_images.all()])
         else:
             return 'No images'
 

@@ -57,6 +57,8 @@ def downloads_upload_to(instance, filename):
 class MenuImage(models.Model):
     image = models.ImageField(upload_to=menu_images_upload_to)
     description = models.TextField(blank=True)
+    menu = models.ForeignKey(
+        'Menu', related_name="menu_images", on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.image.name
@@ -107,8 +109,6 @@ class Menu(models.Model):
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu is visible or not (draft)')
     description = models.TextField(null=True, blank=True)
-    images = models.ForeignKey(
-        'MenuImage', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
