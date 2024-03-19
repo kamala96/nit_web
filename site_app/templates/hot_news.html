@@ -2,14 +2,14 @@
 {% load tz %}
 {% load custom_tags %}
 
-<div class="p-4 flex justify-center items-center bg-gray-100">
+<div class="p-4 flex justify-center items-center">
     <header>
         <h1 class="text-primary text-2xl font-bold relative">Hot News</h1>
         <div class="relative bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-primary mt-1"></div>
     </header>
 </div>
 
-<div class="w-full h-80  overflow-y-auto">
+<div class="flex w-full h-80  overflow-y-auto">
     {% if hot_news %}
     <ul class="divide-y divide-slate-100">
         {% for item in hot_news %}

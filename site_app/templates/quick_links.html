@@ -1,20 +1,22 @@
 {% load static %}
-<div class="w-full border-primary-100 mb-4 rounded-sm">
-    <div class="mb-2 flex justify-center items-center">
-        <header>
-            <h1 class="text-primary text-2xl font-bold relative">Quick Links</h1>
 
-            <div class="relative bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-primary mt-1"></div>
-        </header>
-    </div>
+<div class="mx-2 my-2 flex justify-center items-center">
+    <header>
+        <h1 class="text-primary text-2xl font-bold relative">Quick Links</h1>
+
+        <div class="relative bottom-0 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-primary mt-1"></div>
+    </header>
+</div>
+
+    
 
 
-    <div class="w-full items-center h-96 overflow-y-auto">
+    <div class="w-full h-96  items-center overflow-y-auto">
         {% if quick_links_a %}
         <ul class="max-w-md space-y-1 list-inside ">
 
             {% for link in quick_links_a %}
-            <li class="flex items-center bg-gray-100 p-2 rounded-sm mb-1 text-primary">
+            <li class="flex items-center bg-gray-100 p-2 rounded-sm  text-primary card">
                 <a href="{{ link.url }}" target="_blank" class="flex items-center">
                     <div
                         class="w-5 h-5 flex items-center justify-center rounded-full bg-secondary border-1 border-black mr-2">
@@ -37,4 +39,3 @@
         <p class="flex items-center bg-gray-100 p-2 rounded-sm mb-1 text-primary">No any quick link found</p>
         {% endif %}
     </div>
-</div>
