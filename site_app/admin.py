@@ -15,7 +15,7 @@ class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'url', 'order', 'parent_menu',
                     'menu_type', 'is_visible', 'get_joined_images', 'created_at', 'updated_at']
     list_per_page = 50
-    list_filter = ['parent_menu']
+    list_filter = ['menu_type', 'is_visible']
     search_fields = ['title', 'slug',]
     prepopulated_fields = {'slug': ('title',)}
 
