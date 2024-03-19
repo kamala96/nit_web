@@ -71,8 +71,7 @@
     >
       {% for menu in menus %} 
       {% if menu.menu_type != 'A' %} 
-      {% if menu.submenus
-      %}
+      {% if menu.submenus %}
       <div
         x-show="navigationMenu == '{{menu.id }}'"
         class="flex items-stretch justify-center w-full p-6"
@@ -92,8 +91,9 @@
           </a>
           {% endfor %}
         </div>
-        {% endif %} {% if menu.menu_type == 'C' %} {% for child in
-        menu.submenus.all %}
+        {% endif %}
+        {% if menu.menu_type == 'C' %}
+        {% for child in menu.submenus.all %}
         <div class="w-auto mr-2">
           <p class="block px-3.5 py-2 text-primary text-md font-bold">
             {{ child.title }}
@@ -134,8 +134,9 @@
     <div
       class="flex justify-center w-auto h-auto overflow-hidden bg-sky-200 border rounded-md shadow-sm border-neutral-200/70"
     >
-      {% for menu in menus %} {% if menu.menu_type != 'A' %} {% if menu.submenus
-      %}
+      {% for menu in menus %}
+      {% if menu.menu_type != 'A' %}
+      {% if menu.submenus %}
       <div
         x-show="navigationMenu == '{{menu.id }}'"
         class="flex items-stretch justify-center w-full p-6"
@@ -155,8 +156,10 @@
           </a>
           {% endfor %}
         </div>
-        {% endif %} {% if menu.menu_type == 'C' %} {% for child in
-        menu.submenus.all %}
+        {% endif %}
+        
+        {% if menu.menu_type == 'C' %}
+        {% for child in menu.submenus.all %}
         <div class="w-auto mr-2">
           <p class="block px-3.5 py-2 text-primary text-md font-bold">
             {{ child.title }}
@@ -174,9 +177,12 @@
           </a>
           {% endfor %}
         </div>
-        {% endfor %} {% endif %}
+        {% endfor %}
+        {% endif %}
       </div>
-      {% endif %} {% endif %} {% endfor %}
+      {% endif %}
+      {% endif %}
+      {% endfor %}
     </div>
   </div>
 </nav>
