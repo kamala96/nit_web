@@ -76,6 +76,11 @@ class Menu(models.Model):
         ('B', 'Single Column Child'),
         ('C', 'Multi Column Child')
     ]
+    PAGE_TYPE_CHOICES = [
+        ('A', 'FACULTIES/DIRECTORATES'),
+        ('B', 'DEPARTMENTS/UNITS'),
+        ('C', 'OTHER')
+    ]
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=100, unique=True)
     url = models.CharField(max_length=255)
@@ -83,6 +88,8 @@ class Menu(models.Model):
     parent_menu = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, blank=True, related_name='submenus')
     menu_type = models.CharField(max_length=1, choices=menu_type_choices)
+    page_type = models.CharField(
+        max_length=1, choices=PAGE_TYPE_CHOICES, default="C")
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu is visible or not (draft)')
     description = models.TextField(null=True, blank=True)
