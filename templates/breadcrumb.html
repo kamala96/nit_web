@@ -1,4 +1,6 @@
-<nav x-data="{
+{% load custom_tags %}
+<nav
+  x-data="{
     navigationMenuOpen: false,
     navigationMenu: '{{menu.id}}',
     navigationMenuCloseDelay: 200,
@@ -21,151 +23,167 @@
         this.navigationMenuOpen = false;
         this.navigationMenu = '';
     }
-}" class="sticky top-0 z-50 w-full bg-white">
-    <div class="relative bg-primary shadow-md">
-        <ul
-            class="flex items-center justify-center flex-1 p-1 space-x-1 list-none text-white group border-neutral-200/80">
-            {% for menu in menus %}
-            <li>
+}"
+  class="sticky top-0 z-50 w-full bg-white"
+>
+  <div class="relative bg-primary shadow-md">
+    <ul
+      class="flex items-center justify-center flex-1 p-1 space-x-1 list-none text-white group border-neutral-200/80"
+    >
+      {% for menu in menus %}
+      <li>
+        <a
+          :class="{ 'bg-neutral-100': navigationMenu == '{{menu.id}}', 'hover:bg-neutral-100': navigationMenu!='{{menu.id}}' }"
+          @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{menu.id}}'"
+          @mouseleave="navigationMenuLeave()"
+          class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max"
+        >
+          <span> {{ menu.title }}</span>
+          {% if menu.menu_type != 'A' %}
+          <svg
+            :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '{{menu.id}}' }"
+            class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+          {% endif %}
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 
-                <a {% if menu.menu_type=='A' %}href="{{ menu.slug}}" {% endif %}
-                    :class="{ 'bg-neutral-100': navigationMenu == '{{menu.id}}', 'hover:bg-neutral-100': navigationMenu!='{{menu.id}}' }"
-                    @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{menu.id}}'"
-                    @mouseleave="navigationMenuLeave()"
-                    class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max">
-                    <span> {{ menu.title }}</span>
-                    {% if menu.menu_type != 'A' %}
-                    <svg :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '{{menu.id}}' }"
-                        class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    {% endif %}
-                </a>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
+  <div
+    x-ref="navigationDropdown"
+    x-show="navigationMenuOpen"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="opacity-0 scale-90"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-100"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-90"
+    @mouseover="navigationMenuClearCloseTimeout()"
+    @mouseleave="navigationMenuLeave()"
+    class="absolute top-0 pt-1 duration-200 ease-out -translate-x-1/2 translate-y-11"
+    x-cloak
+  >
+    <div
+      class="flex justify-center w-auto h-auto overflow-hidden bg-sky-200 border rounded-md shadow-sm border-neutral-200/70"
+    >
+      {% for menu in menus %} {% if menu.menu_type != 'A' %} {% if menu.submenus
+      %}
+      <div
+        x-show="navigationMenu == '{{menu.id }}'"
+        class="flex items-stretch justify-center w-full p-6"
+      >
+        {% if menu.menu_type == 'B' %}
+        <div class="w-auto">
+          {% for child in menu.submenus.all %}
 
-
-    <div x-ref="navigationDropdown" x-show="navigationMenuOpen" x-transition:enter="transition ease-out duration-100"
-        x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-90" @mouseover="navigationMenuClearCloseTimeout()"
-        @mouseleave="navigationMenuLeave()"
-        class="absolute top-0 pt-1 duration-200 ease-out -translate-x-1/2 translate-y-11" x-cloak>
-
-        <div
-            class="flex justify-center w-auto h-auto overflow-hidden bg-sky-200 border rounded-md shadow-sm border-neutral-200/70">
-            {% for menu in menus %}
-            {% if menu.menu_type != 'A' %}
-
-            {% if menu.submenus %}
-            <div x-show="navigationMenu == '{{menu.id }}'" class="flex items-stretch justify-center w-full p-6">
-
-                {% if menu.menu_type == 'B' %}
-                <div class="w-auto">
-                    {% for child in menu.submenus.all %}
-
-                    <a href="{{ child.url }}" @click="navigationMenuClose()"
-                        class="block px-3.5 text-sm border-b-2 border-sky-300 py-2">
-                        <span class="block mb-1 font-sm text-gray-600 hover:text-primary">{{ child.title }}</span>
-                    </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-
-                {% if menu.menu_type == 'C' %}
-                {% for child in menu.submenus.all %}
-                <div class="w-auto mr-2">
-
-
-                    <p class="block px-3.5 py-2 text-primary text-md font-bold">{{ child.title }}</p>
-                    {% for grandchild in child.submenus.all %}
-
-                    <a href="{{ grandchild.url }}" @click="navigationMenuClose()"
-                        class="block px-3.5 text-sm border-b-2 border-sky-300 py-2">
-                        <span class="block mb-1 font-sm text-gray-600 hover:text-primary">{{ grandchild.title }}</span>
-                    </a>
-                    {% endfor %}
-
-                </div>
-                {% endfor %}
-                {% endif %}
-
-
-            </div>
-            {% endif %}
-
-            {% endif %}
-            {% endfor %}
-
+          <a
+            href="{{ child.url }}"
+            @click="navigationMenuClose()"
+            class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
+          >
+            <span class="block mb-1 font-sm text-gray-600 hover:text-primary"
+              >{{ child.title }}</span
+            >
+          </a>
+          {% endfor %}
         </div>
+        {% endif %} {% if menu.menu_type == 'C' %} {% for child in
+        menu.submenus.all %}
+        <div class="w-auto mr-2">
+          <p class="block px-3.5 py-2 text-primary text-md font-bold">
+            {{ child.title }}
+          </p>
+          {% for grandchild in child.submenus.all %}
 
-    </div>
-
-
-    <div x-ref="navigationDropdown" x-show="navigationMenuOpen" x-transition:enter="transition ease-out duration-100"
-        x-transition:enter-start="opacity-0 scale-90" x-transition:enter-end="opacity-100 scale-100"
-        x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 scale-100"
-        x-transition:leave-end="opacity-0 scale-90" @mouseover="navigationMenuClearCloseTimeout()"
-        @mouseleave="navigationMenuLeave()"
-        class="absolute top-0 pt-1 duration-200 ease-out -translate-x-1/2 translate-y-11" x-cloak>
-
-        <div
-            class="flex justify-center w-auto h-auto overflow-hidden bg-sky-200 border rounded-md shadow-sm border-neutral-200/70">
-            {% for menu in menus %}
-            {% if menu.menu_type != 'A' %}
-
-            {% if menu.submenus %}
-            <div x-show="navigationMenu == '{{menu.id }}'" class="flex items-stretch justify-center w-full p-6">
-
-                {% if menu.menu_type == 'B' %}
-                <div class="w-auto">
-                    {% for child in menu.submenus.all %}
-
-                    <a href="{{ child.url }}" @click="navigationMenuClose()"
-                        class="block px-3.5 text-sm border-b-2 border-sky-300 py-2">
-                        <span class="block mb-1 font-sm text-gray-600 hover:text-primary">{{ child.title }}</span>
-                    </a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-
-
-                {% if menu.menu_type == 'C' %}
-                {% for child in menu.submenus.all %}
-                <div class="w-auto mr-2">
-
-                    <p class="block px-3.5 py-2 text-primary text-md font-bold">{{ child.title }}</p>
-                    {% for grandchild in child.submenus.all %}
-
-                    <a href="{{ grandchild.url }}" @click="navigationMenuClose()"
-                        class="block px-3.5 text-sm border-b-2 border-sky-300 py-2">
-                        <span class="block mb-1 font-sm text-gray-600 hover:text-primary">{{ grandchild.title }}</span>
-                    </a>
-                    {% endfor %}
-
-                </div>
-                {% endfor %}
-                {% endif %}
-
-
-            </div>
-            {% endif %}
-
-            {% endif %}
-            {% endfor %}
-
+          <a
+            href="{{ grandchild.url }}"
+            @click="navigationMenuClose()"
+            class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
+          >
+            <span class="block mb-1 font-sm text-gray-600 hover:text-primary"
+              >{{ grandchild.title }}</span
+            >
+          </a>
+          {% endfor %}
         </div>
-
+        {% endfor %} {% endif %}
+      </div>
+      {% endif %} {% endif %} {% endfor %}
     </div>
+  </div>
 
+  <div
+    x-ref="navigationDropdown"
+    x-show="navigationMenuOpen"
+    x-transition:enter="transition ease-out duration-100"
+    x-transition:enter-start="opacity-0 scale-90"
+    x-transition:enter-end="opacity-100 scale-100"
+    x-transition:leave="transition ease-in duration-100"
+    x-transition:leave-start="opacity-100 scale-100"
+    x-transition:leave-end="opacity-0 scale-90"
+    @mouseover="navigationMenuClearCloseTimeout()"
+    @mouseleave="navigationMenuLeave()"
+    class="absolute top-0 pt-1 duration-200 ease-out -translate-x-1/2 translate-y-11"
+    x-cloak
+  >
+    <div
+      class="flex justify-center w-auto h-auto overflow-hidden bg-sky-200 border rounded-md shadow-sm border-neutral-200/70"
+    >
+      {% for menu in menus %} {% if menu.menu_type != 'A' %} {% if menu.submenus
+      %}
+      <div
+        x-show="navigationMenu == '{{menu.id }}'"
+        class="flex items-stretch justify-center w-full p-6"
+      >
+        {% if menu.menu_type == 'B' %}
+        <div class="w-auto">
+          {% for child in menu.submenus.all %}
 
+          <a
+            href="{{ child.url }}"
+            @click="navigationMenuClose()"
+            class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
+          >
+            <span class="block mb-1 font-sm text-gray-600 hover:text-primary"
+              >{{ child.title }}</span
+            >
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %} {% if menu.menu_type == 'C' %} {% for child in
+        menu.submenus.all %}
+        <div class="w-auto mr-2">
+          <p class="block px-3.5 py-2 text-primary text-md font-bold">
+            {{ child.title }}
+          </p>
+          {% for grandchild in child.submenus.all %}
 
-
-
-
+          <a
+            href="{{ grandchild.url }}"
+            @click="navigationMenuClose()"
+            class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
+          >
+            <span class="block mb-1 font-sm text-gray-600 hover:text-primary"
+              >{{ grandchild.title }}</span
+            >
+          </a>
+          {% endfor %}
+        </div>
+        {% endfor %} {% endif %}
+      </div>
+      {% endif %} {% endif %} {% endfor %}
+    </div>
+  </div>
 </nav>
