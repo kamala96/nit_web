@@ -27,38 +27,29 @@
   class="sticky top-0 z-50 w-full bg-white"
 >
   <div class="relative bg-primary shadow-md">
-    <ul
-      class="flex items-center justify-center flex-1 p-1 space-x-1 list-none text-white group border-neutral-200/80"
-    >
-      {% for menu in menus %}
-      <li>
-        <a
-          :class="{ 'bg-neutral-100': navigationMenu == '{{menu.id}}', 'hover:bg-neutral-100': navigationMenu!='{{menu.id}}' }"
-          @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{menu.id}}'"
-          @mouseleave="navigationMenuLeave()"
-          class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max"
-        >
-          <span> {{ menu.title }}</span>
-          {% if menu.menu_type != 'A' %}
-          <svg
-            :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '{{menu.id}}' }"
-            class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-          {% endif %}
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
+      <ul
+          class=" flex items-center justify-center flex-1 p-1 space-x-1 list-none text-white group border-neutral-200/80">
+          {% for menu in menus %}
+          <li>
+
+              <a {% if menu.menu_type == 'A' %}href="{{ menu.slug}}"{% endif %}
+                  :class="{ 'bg-neutral-100': navigationMenu == '{{menu.id}}', 'hover:bg-neutral-100': navigationMenu!='{{menu.id}}' }"
+                  @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{menu.id}}'"
+                  @mouseleave="navigationMenuLeave()"
+                  class="inline-flex items-center justify-center h-10 px-4 py-2 text-sm font-medium transition-colors rounded-md hover:text-neutral-900 focus:outline-none disabled:opacity-50 disabled:pointer-events-none bg-background hover:bg-neutral-100 group w-max">
+                  <span> {{ menu.title }}</span>
+                  {% if menu.menu_type != 'A' %}
+                  <svg :class="{ '-rotate-180': navigationMenuOpen == true && navigationMenu == '{{menu.id}}' }"
+                      class="relative top-[1px] ml-1 h-3 w-3 ease-out duration-300" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                      stroke-linejoin="round" aria-hidden="true">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                  {% endif %}
+                </a>
+          </li>
+          {% endfor %}
+      </ul>
   </div>
 
   <div
@@ -78,7 +69,9 @@
     <div
       class="flex justify-center w-auto h-auto overflow-hidden bg-sky-200 border rounded-md shadow-sm border-neutral-200/70"
     >
-      {% for menu in menus %} {% if menu.menu_type != 'A' %} {% if menu.submenus
+      {% for menu in menus %} 
+      {% if menu.menu_type != 'A' %} 
+      {% if menu.submenus
       %}
       <div
         x-show="navigationMenu == '{{menu.id }}'"
