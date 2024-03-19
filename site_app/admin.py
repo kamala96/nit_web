@@ -1,13 +1,17 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Download, Event, Menu, MenuImage, MenuItem, MenuItemContent, Post, QuickLink, Slider
+from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, OrganizationUnit, Post, QuickLink, Slider, Staff
 
 # Register your models here.
 
 
 @admin.register(MenuImage)
 class MenuImageAdmin(admin.ModelAdmin):
-    list_display = ('image',)
+    list_display = ('image', )
+
+    # @admin.display(description='Associated Menu')
+    # def menu_list(self, obj):
+    #     return ", ".join([menu.title for menu in obj.menu_images.all()])
 
 
 @admin.register(Menu)
@@ -103,7 +107,91 @@ class SliderAdmin(admin.ModelAdmin):
 
 @admin.register(AccountingOfficer)
 class AccountingOfficerAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'title', 'welcome_note',
+    list_display = ['full_name', 'title', 'short_welcome_note',
                     'image', 'created_at', 'updated_at']
     list_per_page = 10
     search_fields = ['full_name',]
+
+    @admin.display(description='Welcome Note')
+    def short_welcome_note(self, obj):
+        # Truncate description to two lines
+        max_length = 60
+        if len(obj.welcome_note) > max_length:
+            return obj.welcome_note[:max_length] + '...'
+        return obj.welcome_note
+
+
+class DepartmentInline(admin.TabularInline):
+    model = Department
+    extra = 1
+
+
+class GalleryInline(admin.TabularInline):
+    model = Gallery
+    extra = 1
+
+
+@admin.register(OrganizationUnit)
+class OrganizationUnitAdmin(admin.ModelAdmin):
+    list_display = ['name', 'short_name', 'slug',
+                    'unit_type', 'about_note_text', 'get_joined_gallery']
+    list_per_page = 10
+    search_fields = ['name', 'short_name']
+    list_filter = ['unit_type']
+    inlines = [DepartmentInline, GalleryInline]
+
+    @admin.display(description='Gallery')
+    def get_joined_gallery(self, obj):
+        if obj.unit_images.exists():
+            return ', '.join([image.image.url for image in obj.unit_images.all()])
+        else:
+            return 'No images'
+
+    @admin.display(description='About Note')
+    def about_note_text(self, obj):
+        # Truncate description to two lines
+        max_length = 60  # Adjust as needed
+        if len(obj.about_note) > max_length:
+            return obj.about_note[:max_length] + '...'
+        return obj.about_note
+
+
+class StaffInline(admin.TabularInline):
+    model = Staff
+    extra = 1
+
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ['name', 'short_name', 'slug',
+                    'unit', 'is_academic', 'get_joined_gallery']
+    list_per_page = 10
+    search_fields = ['name', 'short_name', 'slug']
+    list_filter = ['unit', 'is_academic']
+    readonly_fields = ('created_at', 'updated_at')
+    inlines = [StaffInline]
+
+    @admin.display(description='Gallery')
+    def get_joined_gallery(self, obj):
+        if obj.department_images.exists():
+            return ', '.join([image.image.url for image in obj.department_images.all()])
+        else:
+            return 'No images'
+
+
+@admin.register(Staff)
+class StaffAdmin(admin.ModelAdmin):
+    list_display = ['name', 'designation', 'department', 'get_short_specialization',
+                    'profile_picture', 'is_unit_head', 'is_department_head', 'leadership_title', 'staff_phone', 'staff_email']
+    list_per_page = 10
+    search_fields = ['name', 'designation',]
+    list_filter = ['is_unit_head', 'is_department_head', 'designation']
+    readonly_fields = ('created_at', 'updated_at')
+
+    @admin.display(description='Specializaion')
+    def get_short_specialization(self, obj):
+        # Truncate specialization to two liness
+        max_length = 60  # Adjust as needed
+        if len(obj.specialization) > max_length:
+            return obj.specialization[:max_length] + '...'
+        return obj.specialization

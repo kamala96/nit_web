@@ -6,6 +6,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('menu/<str:menu_slug>/', views.handle_nav_menu_click,
          name='handle_nav_menu_click'),
+    path('department/<str:department_slug>/', views.handle_view_department,
+         name='view_department'),
     path('ajax/<str:action>/', views.ajax_handler, name='ajax_handler'),
 
     path('news/<int:news_id>/', views.handle_news_click,

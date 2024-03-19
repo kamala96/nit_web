@@ -65,6 +65,20 @@ class MenuImage(models.Model):
 class Gallery(models.Model):
     name = models.ImageField(upload_to=gallery_upload_to)
     description = models.TextField(blank=True)
+    organization_unit = models.ForeignKey(
+        'OrganizationUnit', related_name='unit_images', on_delete=models.CASCADE, null=True, blank=True)
+    department = models.ForeignKey(
+        'Department', related_name='department_images', on_delete=models.CASCADE, null=True, blank=True)
+
+    def clean(self):
+        super().clean()
+
+        if self.organization_unit and self.department:
+            raise ValidationError(
+                "Either organization_unit or department can have a value, but not both.")
+        elif not self.organization_unit and not self.department:
+            raise ValidationError(
+                "Either organization_unit or department must have a value.")
 
     def __str__(self):
         return self.name
@@ -93,8 +107,8 @@ class Menu(models.Model):
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu is visible or not (draft)')
     description = models.TextField(null=True, blank=True)
-    images = models.ManyToManyField(
-        'MenuImage', related_name='menu_images', null=True, blank=True)
+    images = models.ForeignKey(
+        'MenuImage', on_delete=models.CASCADE, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -291,7 +305,7 @@ class SingletonModel(models.Model):
 
 class AccountingOfficer(SingletonModel):
     full_name = models.CharField(max_length=100)
-    title = models.CharField(max_length=20)
+    title = models.CharField(max_length=50)
     welcome_note = models.TextField()
     image = models.ImageField(
         upload_to=files_accounting_officer_upload_to, null=True)
@@ -312,55 +326,93 @@ class OrganizationUnit(models.Model):
         ('B', 'Administrative'),
     )
 
+    UNIT_GROUP_CHOICES = (
+        ('A', 'Faculty'),
+        ('B', 'Directorate'),
+    )
+
     name = models.CharField(max_length=100)
+    short_name = models.CharField(max_length=20)
+    slug = models.CharField(
+        max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
     unit_type = models.CharField(max_length=20, choices=UNIT_TYPE_CHOICES)
+    unit_group = models.CharField(max_length=20, choices=UNIT_GROUP_CHOICES)
     about_note = models.TextField(blank=True)
-    gallery = models.ManyToManyField(
-        'Gallery', related_name='unit_gallery', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'Faculties + Directorates'
+        verbose_name_plural = 'Faculties + Directorates'
 
     def __str__(self):
         return self.name
 
 
 class Department(models.Model):
+    DEPARTMENT_GROUP_CHOICES = (
+        ('A', 'Department'),
+        ('B', 'Unit'),
+        ('C', 'Center'),
+    )
     name = models.CharField(max_length=100)
+    short_name = models.CharField(max_length=20)
+    slug = models.CharField(
+        max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
+
     unit = models.ForeignKey(
-        OrganizationUnit, on_delete=models.CASCADE, null=True, blank=True)
-    gallery = models.ManyToManyField(
-        'Gallery', related_name='department_gallery', null=True, blank=True)
+        OrganizationUnit, on_delete=models.CASCADE, related_name='departments', null=True, blank=True)
+    department_group = models.CharField(
+        max_length=20, choices=DEPARTMENT_GROUP_CHOICES)
     is_academic = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.short_name}'
 
 
 class Staff(models.Model):
     DESIGNATION_CHOICES = (
         ('professor', 'Professor'),
         ('associate-professor', 'Associate Professor'),
-        ('assistant-professor', 'Assistant Professor'),
+        ('senior-lecturer', 'Senior Lecturer'),
         ('lecturer', 'Lecturer'),
         ('assistant-lecturer', 'Assistant Lecturer'),
+        ('tutorial-assistant', 'Tutorial Assistant'),
         ('tutor', 'Tutor'),
         ('researcher', 'Researcher'),
-        ('ict-officer', 'ICT Officer'),
+        ('ict-officer-1', 'ICT Officer I'),
+        ('ict-officer-2', 'ICT Officer II'),
+        ('pro', 'Public relations Officer'),
+        ('ppro', 'Principal Public relations Officer'),
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
     )
+
+    LEADERSHIP_CHOICES = (
+        ('dean', 'Dean'),
+        ('director', 'Director'),
+        ('head', 'Head'),
+        ('coordinator', 'Coordinator'),
+        ('center-leader', 'Center Leader'),
+    )
+
     name = models.CharField(max_length=100)
     designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
+    staff_email = models.EmailField(blank=True)
+    staff_phone = models.CharField(blank=True, max_length=50)
     department = models.ForeignKey(
         Department, on_delete=models.CASCADE, null=True, blank=True)
-    specialization = models.ManyToManyField(
-        'Specialization', blank=True)
+    specialization = models.TextField(blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
-    is_unit_head = models.BooleanField(default=False)
-    is_department_head = models.BooleanField(default=False)
+    is_unit_head = models.BooleanField(
+        default=False, verbose_name="IS DIRECTORATE/FACULTY LEADER")
+    is_department_head = models.BooleanField(
+        default=False, verbose_name="IS_DEPARMENT/UNIT/CENTER LEADER")
+    leadership_title = models.CharField(
+        max_length=100, choices=LEADERSHIP_CHOICES, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -369,21 +421,17 @@ class Staff(models.Model):
             raise ValidationError(
                 "A staff member cannot be both a organization unit head and a department head.")
 
+        if self.is_department_head or self.leadership_title:
+            if not self.leadership_title:
+                raise ValidationError(
+                    "Leadership title cannot be empty if is_department_head or leadership_title is true.")
+
     def save(self, *args, **kwargs):
         self.full_clean()  # Run full validation
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
-
-
-class Specialization(models.Model):
-    name = models.CharField(max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name
+        return f'{self.name} - {self.designation}'
 
 
 class Program(models.Model):

@@ -31,12 +31,12 @@
             {% get_menu_images 'about-nit' as menu %}
             <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5 p-4">
 
-                <div id="animation-carousel"  class="relative w-full " data-carousel="slide">
+                <div id="animation-carousel" class="relative w-full " data-carousel="slide">
                     <!-- Carousel wrapper -->
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96 ">
                         <!-- Use template_tag - get_menu_images -->
                         {% if menu %}
-                        {% for image in menu.images.all %}
+                        {% for image in menu.images_set.all %}
                         <div class="hidden duration-200 ease-linear " data-carousel-item>
                             <img src="{{ image.image.url }}"
                                 class="border-4 border-white absolute block w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
@@ -99,18 +99,19 @@
 
                                 {% if menu.description|length > 1000 %}
                                 {{ menu.description|slice:":1000"|safe }}...
-                                <a href="{% url 'handle_news_click' menu.id %}" class="text-gray-600 underline cursor-pointer">Read
+                                <a href="{% url 'handle_news_click' menu.id %}"
+                                    class="text-gray-600 underline cursor-pointer">Read
                                     more</a>
                                 {% else %}
                                 {{ menu.description|safe }}
                                 {% endif %}
 
-                                
+
                                 {% else %}
                                 Please ensure your image is well configured
                                 {% endif %}
 
-                                
+
                             </p>
                         </blockquote>
 

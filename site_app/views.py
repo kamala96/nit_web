@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, Post, QuickLink, Slider
+from .models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, OrganizationUnit, Post, QuickLink, Slider, Staff
 from site_app.models import Menu
 
 
@@ -65,6 +65,11 @@ def handle_nav_menu_click(request, menu_slug):
     if menu.slug in ['home']:
         return redirect('index')
 
+    nav_data = []
+    departments_data = []
+    staff_members = []
+    leader = [None, None]
+
     # Get all MenuItem objects for the clicked menu
     menu_items = MenuItem.objects.filter(heading=menu)
 
@@ -72,18 +77,29 @@ def handle_nav_menu_click(request, menu_slug):
     menu_item_contents = {}
 
     # Iterate through each MenuItem and retrieve its associated MenuItemContent
-    for item in menu_items:
-        try:
-            menu_item_content = MenuItemContent.objects.get(menu_item=item)
-            menu_item_contents[item] = menu_item_content
-        except MenuItemContent.DoesNotExist:
-            pass
+    # for item in menu_items:
+    #     try:
+    #         menu_item_content = MenuItemContent.objects.get(menu_item=item)
+    #         menu_item_contents[item] = menu_item_content
+    #     except MenuItemContent.DoesNotExist:
+    #         pass
 
     template_name = '_default.html'
     if menu.slug in ['about-nit']:
         template_name = 'about_nit.html'
     elif menu.page_type.upper() == 'A':
         # Faculties/Directorates
+        try:
+            org_unit = OrganizationUnit.objects.get(slug=menu.slug.lower())
+            nav_data = org_unit
+            if org_unit:
+                departments_data = org_unit.departments.all()
+                staff_members = Staff.objects.filter(department__unit=org_unit)
+                leader[0] = 'Dean' if org_unit.unit_group == 'A' else 'Director'
+                leader[1] = Staff.objects.get(
+                    department__unit=org_unit, is_unit_head=True)
+        except (MenuItemContent.DoesNotExist, Staff.DoesNotExist):
+            pass
         template_name = 'faculty_detailed.html'
     elif menu.page_type.upper() == 'B':
         # Units/Departments
@@ -93,9 +109,17 @@ def handle_nav_menu_click(request, menu_slug):
         'menu': menu,
         'menu_items': menu_items,
         'menu_item_contents': menu_item_contents,
+        'nav_data': nav_data,
+        'departments_data': departments_data,
+        'staff_members': staff_members,
+        'leader': leader,
     }
 
     return render(request, f'nav_menus/{template_name}', context)
+
+
+def handle_view_department(request, department_slug):
+    pass
 
 
 def handle_news_click(request, news_id):
