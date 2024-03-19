@@ -32,7 +32,14 @@
           {% for menu in menus %}
           <li>
 
-              <a {% if menu.menu_type == 'A' %}href="{{ menu.slug}}"{% endif %}
+              <a 
+              {% if menu.menu_type == 'A' %}
+                {% if menu.url|is_url %}
+                  href="{{ menu.url }}" target="_blank"
+                {% else %}
+                  href="{% url 'handle_nav_menu_click' menu.slug %}"
+                {% endif %}
+              {% endif %}
                   :class="{ 'bg-neutral-100': navigationMenu == '{{menu.id}}', 'hover:bg-neutral-100': navigationMenu!='{{menu.id}}','text-gray-900': navigationMenu == '{{menu.id}}' }"
                   @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{menu.id}}'"
                   @mouseleave="navigationMenuLeave()"
@@ -73,15 +80,19 @@
       {% if menu.menu_type != 'A' %} 
       {% if menu.submenus %}
       <div
-        x-show="navigationMenu == '{{menu.id }}'"
+        x-show="navigationMenu == '{{ menu.id }}'"
         class="flex items-stretch justify-center w-full p-6"
       >
         {% if menu.menu_type == 'B' %}
         <div class="w-auto">
           {% for child in menu.submenus.all %}
 
-          <a
-            href="{{ child.url }}"
+          <a 
+            {% if child.url|is_url %}
+                  href="{{ child.url }}" target="_blank"
+              {% else %}
+                  href="{% url 'handle_nav_menu_click' child.slug %}"
+            {% endif %}
             @click="navigationMenuClose()"
             class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
           >
@@ -100,8 +111,13 @@
           </p>
           {% for grandchild in child.submenus.all %}
 
-          <a
-            href="{{ grandchild.url }}"
+          <a 
+            {% if grandchild.url|is_url %}
+                  href="{{ grandchild.url }}" target="_blank"
+              {% else %}
+                  href="{% url 'handle_nav_menu_click' child.slug %}"
+            {% endif %}
+            
             @click="navigationMenuClose()"
             class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
           >
@@ -145,8 +161,12 @@
         <div class="w-auto">
           {% for child in menu.submenus.all %}
 
-          <a
-            href="{{ child.url }}"
+          <a 
+            {% if child.url|is_url %}
+                  href="{{ child.url }}" target="_blank"
+              {% else %}
+                  href="{% url 'handle_nav_menu_click' child.slug %}"
+            {% endif %}
             @click="navigationMenuClose()"
             class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
           >
@@ -166,8 +186,12 @@
           </p>
           {% for grandchild in child.submenus.all %}
 
-          <a
-            href="{{ grandchild.url }}"
+          <a 
+            {% if grandchild.url|is_url %}
+                  href="{{ grandchild.url }}" target="_blank"
+              {% else %}
+                  href="{% url 'handle_nav_menu_click' child.slug %}"
+            {% endif %}
             @click="navigationMenuClose()"
             class="block px-3.5 text-sm border-b-2 border-sky-300 py-2"
           >
