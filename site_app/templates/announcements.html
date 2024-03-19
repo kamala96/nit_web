@@ -29,6 +29,23 @@
                             {{ announcement.created_at|date:"D, d M Y" }} | {{ announcement.created_at|time:"h:i A" }}
                         </p>
                     </div>
+                    <!-- Component: Small primary button with icon  -->
+          <button
+          class="inline-flex items-center self-center justify-center h-8 gap-2 px-4 text-xs font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-secondary hover:bg-sky-600 focus:bg-sky-700 disabled:cursor-not-allowed disabled:border-sky-300 disabled:bg-sky-300 disabled:shadow-none">
+          <span class="relative only:-mx-4">
+            <span class="sr-only">Download</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5" role="graphics-symbol" aria-labelledby="title-14 desc-14">
+              <title id="title-14">download</title>
+              <desc id="desc-14">
+                download
+              </desc>
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+            </svg>
+          </span>
+        </button>
+        <!-- End Small primary button with icon  -->
                 </li>
         </div>
         {% endfor %}
