@@ -85,9 +85,11 @@ def handle_nav_menu_click(request, menu_slug):
     #         pass
 
     template_name = '_default.html'
+   
     if menu.slug in ['about-nit']:
         template_name = 'about_nit.html'
     elif menu.page_type.upper() == 'A':
+  
         # Faculties/Directorates
         try:
             org_unit = OrganizationUnit.objects.get(slug=menu.slug.lower())
