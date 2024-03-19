@@ -29,7 +29,7 @@
           {% for menu in menus %}
           <li>
 
-              <button
+              <a {% if menu.menu_type == 'A' %}href="{{ menu.slug}}"{% endif %}
                   :class="{ 'bg-neutral-100': navigationMenu == '{{menu.id}}', 'hover:bg-neutral-100': navigationMenu!='{{menu.id}}' }"
                   @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{menu.id}}'"
                   @mouseleave="navigationMenuLeave()"
@@ -43,7 +43,7 @@
                       <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                   {% endif %}
-              </button>
+                </a>
           </li>
           {% endfor %}
       </ul>
