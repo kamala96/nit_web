@@ -89,11 +89,11 @@ def handle_nav_menu_click(request, menu_slug):
     #         pass
 
     template_name = '_default.html'
-   
+
     if menu.slug in ['about-nit']:
         template_name = 'about_nit.html'
     elif menu.page_type.upper() == 'A':
-  
+
         # Faculties/Directorates
         try:
             org_unit = OrganizationUnit.objects.get(slug=menu.slug.lower())
@@ -149,6 +149,7 @@ def handle_view_department(request, department_slug):
 def handle_view_program(request, program_id):
     try:
         program = Program.objects.get(pk=program_id)
+        print(program)
     except (Department.DoesNotExist, Staff.DoesNotExist):
         raise Http404(
             "Oops! It looks like this navigation is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")

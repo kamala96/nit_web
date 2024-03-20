@@ -14,6 +14,11 @@ class MenuImageAdmin(admin.ModelAdmin):
     #     return ", ".join([menu.title for menu in obj.menu_images.all()])
 
 
+class MenuImageInline(admin.TabularInline):
+    model = MenuImage
+    extra = 1
+
+
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'url', 'order', 'parent_menu',
@@ -22,6 +27,7 @@ class MenuAdmin(admin.ModelAdmin):
     list_filter = ['menu_type', 'page_type', 'is_visible']
     search_fields = ['title', 'slug',]
     prepopulated_fields = {'slug': ('title',)}
+    inlines = [MenuImageInline]
 
     def get_joined_images(self, obj):
         if obj.menu_images.exists():
