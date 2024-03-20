@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, OrganizationUnit, Post, QuickLink, Slider, Staff
+from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, OrganizationUnit, Post, Program, QuickLink, Slider, Staff
 
 # Register your models here.
 
@@ -161,15 +161,34 @@ class StaffInline(admin.TabularInline):
     extra = 1
 
 
+class ProgramInline(admin.TabularInline):
+    model = Program
+    extra = 1
+
+
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_name', 'slug',
-                    'unit', 'is_academic', 'get_joined_gallery']
+    list_display = ['name', 'short_name', 'slug', 'unit',
+                    'is_academic', 'about_note_text', 'get_joined_gallery']
     list_per_page = 10
     search_fields = ['name', 'short_name', 'slug']
     list_filter = ['unit', 'is_academic']
     readonly_fields = ('created_at', 'updated_at')
     inlines = [StaffInline]
+
+    def get_inline_instances(self, request, obj=None):
+        inline_instances = super().get_inline_instances(request, obj)
+        if obj and obj.is_academic:
+            inline_instances.append(ProgramInline(self.model, self.admin_site))
+        return inline_instances
+
+    @admin.display(description='About Note')
+    def about_note_text(self, obj):
+        # Truncate description to two lines
+        max_length = 60  # Adjust as needed
+        if len(obj.about_note) > max_length:
+            return obj.about_note[:max_length] + '...'
+        return obj.about_note
 
     @admin.display(description='Gallery')
     def get_joined_gallery(self, obj):
@@ -195,3 +214,21 @@ class StaffAdmin(admin.ModelAdmin):
         if len(obj.specialization) > max_length:
             return obj.specialization[:max_length] + '...'
         return obj.specialization
+
+
+@admin.register(Program)
+class ProgramAdmin(admin.ModelAdmin):
+    list_display = ['name', 'short_name', 'department',
+                    'time_frame', 'is_semester_based', 'get_short_description']
+    list_per_page = 10
+    search_fields = ['name', 'short_name',]
+    list_filter = ['department', 'is_semester_based']
+    readonly_fields = ('created_at', 'updated_at')
+
+    @admin.display(description='Description')
+    def get_short_description(self, obj):
+        # Truncate specialization to two liness
+        max_length = 60  # Adjust as needed
+        if len(obj.description) > max_length:
+            return obj.description[:max_length] + '...'
+        return obj.description

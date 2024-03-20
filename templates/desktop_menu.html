@@ -28,9 +28,14 @@
             class="flex items-center justify-center flex-1 p-1 space-x-1 list-none text-white group border-neutral-200/80">
             {% for menu in menus %}
             <li>
-
-                <a {% if menu.menu_type == "A" %} {% if menu.url|is_url %} href="{{ menu.url }}" target="_blank" {% else
-                    %} href="{% url 'handle_nav_menu_click' menu.slug %}" {% endif %} {% endif %}
+                <a 
+                    {% if menu.menu_type == "A" %} 
+                        {% if menu.url|is_url %} 
+                            href="{{ menu.url }}" target="_blank" 
+                        {% else  %} 
+                            href="{% url 'handle_nav_menu_click' menu.slug %}" 
+                        {% endif %}
+                    {% endif %}
                     :class="{ 'bg-neutral-100': navigationMenu == '{{menu.id}}', 'hover:bg-neutral-100': navigationMenu!='{{menu.id}}','text-gray-900': navigationMenu == '{{menu.id}}' }"
                     @mouseover="navigationMenuOpen=true; navigationMenuReposition($el); navigationMenu='{{menu.id}}'"
                     @mouseleave="navigationMenuLeave()"

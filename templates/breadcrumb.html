@@ -1,36 +1,44 @@
 <!-- HTML Structure -->
 <div class="bg-primary sticky top-0 z-50">
-    <div class="items-center justify-between">
-
-        <div class="flex md:hidden p-4">
-            <!-- Mobile menu button -->
-            <button id="mobile-menu-button" class="text-white focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
-                  </svg>
-                  
-            </button>
-        </div>
-
-        <div class="hidden md:block">
-            <!-- Desktop menu items -->
-            {% include 'desktop_menu.html' %}
-        </div>
+  <div class="items-center justify-between">
+    <div class="flex md:hidden p-4">
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="text-white focus:outline-none">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+          />
+        </svg>
+      </button>
     </div>
-    <!-- Mobile menu -->
-    
-    <div id="mobile-menu" class="md:hidden hidden">
-        {% include 'mobile_menu.html' %}
-        
+
+    <div class="hidden md:block">
+      <!-- Desktop menu items -->
+      {% include 'desktop_menu.html' %}
     </div>
+  </div>
+  <!-- Mobile menu -->
+
+  <div id="mobile-menu" class="md:hidden hidden">
+    {% include 'mobile_menu.html' %}
+  </div>
 </div>
 
 <script>
-    // JavaScript to toggle mobile menu visibility
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
+  // JavaScript to toggle mobile menu visibility
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
 
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
+  mobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
 </script>

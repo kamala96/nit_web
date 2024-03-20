@@ -1,8 +1,208 @@
-{% extends 'base.html' %}
-{% block title %}  {{ menu.title }} {% endblock title %} 
+{% extends 'base.html' %} {% block title %} {{ department.name.upper }} ({{
+department.short_name }}) {% endblock title %} {% block styles %}
+<style>
+    [data-hs-tab].active.hs-tab-active\:text-primary {
+        --tw-text-opacity: 1;
+        color: rgb(60 133 125 / var(--tw-text-opacity));
+    }
 
-{% block content %}
+    [data-hs-tab].active.hs-tab-active\:bg-white {
+        --tw-bg-opacity: 1;
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    }
 
-<h1>{{ menu.title }}</h1>
+    [data-hs-tab].active.hs-tab-active\:border-b-transparent {
+        border-bottom-color: transparent;
+    }
 
-{% endblock content %}
+    [data-hs-tab].active.hs-tab-active\:border-primary {
+        --tw-border-opacity: 1;
+        border-color: rgb(60 133 125 / var(--tw-border-opacity));
+    }
+</style>
+{% endblock styles %} {% block content %}
+
+<div class="dark:bg-gray-800 pt-2 lg:pt-0 font-sans text-gray-900 antialiased dark:text-gray-100">
+    <div class="pb-12">
+        <div class="py-16 mt-3 sm:mt-0 text-center bg-cover" style="
+        background: linear-gradient(
+            rgba(18, 40, 37, 0.85),
+            rgba(18, 40, 37, 0.85)
+          ),
+          url('');
+      ">
+            <h1 class="crimson-text text-white text-4xl font-bold">
+                {{ department.name.upper }} ({{ department.short_name.upper }})
+            </h1>
+            <div class="text-white">
+                <a href="{% url 'index' %}">Home</a> |
+                <span>{{ department.name }}</span>
+            </div>
+        </div>
+
+        <div class="mx-8 grid grid-cols-12 gap-3 pt-8 sm:mx-12">
+            <div class="col-span-12 pt-7 lg:col-span-8">
+                <select id="tab-select"
+                    class="block w-full rounded-md border-gray-200 px-4 py-3 pr-9 text-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 sm:hidden"
+                    aria-label="Tabs" role="tablist">
+                    <option value="#hs-tab-to-select-about">About</option>
+                    <option value="#hs-tab-to-select-departments">Programmes</option>
+                    <option value="#hs-tab-to-select-staff">Staff</option>
+                </select>
+
+                <div class="hidden border-b border-primary dark:border-gray-700 sm:block">
+                    <nav class="flex space-x-2" aria-label="Tabs" role="tablist" hs-data-tab-select="#tab-select">
+                        <button type="button"
+                            class="active -mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:bg-gray-800 dark:hs-tab-active:text-white"
+                            id="hs-tab-to-select-item-about" data-hs-tab="#hs-tab-to-select-about"
+                            aria-controls="hs-tab-to-select-about" role="tab">
+                            About
+                        </button>
+
+                        {% if department.is_academic %}
+                        <button type="button"
+                            class="-mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:text-gray-300 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:bg-gray-800 dark:hs-tab-active:text-white"
+                            id="hs-tab-to-select-item-departments" data-hs-tab="#hs-tab-to-select-departments"
+                            aria-controls="hs-tab-to-select-departments" role="tab">
+                            Programmes
+                        </button>
+                        {% endif %}
+                    </nav>
+                </div>
+
+                <div class="html-content mt-3 p-3">
+
+                    <div id="hs-tab-to-select-about" role="tabpanel" aria-labelledby="hs-tab-to-select-item-about">
+                        <p style="text-align: justify;" align="justify">
+                            {{ department.about_note|default:"No data"|safe }}
+                        </p>
+                    </div>
+
+                    {% if department.is_academic %}
+                    <div id="hs-tab-to-select-departments" class="table-container hidden" role="tabpanel"
+                        aria-labelledby="hs-tab-to-select-item-departments">
+                        {% if programs %}
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead>
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">
+                                        SN.
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">
+                                        PROGRAM NAME
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">
+                                        DURATION
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">
+                                        OPTION
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for program in programs %}
+                                <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        {{ forloop.counter }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        {{ program.name|title}} ({{ program.short_name.upper }})
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        {{ program.get_time_frame_display}}
+                                    </td>
+                                    <td class="text-primary px-6 py-4 text-sm font-medium dark:text-gray-200">
+                                        <a href="{% url 'view_program' program.id %}">View</a>
+                                    </td>
+                                </tr>{% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <p>No programs added!</p>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <div class="col-span-12 p-3 lg:col-span-4">
+                <div>
+                    <div class="mx-auto h-48 w-48 overflow-hidden square-full outline outline-offset-2 outline-primary">
+                        <img src="{% if leader.profile_picture %} {{ leader.profile_picture.url }} {% endif %}"
+                            alt="Profile" />
+                    </div>
+                    <div class="text-center">
+                        <h1 class="mt-3 text-base font-bold capitalize text-primary">
+                            {{ leader.name }}
+                        </h1>
+                        <h2 class="text-xs font-semibold text-gray-700">
+                            {{ leader.leadership_title|title }}, {{ department.name }}
+                        </h2>
+                        <div class="mt-6 grid grid-cols-2">
+                            <a class="hover:text-primary" href="tel: {{ leader.staff_phone }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="inline h-4 w-4">
+                                    <path fill-rule="evenodd"
+                                        d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                {{ leader.staff_phone }}
+                            </a>
+                            <a class="hover:text-primary" href="mailto: {{ leader.staff_email }}">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    class="inline h-4 w-4">
+                                    <path
+                                        d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z">
+                                    </path>
+                                    <path
+                                        d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z">
+                                    </path>
+                                </svg>
+                                {{ leader.staff_email }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %} {% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabButtons = document.querySelectorAll("[data-hs-tab]");
+        const tabContents = document.querySelectorAll('[role="tabpanel"]');
+
+        tabButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const targetTabId = button.getAttribute("data-hs-tab");
+
+                // Hide all tab contents
+                tabContents.forEach((tabContent) => {
+                    tabContent.classList.add("hidden");
+                });
+
+                // Remove 'active' class from all tab buttons
+                tabButtons.forEach((tabButton) => {
+                    tabButton.classList.remove("active");
+                });
+
+                // Show the target tab content
+                document.querySelector(targetTabId).classList.remove("hidden");
+
+                // Add 'active' class to the clicked tab button
+                button.classList.add("active");
+            });
+        });
+    });
+</script>
+
+{% endblock scripts %}
+</div>

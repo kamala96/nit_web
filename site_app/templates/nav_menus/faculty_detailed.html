@@ -116,6 +116,7 @@
                         <p>No departments found.</p>
                         {% endif %}
                     </div>
+                    
                     <div id="hs-tab-to-select-staff" class="hidden" role="tabpanel"
                         aria-labelledby="hs-tab-to-select-item-staff">
 
@@ -173,7 +174,7 @@
             <div class="col-span-12 p-3 lg:col-span-4">
                 <div>
                     <div class="mx-auto h-48 w-48 overflow-hidden square-full outline outline-offset-2 outline-primary">
-                        <img src="" alt="">
+                        <img src="{% if leader.1.profile_picture %} {{ leader.1.profile_picture.url }} {% endif %}" alt="Profile">
                     </div>
                     <div class="text-center">
                         <h1 class="mt-3 text-base font-bold capitalize text-primary">{{ leader.1.name }}</h1>
