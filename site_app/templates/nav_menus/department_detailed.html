@@ -1,26 +1,26 @@
 {% extends 'base.html' %} {% block title %} {{ department.name.upper }} ({{
 department.short_name }}) {% endblock title %} {% block styles %}
 
-    <style>
-        [data-hs-tab].active.hs-tab-active\:text-primary {
-            --tw-text-opacity: 1;
-            color: rgb(1 152 216 / var(--tw-text-opacity));
-        }
-    
-        [data-hs-tab].active.hs-tab-active\:bg-white {
-            --tw-bg-opacity: 1;
-            background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-        }
-    
-        [data-hs-tab].active.hs-tab-active\:border-b-transparent {
-            border-bottom-color: transparent;
-        }
-    
-        [data-hs-tab].active.hs-tab-active\:border-primary {
-            --tw-border-opacity: 1;
-            border-color: rgb(1 152 216 / var(--tw-border-opacity));
-        }
-    </style>
+<style>
+    [data-hs-tab].active.hs-tab-active\:text-primary {
+        --tw-text-opacity: 1;
+        color: rgb(1 152 216 / var(--tw-text-opacity));
+    }
+
+    [data-hs-tab].active.hs-tab-active\:bg-white {
+        --tw-bg-opacity: 1;
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    }
+
+    [data-hs-tab].active.hs-tab-active\:border-b-transparent {
+        border-bottom-color: transparent;
+    }
+
+    [data-hs-tab].active.hs-tab-active\:border-primary {
+        --tw-border-opacity: 1;
+        border-color: rgb(1 152 216 / var(--tw-border-opacity));
+    }
+</style>
 
 {% endblock styles %} {% block content %}
 
