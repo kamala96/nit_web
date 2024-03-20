@@ -19,7 +19,7 @@
                     <div class="flex items-center text-secondary">
                         {% if item.created_at >= now|subtract_timedelta:7 %}
                         <!-- Post created within the last 7 days -->
-                        <img src="{% static 'img/hot_news_icon.png' %}" class="w-8 animate-bounce">
+                        <img src="{% static 'img/new_news_icon.png' %}" class="w-8 animate-ping">
                         {% endif %}
                     </div>
                     <div class="flex flex-col gap-0 min-h-[2rem] items-start justify-center w-full min-w-0">
