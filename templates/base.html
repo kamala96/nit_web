@@ -90,26 +90,7 @@
 
   </script>
 
-  {% comment %} <script>
-    const scrollableArea = document.getElementById('scrollable-area-hot-news');
-    const scrollIcon = document.getElementById('scroll-icon');
   
-    // Check if content is scrollable
-    if (scrollableArea.scrollHeight > scrollableArea.clientHeight) {
-      // Show the scroll icon if content is scrollable
-      scrollIcon.classList.remove('hidden');
-    }
-  
-    scrollableArea.addEventListener('scroll', () => {
-      if (scrollableArea.scrollHeight - scrollableArea.scrollTop === scrollableArea.clientHeight) {
-        // Hide the scroll icon when scrolled to the bottom
-        scrollIcon.classList.add('hidden');
-      } else {
-        // Show the scroll icon when not at the bottom
-        scrollIcon.classList.remove('hidden');
-      }
-    });
-  </script> {% endcomment %}
 
   <script>
     function manageScrollableArea(scrollableAreaId, scrollIconId) {
@@ -130,6 +111,12 @@
           // Show the scroll icon when not at the bottom
           scrollIcon.classList.remove('hidden');
         }
+      });
+  
+      // Add click event listener to scroll icon
+      scrollIcon.addEventListener('click', () => {
+        // Scroll the scrollable area to the bottom
+        scrollableArea.scrollTop = scrollableArea.scrollHeight;
       });
     }
   
