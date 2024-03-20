@@ -1,28 +1,30 @@
 {% extends 'base.html' %} {% block title %} {{ department.name.upper }} ({{
 department.short_name }}) {% endblock title %} {% block styles %}
-<style>
-    [data-hs-tab].active.hs-tab-active\:text-primary {
-        --tw-text-opacity: 1;
-        color: rgb(60 133 125 / var(--tw-text-opacity));
-    }
 
-    [data-hs-tab].active.hs-tab-active\:bg-white {
-        --tw-bg-opacity: 1;
-        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-    }
+    <style>
+        [data-hs-tab].active.hs-tab-active\:text-primary {
+            --tw-text-opacity: 1;
+            color: rgb(1 152 216 / var(--tw-text-opacity));
+        }
+    
+        [data-hs-tab].active.hs-tab-active\:bg-white {
+            --tw-bg-opacity: 1;
+            background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+        }
+    
+        [data-hs-tab].active.hs-tab-active\:border-b-transparent {
+            border-bottom-color: transparent;
+        }
+    
+        [data-hs-tab].active.hs-tab-active\:border-primary {
+            --tw-border-opacity: 1;
+            border-color: rgb(1 152 216 / var(--tw-border-opacity));
+        }
+    </style>
 
-    [data-hs-tab].active.hs-tab-active\:border-b-transparent {
-        border-bottom-color: transparent;
-    }
-
-    [data-hs-tab].active.hs-tab-active\:border-primary {
-        --tw-border-opacity: 1;
-        border-color: rgb(60 133 125 / var(--tw-border-opacity));
-    }
-</style>
 {% endblock styles %} {% block content %}
 
-<div class="dark:bg-gray-800 pt-2 lg:pt-0 font-sans text-gray-900 antialiased dark:text-gray-100">
+<div class="pt-2 lg:pt-0 font-sans text-gray-900 antialiased">
     <div class="pb-12">
         <div class="py-16 mt-3 sm:mt-0 text-center bg-cover" style="
         background: linear-gradient(
@@ -43,17 +45,17 @@ department.short_name }}) {% endblock title %} {% block styles %}
         <div class="mx-8 grid grid-cols-12 gap-3 pt-8 sm:mx-12">
             <div class="col-span-12 pt-7 lg:col-span-8">
                 <select id="tab-select"
-                    class="block w-full rounded-md border-gray-200 px-4 py-3 pr-9 text-sm focus:border-primary focus:ring-primary dark:border-gray-700 dark:bg-slate-900 dark:text-gray-400 sm:hidden"
+                    class="block w-full rounded-md border-gray-200 px-4 py-3 pr-9 text-sm focus:border-primary focus:ring-primary sm:hidden"
                     aria-label="Tabs" role="tablist">
                     <option value="#hs-tab-to-select-about">About</option>
                     <option value="#hs-tab-to-select-departments">Programmes</option>
                     <option value="#hs-tab-to-select-staff">Staff</option>
                 </select>
 
-                <div class="hidden border-b border-primary dark:border-gray-700 sm:block">
+                <div class="hidden border-b border-primary sm:block">
                     <nav class="flex space-x-2" aria-label="Tabs" role="tablist" hs-data-tab-select="#tab-select">
                         <button type="button"
-                            class="active -mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:bg-gray-800 dark:hs-tab-active:text-white"
+                            class="active -mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary"
                             id="hs-tab-to-select-item-about" data-hs-tab="#hs-tab-to-select-about"
                             aria-controls="hs-tab-to-select-about" role="tab">
                             About
@@ -61,7 +63,7 @@ department.short_name }}) {% endblock title %} {% block styles %}
 
                         {% if department.is_academic %}
                         <button type="button"
-                            class="-mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary dark:border-gray-700 dark:bg-gray-700 dark:text-gray-400 dark:hover:text-gray-300 dark:hs-tab-active:border-b-gray-800 dark:hs-tab-active:bg-gray-800 dark:hs-tab-active:text-white"
+                            class="-mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary"
                             id="hs-tab-to-select-item-departments" data-hs-tab="#hs-tab-to-select-departments"
                             aria-controls="hs-tab-to-select-departments" role="tab">
                             Programmes
@@ -82,7 +84,7 @@ department.short_name }}) {% endblock title %} {% block styles %}
                     <div id="hs-tab-to-select-departments" class="table-container hidden" role="tabpanel"
                         aria-labelledby="hs-tab-to-select-item-departments">
                         {% if programs %}
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                        <table class="min-w-full divide-y divide-gray-200">
                             <thead>
                                 <tr>
                                     <th scope="col"
@@ -106,17 +108,17 @@ department.short_name }}) {% endblock title %} {% block styles %}
                             <tbody>
 
                                 {% for program in programs %}
-                                <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                <tr class="odd:bg-white even:bg-gray-100">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800">
                                         {{ forloop.counter }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800">
                                         {{ program.name|title}} ({{ program.short_name.upper }})
                                     </td>
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800">
                                         {{ program.get_time_frame_display}}
                                     </td>
-                                    <td class="text-primary px-6 py-4 text-sm font-medium dark:text-gray-200">
+                                    <td class="text-primary px-6 py-4 text-sm font-medium">
                                         <a href="{% url 'view_program' program.id %}">View</a>
                                     </td>
                                 </tr>{% endfor %}
