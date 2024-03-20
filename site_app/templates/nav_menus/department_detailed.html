@@ -26,19 +26,27 @@ department.short_name }}) {% endblock title %} {% block styles %}
 
 <div class="pt-2 lg:pt-0 font-sans text-gray-900 antialiased">
     <div class="pb-12">
-        <div class="py-16 mt-3 sm:mt-0 text-center bg-cover" style="
-        background: linear-gradient(
-            rgba(18, 40, 37, 0.85),
-            rgba(18, 40, 37, 0.85)
-          ),
-          url('');
-      ">
-            <h1 class="crimson-text text-white text-4xl font-bold">
-                {{ department.name.upper }} ({{ department.short_name.upper }})
-            </h1>
+       
+
+
+        <div class="py-16 mt-3 sm:mt-0 text-center bg-primary opacity-90"
+            >
+            
+
+            <div class="p-2 relative flex justify-center items-center">
+                <span class="h-1 w-10 bg-white"></span>
+               
+                <h1 class="crimson-text text-white text-4xl font-bold">
+                    {{ department.name.upper }} ({{ department.short_name.upper }})
+                </h1>
+    
+                
+            </div>
+
+
             <div class="text-white">
                 <a href="{% url 'index' %}">Home</a> |
-                <span>{{ department.name }}</span>
+                <span>{{ nav_data.name|default:"No data" }}</span>
             </div>
         </div>
 
