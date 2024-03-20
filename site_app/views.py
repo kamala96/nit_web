@@ -1,6 +1,7 @@
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from .models import AccountingOfficer, Download, Event, Menu, MenuItem, MenuItemContent, OrganizationUnit, Post, QuickLink, Slider, Staff
+from django.urls import reverse
+from .models import AccountingOfficer, Department, Download, Event, Menu, MenuItem, MenuItemContent, OrganizationUnit, Post, Program, QuickLink, Slider, Staff
 from site_app.models import Menu
 
 
@@ -28,9 +29,9 @@ def index(request):
     return render(request, 'index.html', context)
 
 
-def catch_non_existing_paths(request):
+def catch_non_existing_paths(request, exception=None):
     # return HttpResponseNotFound("Page not found")
-    return render(request, 'errors/html/error404.html')
+    return render(request, 'errors/html/error404.html', status=404)
 
 
 def custom_500_view(request, exception=None):
@@ -60,7 +61,10 @@ def ajax_handler(request, action):
 
 
 def handle_nav_menu_click(request, menu_slug):
-    menu = get_object_or_404(Menu, slug=menu_slug)
+    try:
+        menu = Menu.objects.get(slug=menu_slug)
+    except Menu.DoesNotExist:
+        raise Http404("Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
 
     if menu.slug in ['home']:
         return redirect('index')
@@ -100,12 +104,13 @@ def handle_nav_menu_click(request, menu_slug):
                 leader[0] = 'Dean' if org_unit.unit_group == 'A' else 'Director'
                 leader[1] = Staff.objects.get(
                     department__unit=org_unit, is_unit_head=True)
-        except (MenuItemContent.DoesNotExist, Staff.DoesNotExist):
-            pass
+        except (OrganizationUnit.DoesNotExist, Staff.DoesNotExist):
+            raise Http404(
+                "Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
         template_name = 'faculty_detailed.html'
     elif menu.page_type.upper() == 'B':
         # Units/Departments
-        template_name = 'department_detailed.html'
+        return redirect(reverse('view_department', args=[menu_slug]))
 
     context = {
         'menu': menu,
@@ -121,7 +126,34 @@ def handle_nav_menu_click(request, menu_slug):
 
 
 def handle_view_department(request, department_slug):
-    pass
+    leader = None
+    programs = []
+    try:
+        department = Department.objects.get(slug=department_slug)
+        leader = Staff.objects.get(
+            department=department, is_department_head=True)
+        programs = Program.objects.filter(department=department)
+    except (Department.DoesNotExist, Staff.DoesNotExist):
+        raise Http404("Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
+    except Exception:
+        pass
+
+    context = {
+        'department': department,
+        'leader': leader,
+        'programs': programs,
+    }
+    return render(request, f'nav_menus/department_detailed.html', context)
+
+
+def handle_view_program(request, program_id):
+    try:
+        program = Program.objects.get(pk=program_id)
+    except (Department.DoesNotExist, Staff.DoesNotExist):
+        raise Http404(
+            "Oops! It looks like this navigation is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
+    except Exception:
+        pass
 
 
 def handle_news_click(request, news_id):

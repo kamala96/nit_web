@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+from phonenumber_field.modelfields import PhoneNumberField
+
 from site_app.validators import validate_image_dimensions, validate_pdf_file
 
 # Create your models here.
@@ -365,6 +367,7 @@ class Department(models.Model):
     department_group = models.CharField(
         max_length=20, choices=DEPARTMENT_GROUP_CHOICES)
     is_academic = models.BooleanField(default=False)
+    about_note = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -401,7 +404,7 @@ class Staff(models.Model):
     name = models.CharField(max_length=100)
     designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
     staff_email = models.EmailField(blank=True)
-    staff_phone = models.CharField(blank=True, max_length=50)
+    staff_phone = PhoneNumberField(region="TZ", blank=True)
     department = models.ForeignKey(
         Department, on_delete=models.CASCADE, null=True, blank=True)
     specialization = models.TextField(blank=True)
@@ -446,6 +449,7 @@ class Program(models.Model):
         ('4', '4 Years'),
     )
     name = models.CharField(max_length=100)
+    short_name = models.CharField(max_length=20)
     description = models.TextField(blank=True)
     department = models.ForeignKey(
         'Department', on_delete=models.CASCADE, related_name='programs')
@@ -463,6 +467,9 @@ class Program(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()  # Run full validation
         super().save(*args, **kwargs)
+
+    class Meta:
+        ordering = ['time_frame']
 
     def __str__(self):
         return self.name
