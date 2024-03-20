@@ -179,7 +179,7 @@ class Post(models.Model):
     post_type_choices = [
         ('A', 'Announcements'),
         ('B', 'Latest News'),
-        ('C', 'Hot News'),
+        ('C', 'Current News'),
         ('D', 'e-News Flash')
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
