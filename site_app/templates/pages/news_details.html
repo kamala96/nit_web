@@ -28,10 +28,10 @@
         </div>
     </div>
     <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5 flex ">
-      <div class="w-full m-16 justify-center items-center bg-gray-100 border-2 border-sky-200 border-dashed">
+      <div class="w-full m-16 justify-center items-center bg-sky-100">
 
         {% include 'latest_news.html' with latest_news=latest_news %}
-        {% include 'quick_links.html' with quick_links=quick_links %}
+      <div class="m-2 border-2 border-gray-300">  {% include 'quick_links.html' with quick_links=quick_links %}</div>
      
       </div>
     </div>

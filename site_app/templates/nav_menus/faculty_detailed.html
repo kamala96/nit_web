@@ -3,6 +3,7 @@
 {% block title %} {{ nav_data.name.upper }} ({{ nav_data.short_name }}) {% endblock title %}
 
 {% block styles %}
+
 <style>
     [data-hs-tab].active.hs-tab-active\:text-primary {
         --tw-text-opacity: 1;
@@ -15,7 +16,7 @@
     }
 
     [data-hs-tab].active.hs-tab-active\:border-b-transparent {
-        border-bottom-color: transparent;
+        border-bottom-color: transparent !important;
     }
 
     [data-hs-tab].active.hs-tab-active\:border-primary {
@@ -23,7 +24,6 @@
         border-color: rgb(1 152 216 / var(--tw-border-opacity));
     }
 </style>
-
 
 {% endblock styles %}
 
