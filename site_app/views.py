@@ -73,6 +73,7 @@ def handle_nav_menu_click(request, menu_slug):
     departments_data = []
     staff_members = []
     leader = [None, None]
+    accounting_officer = None
 
     # Get all MenuItem objects for the clicked menu
     menu_items = MenuItem.objects.filter(heading=menu)
@@ -92,11 +93,11 @@ def handle_nav_menu_click(request, menu_slug):
 
     if menu.slug in ['about-us']:
         template_name = 'about_us.html'
-        
+
     if menu.slug in ['rector-message']:
         accounting_officer = AccountingOfficer.load()
         template_name = 'rector_message.html'
-        
+
     elif menu.page_type.upper() == 'A':
 
         # Faculties/Directorates
@@ -125,7 +126,7 @@ def handle_nav_menu_click(request, menu_slug):
         'departments_data': departments_data,
         'staff_members': staff_members,
         'leader': leader,
-        'accounting_officer':accounting_officer
+        'accounting_officer': accounting_officer
     }
 
     return render(request, f'nav_menus/{template_name}', context)
