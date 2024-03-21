@@ -475,8 +475,6 @@ class Staff(models.Model):
     designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
     staff_email = models.EmailField(null=True, blank=True)
     staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
-    department = models.ForeignKey(
-        Department, on_delete=models.CASCADE, null=True, blank=True)
     departments = models.ManyToManyField(
         Department, through='StaffDepartmentRelationship', related_name='staff_memberships')
     specialization = models.TextField(blank=True)
@@ -687,4 +685,3 @@ class ModuleProgram(models.Model):
 
     def __str__(self):
         return f"{self.module} - {self.program}"
-    
