@@ -384,6 +384,7 @@ class Staff(models.Model):
         ('assistant-lecturer', 'Assistant Lecturer'),
         ('tutorial-assistant', 'Tutorial Assistant'),
         ('senior-tutor', 'Senior Tutor'),
+        ('tutor', 'Tutor'),
         ('tutor-1', 'Tutor I'),
         ('tutor-2', 'Tutor II'),
         ('researcher', 'Researcher'),
