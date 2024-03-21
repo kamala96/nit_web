@@ -352,11 +352,15 @@ class OrganizationUnit(models.Model):
 
 
 class Department(models.Model):
+    DEPARTMENT = 'A'
+    UNIT = 'B'
+    CENTRE = 'C'
     DEPARTMENT_GROUP_CHOICES = (
-        ('A', 'Department'),
-        ('B', 'Unit'),
-        ('C', 'Center'),
+        (DEPARTMENT, 'Department'),
+        (UNIT, 'Unit'),
+        (CENTRE, 'Centre'),
     )
+    
     name = models.CharField(max_length=100)
     short_name = models.CharField(max_length=20)
     slug = models.CharField(

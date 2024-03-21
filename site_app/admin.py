@@ -164,7 +164,7 @@ class OrganizationUnitAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_name', 'slug', 'unit', 'is_academic',
+    list_display = ['name', 'short_name', 'slug', 'unit', 'department_group', 'is_academic',
                     'has_prefix', 'about_note_text', 'get_joined_gallery']
     list_per_page = 10
     search_fields = ['name', 'short_name', 'slug']
