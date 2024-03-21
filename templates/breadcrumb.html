@@ -33,6 +33,7 @@
   </div>
 </div>
 
+{% block scripts %}
 <script>
   // JavaScript to toggle mobile menu visibility
   const mobileMenuButton = document.getElementById("mobile-menu-button");
@@ -42,3 +43,4 @@
     mobileMenu.classList.toggle("hidden");
   });
 </script>
+{% endblock %}

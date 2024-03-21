@@ -1,5 +1,7 @@
 {% load static %}
+
 {% load custom_tags %}
+{% get_menu_images 'about-nit' as menu %}
 
 <div class="p-2 relative flex justify-center items-center">
 
@@ -11,9 +13,6 @@
 
 
 <section class="flex flex-col md:flex-row mt-2">
-
-
-
 
     <div class="w-full relative overflow-hidden">
 
@@ -27,21 +26,19 @@
            
             <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5 p-4">
 
-                {% include 'about_nit_slide.html' %}
+                {% include 'about_nit_slide.html' with menu=menu %}
 
             </div>
 
             <div class="w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
               
                 
-                {% include 'about_nit_message.html' %}
+                {% include 'about_nit_message.html' with menu=menu %}
 
 
             </div>
         </div>
    
     </div>
-
-
 
 </section>
