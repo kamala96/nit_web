@@ -403,7 +403,9 @@ class Staff(models.Model):
          'Senior Flight Operations Instructor'),
         ('laboratory-technician', 'Laboratory Technician'),
 
-        ('pro', 'Public relations Officer'),
+        ('pro', 'Public Relations Officer'),
+        ('pro-1', 'Public Relations Officer I'),
+        ('pro-2', 'Public Relations Officer II'),
         ('ppro', 'Principal Public relations Officer'),
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
