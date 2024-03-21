@@ -79,6 +79,11 @@
                             Programmes
                         </button>
                         {% endif %}
+                        <button type="button"
+                            class="-mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary"
+                            id="hs-tab-to-select-item-staff" data-hs-tab="#hs-tab-to-select-staff"
+                            aria-controls="hs-tab-to-select-staff" role="tab">
+                            Staff
                     </nav>
                 </div>
 
@@ -163,6 +168,56 @@
                         {% endif %}
                     </div>
                     {% endif %}
+
+
+                    <div id="hs-tab-to-select-staff" class="hidden" role="tabpanel"
+                        aria-labelledby="hs-tab-to-select-item-staff">
+
+                        {% if staff_members %}
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">SN.</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">Name</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">
+                                        Designation</th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">
+                                        Specialization</th>
+
+                                </tr>
+                            </thead>
+
+                            {% for staff in staff_members %}
+                            <tr class="odd:bg-white even:bg-gray-100">
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">
+                                    {{ forloop.counter }}
+                                </td>
+
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">
+                                    {{ staff.name }}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">
+
+                                    {% if staff.is_department_head %}
+                                    {{ staff.leadership_title.upper }} {{ staff.department.short_name.upper }},
+                                    {% endif %}
+
+                                    {{ staff.get_designation_display }} </td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-800">
+                                    {{ staff.specialization }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <p>No staff found.</p>
+                        {% endif %}
+                    </div>
 
                 </div>
             </div>
