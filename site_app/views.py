@@ -81,17 +81,22 @@ def handle_nav_menu_click(request, menu_slug):
     menu_item_contents = {}
 
     # Iterate through each MenuItem and retrieve its associated MenuItemContent
-    # for item in menu_items:
-    #     try:
-    #         menu_item_content = MenuItemContent.objects.get(menu_item=item)
-    #         menu_item_contents[item] = menu_item_content
-    #     except MenuItemContent.DoesNotExist:
-    #         pass
+    for item in menu_items:
+        try:
+            menu_item_content = MenuItemContent.objects.get(menu_item=item)
+            menu_item_contents[item] = menu_item_content
+        except MenuItemContent.DoesNotExist:
+            pass
 
     template_name = '_default.html'
 
-    if menu.slug in ['about-nit']:
-        template_name = 'about_nit.html'
+    if menu.slug in ['about-us']:
+        template_name = 'about_us.html'
+        
+    if menu.slug in ['rector-message']:
+        accounting_officer = AccountingOfficer.load()
+        template_name = 'rector_message.html'
+        
     elif menu.page_type.upper() == 'A':
 
         # Faculties/Directorates
@@ -120,6 +125,7 @@ def handle_nav_menu_click(request, menu_slug):
         'departments_data': departments_data,
         'staff_members': staff_members,
         'leader': leader,
+        'accounting_officer':accounting_officer
     }
 
     return render(request, f'nav_menus/{template_name}', context)

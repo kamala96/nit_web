@@ -1,0 +1,87 @@
+{% block styles %}
+
+<style>
+    [data-hs-tab].active.hs-tab-active\:text-primary {
+        --tw-text-opacity: 1;
+        color: rgb(1 152 216 / var(--tw-text-opacity));
+    }
+
+    [data-hs-tab].active.hs-tab-active\:bg-white {
+        --tw-bg-opacity: 1;
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    }
+
+    [data-hs-tab].active.hs-tab-active\:border-b-transparent {
+        border-bottom-color: transparent !important;
+    }
+
+    [data-hs-tab].active.hs-tab-active\:border-primary {
+        --tw-border-opacity: 1;
+        border-color: rgb(1 152 216 / var(--tw-border-opacity));
+    }
+</style>
+
+{% endblock styles %}
+
+<select id="tab-select"
+    class="block w-full rounded-md border-gray-200 px-4 py-3 pr-9 text-sm focus:border-primary focus:ring-primary sm:hidden"
+    aria-label="Tabs" role="tablist">
+    {% for item, content in menu_item_contents.items %}
+    <option value="#hs-tab-to-select-{{ item.name }}">{{ item.name }}</option>
+    {% endfor %}
+</select>
+
+<div class="hidden border-b border-primary sm:block">
+    <nav class="flex space-x-2" aria-label="Tabs" role="tablist" hs-data-tab-select="#tab-select">
+        {% for item, content in menu_item_contents.items %}
+        <button type="button"
+            class="{% if forloop.first %} active {% endif %} -mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary "
+            id="hs-tab-to-select-item-{{ item.name }}" data-hs-tab="#hs-tab-to-select-{{ item.name }}"
+            aria-controls="hs-tab-to-select-{{ item.name }}" role="tab">
+            {{ item.name }}
+        </button>
+        {% endfor %}
+    </nav>
+</div>
+
+<div class="html-content mt-3 p-3">
+    {% for item, content in menu_item_contents.items %}
+    <div id="hs-tab-to-select-{{ item.name }}" {% if forloop.first %} class="active" {% else %} class="hidden" {% endif %} role="tabpanel" aria-labelledby="hs-tab-to-select-item-{{ item.name }}">
+        <p style="text-align: justify;" align="justify">
+            {{ content.content }}
+        </p>
+    </div>
+    {% endfor %}
+</div>
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabButtons = document.querySelectorAll('[data-hs-tab]');
+        const tabContents = document.querySelectorAll('[role="tabpanel"]');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTabId = button.getAttribute('data-hs-tab');
+
+                // Hide all tab contents
+                tabContents.forEach(tabContent => {
+                    tabContent.classList.add('hidden');
+                });
+
+                // Remove 'active' class from all tab buttons
+                tabButtons.forEach(tabButton => {
+                    tabButton.classList.remove('active');
+                });
+
+                // Show the target tab content
+                document.querySelector(targetTabId).classList.remove('hidden');
+
+                // Add 'active' class to the clicked tab button
+                button.classList.add('active');
+            });
+        });
+    });
+</script>
+
+{% endblock scripts %}
