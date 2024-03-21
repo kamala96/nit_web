@@ -420,6 +420,7 @@ class Staff(models.Model):
         ('internal-audit-officer-1', 'Internal Audit Officer I'),
         ('internal-audit-officer-2', 'Internal Audit Officer II'),
 
+        ('head-pmu', 'Head PMU'),
         ('chief-procurement-officer', 'Chief Procurement Officer'),
         ('senior-supplies-officer', 'Senior Supplies Officer'),
         ('senior-procurement-officer', 'Senior Procurement Officer'),
@@ -430,6 +431,7 @@ class Staff(models.Model):
         ('supplies-officer-1', 'Supplies Officer I'),
         ('supplies-officer-2', 'Supplies Officer II'),
 
+        ('head-legal', 'Head Legal'),
         ('legal-officer-1', 'Legal Officer I'),
         ('legal-officer-2', 'Legal Officer II'),
 
