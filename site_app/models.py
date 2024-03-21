@@ -486,6 +486,34 @@ class Staff(models.Model):
     class Meta:
         verbose_name_plural = 'Staff'
 
+    def clean(self):
+        # Check for existing staff with the same name and designation
+        existing_staff = Staff.objects.filter(
+            name=self.name, designation=self.designation)
+        if self.pk:  # If editing an existing staff instance, exclude itself from the query
+            existing_staff = existing_staff.exclude(pk=self.pk)
+        if existing_staff.exists():
+            raise ValidationError(
+                "Staff member with the same name and designation already exists.")
+
+        # Check for existing staff with the same email or phone number
+        if self.staff_email:
+            existing_email_staff = Staff.objects.filter(
+                staff_email=self.staff_email)
+            if self.pk:  # If editing an existing staff instance, exclude itself from the query
+                existing_email_staff = existing_email_staff.exclude(pk=self.pk)
+            if existing_email_staff.exists():
+                raise ValidationError(
+                    "Staff member with the same email already exists.")
+        if self.staff_phone:
+            existing_phone_staff = Staff.objects.filter(
+                staff_phone=self.staff_phone)
+            if self.pk:  # If editing an existing staff instance, exclude itself from the query
+                existing_phone_staff = existing_phone_staff.exclude(pk=self.pk)
+            if existing_phone_staff.exists():
+                raise ValidationError(
+                    "Staff member with the same phone number already exists.")
+
     def save(self, *args, **kwargs):
         self.full_clean()  # Run full validation
         super().save(*args, **kwargs)
