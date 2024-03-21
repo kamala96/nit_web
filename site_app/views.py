@@ -135,7 +135,7 @@ def handle_nav_menu_click(request, menu_slug):
 def handle_view_department(request, department_slug):
     leader = None
     programs = []
-    staff_members
+    staff_members = []
     try:
         department = Department.objects.get(slug=department_slug)
         leader = Staff.objects.get(
