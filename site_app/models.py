@@ -430,6 +430,9 @@ class Staff(models.Model):
         ('supplies-officer-1', 'Supplies Officer I'),
         ('supplies-officer-2', 'Supplies Officer II'),
 
+        ('legal-officer-1', 'Legal Officer I'),
+        ('legal-officer-2', 'Legal Officer II'),
+
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
     )
