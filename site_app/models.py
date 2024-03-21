@@ -96,7 +96,7 @@ class Menu(models.Model):
     ]
     PAGE_TYPE_CHOICES = [
         ('A', 'FACULTIES/DIRECTORATES'),
-        ('B', 'DEPARTMENTS/UNITS'),
+        ('B', 'DEPARTMENTS/UNITS/CENTERS'),
         ('C', 'OTHER')
     ]
     title = models.CharField(max_length=255)
