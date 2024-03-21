@@ -143,18 +143,25 @@ def handle_view_department(request, department_slug):
         'leader': leader,
         'programs': programs,
     }
-    return render(request, f'nav_menus/department_detailed.html', context)
+    return render(request, 'nav_menus/department_detailed.html', context)
 
 
 def handle_view_program(request, program_id):
     try:
         program = Program.objects.get(pk=program_id)
-        print(program)
+        modules = program.moduleprogram_set.all()
+        print(modules)
     except (Department.DoesNotExist, Staff.DoesNotExist):
         raise Http404(
             "Oops! It looks like this navigation is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
     except Exception:
         pass
+
+    context = {
+        'program': program,
+        'modules': modules,
+    }
+    return render(request, 'nav_menus/program_detailed.html', context)
 
 
 def handle_news_click(request, news_id):
