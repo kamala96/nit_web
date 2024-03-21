@@ -165,10 +165,15 @@ def handle_view_program(request, program_id):
 
 
 def handle_news_click(request, news_id):
+    posts = Post.objects.all()
+   
     news = get_object_or_404(Post, pk=news_id)
+    quick_links = QuickLink.objects.all()
 
     context = {
-        'news': news
+        'news': news,
+        'latest_news': posts.filter(post_type='B').order_by('-created_at')[:4],
+        'quick_links_a': quick_links.filter(group='A')[:7],
     }
 
     return render(request, 'pages/news_details.html', context)
