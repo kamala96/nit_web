@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} {{ nav_data.name.upper }} ({{ nav_data.short_name }}) {% endblock title %}
+{% block title %} {{ menu.title.upper }} {% endblock title %}
 
 {% block content %}
 {% include 'components/header_details.html' with title=menu.title%}
