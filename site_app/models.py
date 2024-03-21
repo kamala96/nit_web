@@ -443,7 +443,6 @@ class Program(models.Model):
     POSTGRADUATE_DIPLOMA = 'postgraduate-diploma'
     BACHELOR_DEGREE = "bachelor-degree"
     DIPLOMA = 'diploma'
-    CERTIFICATE = 'certificate'
     SHORT_COURSE = 'short-course'
 
     PROGRAM_GROUP_CHOICES = [
@@ -452,7 +451,6 @@ class Program(models.Model):
         (POSTGRADUATE_DIPLOMA, 'Postgraduate Diploma'),
         (BACHELOR_DEGREE, "Bachelor's Degree"),
         (DIPLOMA, 'Diploma'),
-        (CERTIFICATE, 'Certificate'),
         (SHORT_COURSE, 'Short Course'),
     ]
 
@@ -474,6 +472,8 @@ class Program(models.Model):
         max_length=50, choices=PROGRAM_GROUP_CHOICES)
     program_type = models.CharField(
         max_length=50, choices=PROGRAM_TYPE_CHOICES)
+    order = models.IntegerField(
+        default=0, help_text="Order in which programs should be displayed in its Group.")
 
     program_specification = models.TextField(blank=True)
     admission_requirements = models.TextField(blank=True)
@@ -501,11 +501,22 @@ class Program(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['duration']
+        ordering = ['order', 'program_group', 'duration']
         verbose_name_plural = 'Programmes'
 
     def __str__(self):
         return self.name
+
+    @property
+    def formatted_duration(self):
+        if self.program_type == Program.LONG:
+            years = int(self.duration)
+            return f"{years} year{'s' if years > 1 else ''}"
+        elif self.program_type == Program.SHORT:
+            months = int(self.duration)
+            return f"{months} month{'s' if months > 1 else ''}"
+        else:
+            return None
 
 
 class Module(models.Model):
@@ -530,8 +541,11 @@ class ModuleProgram(models.Model):
         blank=True, null=True, help_text='Year of Study, if applies')
     semester = models.IntegerField(
         blank=True, null=True, help_text='Semester of Study, if applies')
+    order = models.IntegerField(
+        default=0, help_text="Order in which module should be displayed.")
 
     class Meta:
+        ordering = ['order', 'program__program_group']
         verbose_name = 'Module Program (Intermediate)'
         verbose_name_plural = 'Module Program (Intermediate)'
 
