@@ -361,7 +361,6 @@ class Department(models.Model):
     short_name = models.CharField(max_length=20)
     slug = models.CharField(
         max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
-
     unit = models.ForeignKey(
         OrganizationUnit, on_delete=models.CASCADE, related_name='departments', null=True, blank=True)
     department_group = models.CharField(
@@ -520,14 +519,18 @@ class Program(models.Model):
 
     @property
     def formatted_duration(self):
+        if self.duration is None:
+            return None
+
         if self.program_type == Program.LONG:
             years = int(self.duration)
             return f"{years} year{'s' if years > 1 else ''}"
         elif self.program_type == Program.SHORT:
-            months = int(self.duration)
-            return f"{months} month{'s' if months > 1 else ''}"
-        else:
-            return None
+            if self.duration >= 30:  # Assuming 30 days for a month
+                months = self.duration / 30
+                return f"{months} month{'s' if months > 1 else ''}"
+            else:
+                return f"{self.duration} day{'s' if self.duration > 1 else ''}"
 
 
 class Module(models.Model):
