@@ -392,7 +392,7 @@ class Staff(models.Model):
         ('instructor', 'Instructor'),
         ('instructors-facilitator', 'Instructor/Facilitator'),
 
-        ('senior-cabin-crew-instructors', 'Senior Cabin Crew Instructors'),
+        ('senior-cabin-crew-instructor', 'Senior Cabin Crew Instructor'),
         ('senior-flight-operations-instructor',
          'Senior Flight Operations Instructor'),
         ('laboratory-technician', 'Laboratory Technician'),
