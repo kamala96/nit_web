@@ -415,10 +415,20 @@ class Staff(models.Model):
         ('pro-2', 'Public Relations Officer II'),
         ('ppro', 'Principal Public Relations Officer'),
 
+        ('chief-internal-auditor', 'Chief Internal Auditor'),
         ('principal-internal-audit-officer', 'Principal Internal Audit Officer'),
         ('internal-audit-officer-1', 'Internal Audit Officer I'),
         ('internal-audit-officer-2', 'Internal Audit Officer II'),
 
+        ('chief-procurement-officer', 'Chief Procurement Officer'),
+        ('senior-supplies-officer', 'Senior Supplies Officer'),
+        ('senior-procurement-officer', 'Senior Procurement Officer'),
+        ('senior-supplies-officer-1', 'Senior Supplies Officer I'),
+        ('senior-procurement-officer-1', 'Senior Procurement Officer I'),
+        ('procurement-officer-1', 'Procurement Officer II'),
+        ('procurement-officer-2', 'Procurement Officer I'),
+        ('supplies-officer-1', 'Supplies Officer I'),
+        ('supplies-officer-2', 'Supplies Officer II'),
 
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
