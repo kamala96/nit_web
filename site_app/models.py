@@ -403,8 +403,36 @@ class Staff(models.Model):
          'Senior Flight Operations Instructor'),
         ('laboratory-technician', 'Laboratory Technician'),
 
-        ('pro', 'Public relations Officer'),
-        ('ppro', 'Principal Public relations Officer'),
+        ('senior-librarian', 'Senior Librarian'),
+        ('principal-librarian', 'Principal Librarian'),
+        ('librarian-1', 'Librarian I'),
+        ('librarian-2', 'Librarian II'),
+        ('librarian-assistant-1', 'Library Assistant I'),
+        ('librarian-assistant-2', 'Library Assistant II'),
+
+        ('pro', 'Public Relations Officer'),
+        ('pro-1', 'Public Relations Officer I'),
+        ('pro-2', 'Public Relations Officer II'),
+        ('ppro', 'Principal Public Relations Officer'),
+
+        ('chief-internal-auditor', 'Chief Internal Auditor'),
+        ('principal-internal-audit-officer', 'Principal Internal Audit Officer'),
+        ('internal-audit-officer-1', 'Internal Audit Officer I'),
+        ('internal-audit-officer-2', 'Internal Audit Officer II'),
+
+        ('chief-procurement-officer', 'Chief Procurement Officer'),
+        ('senior-supplies-officer', 'Senior Supplies Officer'),
+        ('senior-procurement-officer', 'Senior Procurement Officer'),
+        ('senior-supplies-officer-1', 'Senior Supplies Officer I'),
+        ('senior-procurement-officer-1', 'Senior Procurement Officer I'),
+        ('procurement-officer-1', 'Procurement Officer II'),
+        ('procurement-officer-2', 'Procurement Officer I'),
+        ('supplies-officer-1', 'Supplies Officer I'),
+        ('supplies-officer-2', 'Supplies Officer II'),
+
+        ('legal-officer-1', 'Legal Officer I'),
+        ('legal-officer-2', 'Legal Officer II'),
+
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
     )

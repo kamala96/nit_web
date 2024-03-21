@@ -135,11 +135,13 @@ def handle_nav_menu_click(request, menu_slug):
 def handle_view_department(request, department_slug):
     leader = None
     programs = []
+    staff_members = []
     try:
         department = Department.objects.get(slug=department_slug)
         leader = Staff.objects.get(
             department=department, is_department_head=True)
         programs = Program.objects.filter(department=department)
+        staff_members = Staff.objects.filter(department=department)
     except (Department.DoesNotExist, Staff.DoesNotExist):
         raise Http404("Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
     except Exception:
@@ -149,6 +151,7 @@ def handle_view_department(request, department_slug):
         'department': department,
         'leader': leader,
         'programs': programs,
+        'staff_members': staff_members,
     }
     return render(request, 'nav_menus/department_detailed.html', context)
 
