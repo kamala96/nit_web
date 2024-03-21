@@ -2,7 +2,6 @@
 {% load tz %}
 
 
-{% get_menu_images 'about-nit' as menu %}
 
 <div id="animation-carousel" class="relative w-full " data-carousel="slide">
     <!-- Carousel wrapper -->
@@ -10,6 +9,7 @@
         <!-- Use template_tag - get_menu_images -->
         {% if menu %}
         {% for image in menu.menu_images.all %}
+    
         <div class="hidden duration-200 ease-linear " data-carousel-item>
             <img src="{{ image.image.url }}"
                 class="border-4 border-white absolute block w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"

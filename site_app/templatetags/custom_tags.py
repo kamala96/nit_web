@@ -81,6 +81,7 @@ def truncate_chars(value, max_length):
 def get_menu_images(slug):
     try:
         menu = Menu.objects.get(slug=slug)
+        print(menu.menu_images.all())
         # return menu.images.all()
         return menu
     except Menu.DoesNotExist:
