@@ -206,7 +206,7 @@ class StaffAdmin(admin.ModelAdmin):
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_name', 'department_short_name', 'duration', 'program_group', 'program_type',
+    list_display = ['name', 'short_name', 'department_short_name', 'duration', 'program_group', 'program_type', 'order',
                     'get_short_program_specification', 'get_short_admission_requirements', 'get_short_learning_outcomes', 'get_short_assessment']
     search_fields = ['name', 'short_name',]
     list_filter = ['department', 'program_group', 'program_type']
@@ -255,7 +255,7 @@ class ModuleAdmin(admin.ModelAdmin):
 @admin.register(ModuleProgram)
 class ModuleProgramAdmin(admin.ModelAdmin):
     list_display = ['module_formatted_name',
-                    'program_short_name', 'year', 'semester',]
+                    'program_short_name', 'year', 'semester', 'order',]
     list_per_page = 10
 
     @admin.display(description='Module')

@@ -150,7 +150,6 @@ def handle_view_program(request, program_id):
     try:
         program = Program.objects.get(pk=program_id)
         modules = program.moduleprogram_set.all()
-        print(modules)
     except (Department.DoesNotExist, Staff.DoesNotExist):
         raise Http404(
             "Oops! It looks like this navigation is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
@@ -166,7 +165,7 @@ def handle_view_program(request, program_id):
 
 def handle_news_click(request, news_id):
     posts = Post.objects.all()
-   
+
     news = get_object_or_404(Post, pk=news_id)
     quick_links = QuickLink.objects.all()
 

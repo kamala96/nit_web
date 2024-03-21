@@ -115,21 +115,45 @@ department.short_name }}) {% endblock title %} {% block styles %}
                             </thead>
                             <tbody>
 
-                                {% for program in programs %}
+                                <!-- {f% for program in programs %}
                                 <tr class="odd:bg-white even:bg-gray-100">
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800">
+                                        {f{ forloop.counter }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800">
+                                        {f{ program.name|title}} ({f{ program.short_name.upper }})
+                                    </td>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-800">
+                                        {f{ program.formatted_duration}}
+                                    </td>
+                                    <td class="text-primary px-6 py-4 text-sm font-medium">
+                                        <a href="{f% url 'view_program' program.id %}">View</a>
+                                    </td>
+                                </tr>
+                                {f% endfor %} -->
+                                {% regroup programs by program_group as program_groups %}
+
+                                {% for group in program_groups %}
+                                <tr scope="col" class="px-6 py-3 text-left text-sm font-bold uppercase text-gray-500">
+                                    <td colspan="4"><strong>{{ group.grouper }}</strong></td>
+                                </tr>
+                                {% for program in group.list %}
+                                <tr>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
                                         {{ forloop.counter }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
-                                        {{ program.name|title}} ({{ program.short_name.upper }})
+                                        {{ program.name|title }} ({{ program.short_name.upper }})
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
-                                        {{ program.duration}}
+                                        {{ program.formatted_duration }}
                                     </td>
                                     <td class="text-primary px-6 py-4 text-sm font-medium">
                                         <a href="{% url 'view_program' program.id %}">View</a>
                                     </td>
-                                </tr>{% endfor %}
+                                </tr>
+                                {% endfor %}
+                                {% endfor %}
                             </tbody>
                         </table>
                         {% else %}
