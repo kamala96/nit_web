@@ -151,6 +151,7 @@ def handle_view_department(request, department_slug):
         'department': department,
         'leader': leader,
         'programs': programs,
+        'staff_members': staff_members,
     }
     return render(request, 'nav_menus/department_detailed.html', context)
 
