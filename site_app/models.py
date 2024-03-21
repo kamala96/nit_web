@@ -403,6 +403,13 @@ class Staff(models.Model):
          'Senior Flight Operations Instructor'),
         ('laboratory-technician', 'Laboratory Technician'),
 
+        ('senior-librarian', 'Senior Librarian'),
+        ('principal-librarian', 'Principal Librarian'),
+        ('librarian-1', 'Librarian I'),
+        ('librarian-2', 'Librarian II'),
+        ('librarian-assistant-1', 'Library Assistant I'),
+        ('librarian-assistant-2', 'Library Assistant II'),
+
         ('pro', 'Public Relations Officer'),
         ('pro-1', 'Public Relations Officer I'),
         ('pro-2', 'Public Relations Officer II'),
