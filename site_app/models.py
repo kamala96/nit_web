@@ -438,24 +438,47 @@ class Staff(models.Model):
 
 
 class Program(models.Model):
-    TIMEFRAME_CHOICES = (
-        ('0.1', '1 Month'),
-        ('0.2', '2 Months'),
-        ('0.3', '3 Months'),
-        ('0.6', '6 Months'),
-        ('1', '1 Year'),
-        ('2', '2 Years'),
-        ('3', '3 Years'),
-        ('4', '4 Years'),
-    )
+    PHD = 'phd'
+    MASTERS = 'masters'
+    POSTGRADUATE_DIPLOMA = 'postgraduate-diploma'
+    BACHELOR_DEGREE = "bachelor-degree"
+    DIPLOMA = 'diploma'
+    CERTIFICATE = 'certificate'
+    SHORT_COURSE = 'short-course'
+
+    PROGRAM_GROUP_CHOICES = [
+        (PHD, 'PhD'),
+        (MASTERS, 'Masters'),
+        (POSTGRADUATE_DIPLOMA, 'Postgraduate Diploma'),
+        (BACHELOR_DEGREE, "Bachelor's Degree"),
+        (DIPLOMA, 'Diploma'),
+        (CERTIFICATE, 'Certificate'),
+        (SHORT_COURSE, 'Short Course'),
+    ]
+
+    SHORT = 'short'
+    LONG = 'long'
+    PROGRAM_TYPE_CHOICES = [
+        (SHORT, 'Short Program'),
+        (LONG, 'Long Program'),
+    ]
+
     name = models.CharField(max_length=100)
     short_name = models.CharField(max_length=20)
-    description = models.TextField(blank=True)
     department = models.ForeignKey(
-        'Department', on_delete=models.CASCADE, related_name='programs')
-    time_frame = models.CharField(
-        max_length=100, choices=TIMEFRAME_CHOICES, null=True)
-    is_semester_based = models.BooleanField(default=False)
+        Department, on_delete=models.CASCADE, related_name='programs')
+    duration = models.DecimalField(max_digits=5, decimal_places=2,
+                                   help_text="Duration in months for Short Program, in years for Long Program")
+
+    program_group = models.CharField(
+        max_length=50, choices=PROGRAM_GROUP_CHOICES)
+    program_type = models.CharField(
+        max_length=50, choices=PROGRAM_TYPE_CHOICES)
+
+    program_specification = models.TextField(blank=True)
+    admission_requirements = models.TextField(blank=True)
+    learning_outcomes = models.TextField(blank=True)
+    assessment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -464,35 +487,70 @@ class Program(models.Model):
             raise ValidationError(
                 "Programs can only be associated with academic departments.")
 
+        if self.program_type == self.SHORT:
+            if self.program_group != self.SHORT_COURSE:
+                raise ValidationError(
+                    "For Short Programs, program group must be 'Short Course'.")
+        elif self.program_type == self.LONG:
+            if self.program_group == self.SHORT_COURSE:
+                raise ValidationError(
+                    "For Long Programs, program group cannot be 'Short Course'.")
+
     def save(self, *args, **kwargs):
         self.full_clean()  # Run full validation
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['time_frame']
+        ordering = ['duration']
+        verbose_name_plural = 'Programmes'
 
     def __str__(self):
         return self.name
 
 
 class Module(models.Model):
-    SEMESTER_CHOICES = (
-        ('1', 'Semester 1'),
-        ('2', 'Semester 2'),
-        ('3', 'Semester 3'),
-        ('4', 'Semester 4'),
-        ('5', 'Semester 5'),
-        ('6', 'Semester 6'),
-        ('7', 'Semester 7'),
-        ('8', 'Semester 8'),
-    )
     name = models.CharField(max_length=100)
-    duration = models.PositiveIntegerField(
-        help_text="Duration in weeks", null=True, blank=True)
-    semester = models.CharField(
-        max_length=100, choices=SEMESTER_CHOICES, null=True, blank=True)
-    program = models.ForeignKey(
-        Program, on_delete=models.CASCADE, related_name='modules')
+    code = models.CharField(max_length=50, unique=True)
+    programs = models.ManyToManyField(Program, through='ModuleProgram')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'Modules/Courses'
 
     def __str__(self):
         return self.name
+
+
+class ModuleProgram(models.Model):
+    module = models.ForeignKey(
+        Module, on_delete=models.CASCADE, help_text="Related module")
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    year = models.IntegerField(
+        blank=True, null=True, help_text='Year of Study, if applies')
+    semester = models.IntegerField(
+        blank=True, null=True, help_text='Semester of Study, if applies')
+
+    class Meta:
+        verbose_name = 'Module Program (Intermediate)'
+        verbose_name_plural = 'Module Program (Intermediate)'
+
+    def clean(self):
+        if self.program.program_type == Program.SHORT:
+            if self.year is not None or self.semester is not None:
+                raise ValidationError(
+                    "For Short Programs, year and semester should not be provided.")
+        elif self.program.program_type == Program.LONG:
+            # Convert duration to months and then divide by 12 to get the number of years
+            duration_in_years = int(self.program.duration * 12 / 12)
+            if self.year is None or self.semester is None:
+                raise ValidationError(
+                    "For Long Programs, year and semester must be provided.")
+            if self.year not in range(1, duration_in_years + 1):
+                raise ValidationError(
+                    "Year should be within program duration.")
+            if self.semester not in [1, 2]:
+                raise ValidationError("Semester should be either 1 or 2.")
+
+    def __str__(self):
+        return f"{self.module} - {self.program}"

@@ -1,22 +1,48 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, OrganizationUnit, Post, Program, QuickLink, Slider, Staff
+from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, Module, ModuleProgram, OrganizationUnit, Post, Program, QuickLink, Slider, Staff
+from site_app.utilities import get_short_description
 
 # Register your models here.
+
+
+class MenuImageInline(admin.TabularInline):
+    model = MenuImage
+    extra = 1
+
+
+class ModuleProgramInline(admin.TabularInline):
+    model = ModuleProgram
+    extra = 1
 
 
 @admin.register(MenuImage)
 class MenuImageAdmin(admin.ModelAdmin):
     list_display = ('image', 'menu')
 
-    # @admin.display(description='Associated Menu')
-    # def menu_list(self, obj):
-    #     return ", ".join([menu.title for menu in obj.menu_images.all()])
 
-
-class MenuImageInline(admin.TabularInline):
-    model = MenuImage
+class DepartmentInline(admin.TabularInline):
+    model = Department
     extra = 1
+
+
+class GalleryInline(admin.TabularInline):
+    model = Gallery
+    extra = 1
+
+
+class StaffInline(admin.TabularInline):
+    model = Staff
+    extra = 1
+
+
+class ProgramInline(admin.TabularInline):
+    model = Program
+    extra = 1
+
+# @admin.display(description='Associated Menu')
+# def menu_list(self, obj):
+#     return ", ".join([menu.title for menu in obj.menu_images.all()])
 
 
 @admin.register(Menu)
@@ -72,19 +98,11 @@ class PostAdmin(admin.ModelAdmin):
 
     @admin.display(description='Title')
     def short_title(self, obj):
-        # Truncate description to two lines
-        max_length = 60  # Adjust as needed
-        if len(obj.description) > max_length:
-            return obj.description[:max_length] + '...'
-        return obj.description
+        return get_short_description(obj, field_name='title')
 
     @admin.display(description='Description')
     def short_description(self, obj):
-        # Truncate description to two lines
-        max_length = 60  # Adjust as needed
-        if len(obj.description) > max_length:
-            return obj.description[:max_length] + '...'
-        return obj.description
+        return get_short_description(obj, field_name='description')
 
 
 @admin.register(QuickLink)
@@ -120,21 +138,7 @@ class AccountingOfficerAdmin(admin.ModelAdmin):
 
     @admin.display(description='Welcome Note')
     def short_welcome_note(self, obj):
-        # Truncate description to two lines
-        max_length = 60
-        if len(obj.welcome_note) > max_length:
-            return obj.welcome_note[:max_length] + '...'
-        return obj.welcome_note
-
-
-class DepartmentInline(admin.TabularInline):
-    model = Department
-    extra = 1
-
-
-class GalleryInline(admin.TabularInline):
-    model = Gallery
-    extra = 1
+        return get_short_description(obj, field_name='welcome_note')
 
 
 @admin.register(OrganizationUnit)
@@ -155,21 +159,7 @@ class OrganizationUnitAdmin(admin.ModelAdmin):
 
     @admin.display(description='About Note')
     def about_note_text(self, obj):
-        # Truncate description to two lines
-        max_length = 60  # Adjust as needed
-        if len(obj.about_note) > max_length:
-            return obj.about_note[:max_length] + '...'
-        return obj.about_note
-
-
-class StaffInline(admin.TabularInline):
-    model = Staff
-    extra = 1
-
-
-class ProgramInline(admin.TabularInline):
-    model = Program
-    extra = 1
+        return get_short_description(obj, field_name='about_note')
 
 
 @admin.register(Department)
@@ -190,11 +180,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 
     @admin.display(description='About Note')
     def about_note_text(self, obj):
-        # Truncate description to two lines
-        max_length = 60  # Adjust as needed
-        if len(obj.about_note) > max_length:
-            return obj.about_note[:max_length] + '...'
-        return obj.about_note
+        return get_short_description(obj, field_name='about_note')
 
     @admin.display(description='Gallery')
     def get_joined_gallery(self, obj):
@@ -215,26 +201,67 @@ class StaffAdmin(admin.ModelAdmin):
 
     @admin.display(description='Specializaion')
     def get_short_specialization(self, obj):
-        # Truncate specialization to two liness
-        max_length = 60  # Adjust as needed
-        if len(obj.specialization) > max_length:
-            return obj.specialization[:max_length] + '...'
-        return obj.specialization
+        return get_short_description(obj, field_name='specialization')
 
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_name', 'department',
-                    'time_frame', 'is_semester_based', 'get_short_description']
-    list_per_page = 10
+    list_display = ['name', 'short_name', 'department_short_name', 'duration', 'program_group', 'program_type',
+                    'get_short_program_specification', 'get_short_admission_requirements', 'get_short_learning_outcomes', 'get_short_assessment']
     search_fields = ['name', 'short_name',]
-    list_filter = ['department', 'is_semester_based']
+    list_filter = ['department', 'program_group', 'program_type']
     readonly_fields = ('created_at', 'updated_at')
+    list_per_page = 10
+    inlines = [ModuleProgramInline]
 
-    @admin.display(description='Description')
-    def get_short_description(self, obj):
-        # Truncate specialization to two liness
-        max_length = 60  # Adjust as needed
-        if len(obj.description) > max_length:
-            return obj.description[:max_length] + '...'
-        return obj.description
+    @admin.display(description='Department')
+    def department_short_name(self, obj):
+        return obj.department.short_name
+
+    @admin.display(description='Program Specification')
+    def get_short_program_specification(self, obj):
+        return get_short_description(obj, field_name='program_specification')
+
+    @admin.display(description='Admission Requirements')
+    def get_short_admission_requirements(self, obj):
+        return get_short_description(obj, field_name='admission_requirements')
+
+    @admin.display(description='Learning Outcomes')
+    def get_short_learning_outcomes(self, obj):
+        return get_short_description(obj, field_name='learning_outcomes')
+
+    @admin.display(description='Assessment')
+    def get_short_assessment(self, obj):
+        return get_short_description(obj, field_name='assessment')
+
+
+@admin.register(Module)
+class ModuleAdmin(admin.ModelAdmin):
+    list_display = ['name', 'code', 'display_programs',]
+    search_fields = ['name', 'code',]
+    readonly_fields = ('created_at', 'updated_at')
+    list_per_page = 10
+
+    @admin.display(description='Programs')
+    def display_programs(self, obj):
+        # Fetch and format the list of programs (by short_name)
+        programs = obj.programs.all()
+        if programs:
+            return ', '.join(program.short_name for program in programs)
+        else:
+            return 'No programs associated'
+
+
+@admin.register(ModuleProgram)
+class ModuleProgramAdmin(admin.ModelAdmin):
+    list_display = ['module_formatted_name',
+                    'program_short_name', 'year', 'semester',]
+    list_per_page = 10
+
+    @admin.display(description='Module')
+    def module_formatted_name(self, obj):
+        return f'{obj.module.name} ({obj.module.code})'
+
+    @admin.display(description='Program')
+    def program_short_name(self, obj):
+        return obj.program.short_name

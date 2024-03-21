@@ -26,22 +26,21 @@ department.short_name }}) {% endblock title %} {% block styles %}
 
 <div class="pt-2 lg:pt-0 font-sans text-gray-900 antialiased">
     <div class="pb-12">
-       
 
 
-        <div class="py-16 mt-3 sm:mt-0 text-center bg-primary opacity-90"
-            >
-            
+
+        <div class="py-16 mt-3 sm:mt-0 text-center bg-primary opacity-90">
+
 
             <div class="p-2 relative flex justify-center items-center">
                 <span class="h-1 w-10 bg-white"></span>
-               
+
                 <h1 class="crimson-text text-white text-4xl font-bold mx-2">
                     {{ department.name.upper }} ({{ department.short_name.upper }})
                 </h1>
                 <span class="h-1 w-10 bg-white "></span>
-           
-                
+
+
             </div>
 
 
@@ -125,7 +124,7 @@ department.short_name }}) {% endblock title %} {% block styles %}
                                         {{ program.name|title}} ({{ program.short_name.upper }})
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
-                                        {{ program.get_time_frame_display}}
+                                        {{ program.duration}}
                                     </td>
                                     <td class="text-primary px-6 py-4 text-sm font-medium">
                                         <a href="{% url 'view_program' program.id %}">View</a>
