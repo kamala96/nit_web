@@ -13,7 +13,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
     }
 
     [data-hs-tab].active.hs-tab-active\:border-b-transparent {
-        border-bottom-color: transparent;
+        border-bottom-color: transparent !important;
     }
 
     [data-hs-tab].active.hs-tab-active\:border-primary {
@@ -24,7 +24,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
 
 {% endblock styles %} {% block content %}
 
-<div class="dark:bg-gray-800 pt-2 lg:pt-0 pb-10 font-sans text-gray-900 antialiased dark:text-gray-100">
+<div class="pt-2 lg:pt-0 pb-10 font-sans text-gray-900 antialiased ">
     <div wire:snapshot="">
         <div class="space-y-3 text-center">
             <h1 class="crimson-text text-3xl font-bold text-gray-800 sm:text-4xl"> Bachelor Degree in Information
@@ -40,21 +40,21 @@ program.short_name }}) {% endblock title %} {% block styles %}
             <div class="col-span-12 pt-3 lg:col-span-8">
                 <h1 class="mt-6 border-b py-3 text-primary font-bold text-xl mb-3">Program overview</h1>
                 <div class=" ">
-                    <div class="relative z-10 text-gray-800 dark:text-white sm:text-lg">
+                    <div class="relative z-10 text-gray-800  sm:text-lg">
                         <div class="html-content hs-accordion-group space-y-6">
                             <div class="hs-accordion" id="hs-basic-heading-one">
                                 <button
                                     class="hs-accordion-toggle 
-                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                                     aria-controls="hs-basic-collapse-one">
-                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
                                         <path d="M5 12h14"></path>
                                         <path d="M12 5v14"></path>
                                     </svg>
-                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -66,7 +66,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
                                     aria-labelledby="hs-basic-heading-one" style="height: 0px;">
                                     <div class="pb-4 px-6">
-                                        <p class="text-sm text-gray-600 dark:text-gray-200">
+                                        <p class="text-sm text-gray-600">
                                             {{ program.program_specification|title }}
                                         </p>
                                     </div>
@@ -76,16 +76,16 @@ program.short_name }}) {% endblock title %} {% block styles %}
                             <div class="hs-accordion" id="hs-basic-heading-two">
                                 <button
                                     class="hs-accordion-toggle 
-                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                                     aria-controls="hs-basic-collapse-two">
-                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
                                         <path d="M5 12h14"></path>
                                         <path d="M12 5v14"></path>
                                     </svg>
-                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -97,7 +97,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
                                     aria-labelledby="hs-basic-heading-two" style="height: 0px;">
                                     <div class="pb-4 px-6">
-                                        <p class="text-sm text-gray-600 dark:text-gray-200">
+                                        <p class="text-sm text-gray-600">
                                             {{ program.admission_requirements|title }}
                                         </p>
                                     </div>
@@ -107,16 +107,16 @@ program.short_name }}) {% endblock title %} {% block styles %}
                             <div class="hs-accordion" id="hs-basic-heading-three">
                                 <button
                                     class="hs-accordion-toggle 
-                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                                     aria-controls="hs-basic-collapse-three">
-                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
                                         <path d="M5 12h14"></path>
                                         <path d="M12 5v14"></path>
                                     </svg>
-                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -128,7 +128,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
                                     aria-labelledby="hs-basic-heading-three" style="height: 0px;">
                                     <div class="pb-4 px-6">
-                                        <p class="text-sm text-gray-600 dark:text-gray-200">
+                                        <p class="text-sm text-gray-600">
                                             {{ program.learning_outcomes }}
                                         </p>
                                     </div>
@@ -138,16 +138,16 @@ program.short_name }}) {% endblock title %} {% block styles %}
                             <div class="hs-accordion" id="hs-basic-heading-three">
                                 <button
                                     class="hs-accordion-toggle 
-                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                                     aria-controls="hs-basic-collapse-four">
-                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
                                         <path d="M5 12h14"></path>
                                         <path d="M12 5v14"></path>
                                     </svg>
-                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                                    <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500"
                                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round">
@@ -159,7 +159,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
                                     aria-labelledby="hs-basic-heading-three" style="height: 0px;">
                                     <div class="pb-4 px-6">
-                                        <p class="text-sm text-gray-600 dark:text-gray-200">
+                                        <p class="text-sm text-gray-600">
                                             {{ program.assessment }}
                                         </p>
                                     </div>
@@ -181,16 +181,16 @@ program.short_name }}) {% endblock title %} {% block styles %}
                     <div class="hs-accordion" id="hs-basic-heading-year1">
                         <button
                             class="hs-accordion-toggle
-                            bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                             aria-controls="hs-basic-collapse-year1">
-                            <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                            <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M5 12h14"></path>
                                 <path d="M12 5v14"></path>
                             </svg>
-                            <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                            <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -202,7 +202,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                             class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
                             aria-labelledby="hs-basic-heading-year14" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
-                                <p class="text-sm text-gray-600 dark:text-gray-200">
+                                <p class="text-sm text-gray-600">
                                     <!--[if BLOCK]><![endif]-->
                                 </p>
 
@@ -233,16 +233,16 @@ program.short_name }}) {% endblock title %} {% block styles %}
                     <div class="hs-accordion" id="hs-basic-heading-year1">
                         <button
                             class="hs-accordion-toggle
-                                        bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                        bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
                             aria-controls="hs-basic-collapse-year1">
-                            <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                            <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M5 12h14"></path>
                                 <path d="M12 5v14"></path>
                             </svg>
-                            <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500 dark:text-gray-400"
+                            <svg class="hs-accordion-active:block hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary hidden size-4 text-gray-600 group-hover:text-gray-500"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
@@ -254,7 +254,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                             class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
                             aria-labelledby="hs-basic-heading-year14" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
-                                <p class="text-sm text-gray-600 dark:text-gray-200"></p>
+                                <p class="text-sm text-gray-600"></p>
                                 {% for module in modules %}
                                 <div class="flex items-start text-left"><svg xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20" fill="currentColor"
