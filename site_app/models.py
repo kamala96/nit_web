@@ -413,7 +413,13 @@ class Staff(models.Model):
         ('pro', 'Public Relations Officer'),
         ('pro-1', 'Public Relations Officer I'),
         ('pro-2', 'Public Relations Officer II'),
-        ('ppro', 'Principal Public relations Officer'),
+        ('ppro', 'Principal Public Relations Officer'),
+
+        ('principal-internal-audit-officer', 'Principal Internal Audit Officer'),
+        ('internal-audit-officer-1', 'Internal Audit Officer I'),
+        ('internal-audit-officer-2', 'Internal Audit Officer II'),
+
+
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
     )
