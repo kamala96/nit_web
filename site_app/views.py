@@ -1,7 +1,7 @@
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from .models import AccountingOfficer, Department, Download, Event, Menu, MenuItem, MenuItemContent, OrganizationUnit, Post, Program, QuickLink, Slider, Staff
+from .models import AccountingOfficer, Department, Download, Event, Menu, MenuItem, MenuItemContent, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship
 from site_app.models import Menu
 
 
@@ -72,7 +72,7 @@ def handle_nav_menu_click(request, menu_slug):
     nav_data = []
     departments_data = []
     staff_members = []
-    leader = [None, None]
+    leader = None
     accounting_officer = None
 
     # Get all MenuItem objects for the clicked menu
@@ -106,11 +106,11 @@ def handle_nav_menu_click(request, menu_slug):
             nav_data = org_unit
             if org_unit:
                 departments_data = org_unit.departments.all()
-                staff_members = Staff.objects.filter(department__unit=org_unit)
-                leader[0] = 'Dean' if org_unit.unit_group == 'A' else 'Director'
-                leader[1] = Staff.objects.get(
-                    department__unit=org_unit, is_unit_head=True)
-        except (OrganizationUnit.DoesNotExist, Staff.DoesNotExist):
+                # Get all staff department relationships where the department is under the organization unit
+                staff_members = StaffDepartmentRelationship.objects.filter(
+                    department__unit=org_unit)
+                leader = staff_members.filter(is_unit_head=True).first()
+        except (OrganizationUnit.DoesNotExist):
             raise Http404(
                 "Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
         template_name = 'faculty_detailed.html'
@@ -123,7 +123,7 @@ def handle_nav_menu_click(request, menu_slug):
         'menu_items': menu_items,
         'menu_item_contents': menu_item_contents,
         'nav_data': nav_data,
-        'departments_data': departments_data,
+        'departments_data': departments_data.filter(is_visible=True),
         'staff_members': staff_members,
         'leader': leader,
         'accounting_officer': accounting_officer
@@ -138,11 +138,11 @@ def handle_view_department(request, department_slug):
     staff_members = []
     try:
         department = Department.objects.get(slug=department_slug)
-        leader = Staff.objects.get(
-            department=department, is_department_head=True)
         programs = Program.objects.filter(department=department)
-        staff_members = Staff.objects.filter(department=department)
-    except (Department.DoesNotExist, Staff.DoesNotExist):
+        staff_members = StaffDepartmentRelationship.objects.filter(
+            department=department)
+        leader = staff_members.filter(is_department_head=True).first()
+    except (Department.DoesNotExist):
         raise Http404("Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
     except Exception:
         pass

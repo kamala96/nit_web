@@ -89,16 +89,24 @@ class Gallery(models.Model):
 
 
 class Menu(models.Model):
+    LINK = 'A'
+    SINGLE_COLUMN_CHILD = 'B'
+    MULTIPLE_COLUMN_CHILD = 'C'
     menu_type_choices = [
-        ('A', 'Link'),
-        ('B', 'Single Column Child'),
-        ('C', 'Multi Column Child')
+        (LINK, 'Link'),
+        (SINGLE_COLUMN_CHILD, 'Single Column Child'),
+        (MULTIPLE_COLUMN_CHILD, 'Multi Column Child')
     ]
+
+    FACULTIES_DIRECTORATES = 'A'
+    DEPARTMENTS_UNITS_CENTRES_SECTION = 'B'
+    OTHER = 'C'
     PAGE_TYPE_CHOICES = [
-        ('A', 'FACULTIES/DIRECTORATES'),
-        ('B', 'DEPARTMENTS/UNITS/CENTERS'),
-        ('C', 'OTHER')
+        (FACULTIES_DIRECTORATES, 'FACULTIES/DIRECTORATES'),
+        (DEPARTMENTS_UNITS_CENTRES_SECTION, 'DEPARTMENTS/UNITS/CENTRES/SECTION'),
+        (OTHER, 'OTHER')
     ]
+
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=100, unique=True)
     url = models.CharField(max_length=255)
@@ -176,11 +184,15 @@ class Event(models.Model):
 
 
 class Post(models.Model):
+    ANNOUNCEMENTS = 'A'
+    LATEST_NEWS = 'B'
+    CURRENT_NEWS = 'C'
+    E_NEWS_FLASH = 'D'
     post_type_choices = [
-        ('A', 'Announcements'),
-        ('B', 'Latest News'),
-        ('C', 'Current News'),
-        ('D', 'e-News Flash')
+        (ANNOUNCEMENTS, 'Announcements'),
+        (LATEST_NEWS, 'Latest News'),
+        (CURRENT_NEWS, 'Current News'),
+        (E_NEWS_FLASH, 'e-News Flash')
     ]
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post_type = models.CharField(max_length=1, choices=post_type_choices)
@@ -197,21 +209,21 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def clean(self):
-        if self.post_type == 'A':
+        if self.post_type == self.ANNOUNCEMENTS:
             if not self.file_url:
                 raise ValidationError("For Announcements, file is required.")
             if self.image_url:
                 raise ValidationError(
                     "For Announcements, image is not required.")
-        if self.post_type == 'B' and not self.image_url:
+        if self.post_type == self.LATEST_NEWS and not self.image_url:
             if self.file_url:
                 raise ValidationError("For Latest News, file is not required.")
             if not self.image_url:
                 raise ValidationError("For Latest News, image is required.")
-        elif self.post_type == 'C' and (self.image_url or self.file_url or self.cover_image):
+        elif self.post_type == self.CURRENT_NEWS and (self.image_url or self.file_url or self.cover_image):
             raise ValidationError(
                 "For Announcements and Hot News, the image and file are not required.")
-        elif self.post_type == 'D' and not (self.image_url and self.file_url):
+        elif self.post_type == self.E_NEWS_FLASH and not (self.image_url and self.file_url):
             raise ValidationError(
                 "For e-News Flash, both image and file are required.")
 
@@ -227,9 +239,11 @@ class Post(models.Model):
 
 
 class QuickLink(models.Model):
+    GROUP_A = 'A'
+    GROUP_B = 'B'
     GROUP_CHOICES = (
-        ('A', 'Group A'),
-        ('B', 'Group B'),
+        (GROUP_A, 'Group A'),
+        (GROUP_B, 'Group B'),
     )
 
     title = models.CharField(max_length=255)
@@ -323,14 +337,18 @@ class AccountingOfficer(SingletonModel):
 
 
 class OrganizationUnit(models.Model):
+    ACADEMIC = 'A'
+    ADMINISTRATIVE = 'B'
     UNIT_TYPE_CHOICES = (
-        ('A', 'Academic'),
-        ('B', 'Administrative'),
+        (ACADEMIC, 'Academic'),
+        (ADMINISTRATIVE, 'Administrative'),
     )
 
+    FACULTY = 'A'
+    DIRECTORATE = 'B'
     UNIT_GROUP_CHOICES = (
-        ('A', 'Faculty'),
-        ('B', 'Directorate'),
+        (FACULTY, 'Faculty'),
+        (DIRECTORATE, 'Directorate'),
     )
 
     name = models.CharField(max_length=100)
@@ -355,10 +373,12 @@ class Department(models.Model):
     DEPARTMENT = 'A'
     UNIT = 'B'
     CENTRE = 'C'
+    SECTION = 'D'
     DEPARTMENT_GROUP_CHOICES = (
         (DEPARTMENT, 'Department'),
         (UNIT, 'Unit'),
         (CENTRE, 'Centre'),
+        (SECTION, 'Section'),
     )
 
     name = models.CharField(max_length=100)
@@ -371,7 +391,9 @@ class Department(models.Model):
         max_length=20, choices=DEPARTMENT_GROUP_CHOICES)
     is_academic = models.BooleanField(default=False)
     has_prefix = models.BooleanField(
-        default=True, help_text='Whether a Department/Centre/Unit has to be prefixed with words - Department, Centre or Unit')
+        default=True, help_text='Whether a Department/Centre/Unit/Section has to be prefixed with words - Department, Centre or Unit')
+    is_visible = models.BooleanField(
+        default=True, help_text='Whether a Department/Centre/Unit/Section has to be displayed or not (reserved for system self purposes)')
     about_note = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -395,6 +417,8 @@ class Staff(models.Model):
         ('researcher', 'Researcher'),
         ('ict-officer-1', 'ICT Officer I'),
         ('ict-officer-2', 'ICT Officer II'),
+        ('assistant-ict-officer-1', 'Assistant ICT Officer I'),
+        ('assistant-ict-officer-2', 'Assistant ICT Officer II'),
         ('instructor', 'Instructor'),
         ('instructors-facilitator', 'Instructor/Facilitator'),
 
@@ -453,27 +477,16 @@ class Staff(models.Model):
     staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
     department = models.ForeignKey(
         Department, on_delete=models.CASCADE, null=True, blank=True)
+    departments = models.ManyToManyField(
+        Department, through='StaffDepartmentRelationship', related_name='staff_memberships')
     specialization = models.TextField(blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
-    is_unit_head = models.BooleanField(
-        default=False, verbose_name="IS DIRECTORATE/FACULTY LEADER")
-    is_department_head = models.BooleanField(
-        default=False, verbose_name="IS_DEPARMENT/UNIT/CENTER LEADER")
-    leadership_title = models.CharField(
-        max_length=100, choices=LEADERSHIP_CHOICES, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def clean(self):
-        if self.is_unit_head and self.is_department_head:
-            raise ValidationError(
-                "A staff member cannot be both a organization unit head and a department head.")
-
-        if self.is_department_head or self.leadership_title:
-            if not self.leadership_title:
-                raise ValidationError(
-                    "Leadership title cannot be empty if is_department_head or leadership_title is true.")
+    class Meta:
+        verbose_name_plural = 'Staff'
 
     def save(self, *args, **kwargs):
         self.full_clean()  # Run full validation
@@ -481,6 +494,62 @@ class Staff(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.designation}'
+
+
+class StaffDepartmentRelationship(models.Model):
+    DEAN = 'dean'
+    DIRECTOR = 'director'
+    HEAD = 'head'
+    COORDINATOR = 'coordinator'
+    CENTRE_LEADER = 'centre-leade'
+
+    LEADERSHIP_CHOICES = (
+        (DEAN, 'Dean'),
+        (DIRECTOR, 'Director'),
+        (HEAD, 'Head'),
+        (COORDINATOR, 'Coordinator'),
+        (CENTRE_LEADER, 'Centre Leader'),
+    )
+
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    is_unit_head = models.BooleanField(
+        default=False, verbose_name="IS DIRECTORATE/FACULTY LEADER")
+    is_department_head = models.BooleanField(
+        default=False, verbose_name="IS DEPARTMENT/UNIT/CENTRE/SECTION LEADER")
+    leadership_title = models.CharField(
+        max_length=100, choices=LEADERSHIP_CHOICES, null=True, blank=True)
+    is_acting = models.BooleanField(default=False, verbose_name="Is Acting")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        # Ensure each staff member is associated with a department only once
+        unique_together = ('staff', 'department')
+        verbose_name = 'Staff Department (Intermediate)'
+        verbose_name_plural = 'Staff Department (Intermediate)'
+
+    def clean(self):
+        if self.is_unit_head and self.is_department_head:
+            raise ValidationError(
+                "A staff member cannot be both a organization unit head and a department head.")
+        if self.is_department_head or self.leadership_title:
+            if not self.leadership_title:
+                raise ValidationError(
+                    "Leadership title cannot be empty if is_department_head or leadership_title is true.")
+        if not (self.is_unit_head or self.is_department_head):
+            self.is_acting = False  # If not a unit or department head, set is_acting to False
+
+        existing_relationships = StaffDepartmentRelationship.objects.filter(
+            staff=self.staff, department__unit=self.department.unit
+        ).exclude(id=self.id)  # Exclude current instance if it's being updated
+        if existing_relationships.exists():
+            raise ValidationError(
+                "Staff member is already associated with another department in the same Faculty/Directorate.")
+
+    def save(self, *args, **kwargs):
+        self.full_clean()  # Run full validation
+        super().save(*args, **kwargs)
 
 
 class Program(models.Model):
@@ -618,3 +687,4 @@ class ModuleProgram(models.Model):
 
     def __str__(self):
         return f"{self.module} - {self.program}"
+    

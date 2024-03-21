@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, Module, ModuleProgram, OrganizationUnit, Post, Program, QuickLink, Slider, Staff
+from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, Module, ModuleProgram, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship
 from site_app.utilities import get_short_description
 
 # Register your models here.
@@ -165,7 +165,7 @@ class OrganizationUnitAdmin(admin.ModelAdmin):
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ['name', 'short_name', 'slug', 'unit', 'department_group', 'is_academic',
-                    'has_prefix', 'about_note_text', 'get_joined_gallery']
+                    'has_prefix', 'is_visible', 'about_note_text', 'get_joined_gallery']
     list_per_page = 10
     search_fields = ['name', 'short_name', 'slug']
     list_filter = ['unit', 'is_academic']
@@ -192,16 +192,35 @@ class DepartmentAdmin(admin.ModelAdmin):
 
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
-    list_display = ['name', 'designation', 'department', 'get_short_specialization',
-                    'profile_picture', 'is_unit_head', 'is_department_head', 'leadership_title', 'staff_phone', 'staff_email']
+    list_display = ['name', 'designation', 'department', 'display_departments', 'get_short_specialization',
+                    'profile_picture', 'staff_phone', 'staff_email']
     list_per_page = 10
     search_fields = ['name', 'designation',]
-    list_filter = ['is_unit_head', 'is_department_head', 'designation']
+    list_filter = ['designation']
     readonly_fields = ('created_at', 'updated_at')
 
     @admin.display(description='Specializaion')
     def get_short_specialization(self, obj):
         return get_short_description(obj, field_name='specialization')
+
+    @admin.display(description='Departments')
+    def display_departments(self, obj):
+        # Fetch and format the list of programs (by short_name)
+        departments = obj.departments.all()
+        if departments:
+            return ', '.join(department.name for department in departments)
+        else:
+            return 'No department associated'
+
+
+@admin.register(StaffDepartmentRelationship)
+class StaffDepartmentRelationshipAdmin(admin.ModelAdmin):
+    list_display = ['staff', 'department', 'is_unit_head',
+                    'is_department_head', 'leadership_title', 'is_acting']
+    list_filter = ['is_unit_head', 'is_department_head', 'is_acting']
+    search_fields = ['staff__name',
+                     'department__name', 'department__short_name']
+    readonly_fields = ['created_at', 'updated_at']
 
 
 @admin.register(Program)
