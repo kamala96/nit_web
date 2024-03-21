@@ -96,7 +96,7 @@ class Menu(models.Model):
     ]
     PAGE_TYPE_CHOICES = [
         ('A', 'FACULTIES/DIRECTORATES'),
-        ('B', 'DEPARTMENTS/UNITS'),
+        ('B', 'DEPARTMENTS/UNITS/CENTERS'),
         ('C', 'OTHER')
     ]
     title = models.CharField(max_length=255)
@@ -361,7 +361,6 @@ class Department(models.Model):
     short_name = models.CharField(max_length=20)
     slug = models.CharField(
         max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
-
     unit = models.ForeignKey(
         OrganizationUnit, on_delete=models.CASCADE, related_name='departments', null=True, blank=True)
     department_group = models.CharField(
@@ -383,10 +382,21 @@ class Staff(models.Model):
         ('lecturer', 'Lecturer'),
         ('assistant-lecturer', 'Assistant Lecturer'),
         ('tutorial-assistant', 'Tutorial Assistant'),
+        ('senior-tutor', 'Senior Tutor'),
         ('tutor', 'Tutor'),
+        ('tutor-1', 'Tutor I'),
+        ('tutor-2', 'Tutor II'),
         ('researcher', 'Researcher'),
         ('ict-officer-1', 'ICT Officer I'),
         ('ict-officer-2', 'ICT Officer II'),
+        ('instructor', 'Instructor'),
+        ('instructors-facilitator', 'Instructor/Facilitator'),
+
+        ('senior-cabin-crew-instructors', 'Senior Cabin Crew Instructors'),
+        ('senior-flight-operations-instructor',
+         'Senior Flight Operations Instructor'),
+        ('laboratory-technician', 'Laboratory Technician'),
+
         ('pro', 'Public relations Officer'),
         ('ppro', 'Principal Public relations Officer'),
         ('administrative-staff', 'Administrative Staff'),
@@ -403,8 +413,8 @@ class Staff(models.Model):
 
     name = models.CharField(max_length=100)
     designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
-    staff_email = models.EmailField(blank=True)
-    staff_phone = PhoneNumberField(region="TZ", blank=True)
+    staff_email = models.EmailField(null=True, blank=True)
+    staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
     department = models.ForeignKey(
         Department, on_delete=models.CASCADE, null=True, blank=True)
     specialization = models.TextField(blank=True)
@@ -509,14 +519,18 @@ class Program(models.Model):
 
     @property
     def formatted_duration(self):
+        if self.duration is None:
+            return None
+
         if self.program_type == Program.LONG:
             years = int(self.duration)
             return f"{years} year{'s' if years > 1 else ''}"
         elif self.program_type == Program.SHORT:
-            months = int(self.duration)
-            return f"{months} month{'s' if months > 1 else ''}"
-        else:
-            return None
+            if self.duration >= 30:  # Assuming 30 days for a month
+                months = self.duration / 30
+                return f"{months} month{'s' if months > 1 else ''}"
+            else:
+                return f"{self.duration} day{'s' if self.duration > 1 else ''}"
 
 
 class Module(models.Model):
