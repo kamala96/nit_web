@@ -403,8 +403,8 @@ class Staff(models.Model):
 
     name = models.CharField(max_length=100)
     designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
-    staff_email = models.EmailField(blank=True)
-    staff_phone = PhoneNumberField(region="TZ", blank=True)
+    staff_email = models.EmailField(null=True, blank=True)
+    staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
     department = models.ForeignKey(
         Department, on_delete=models.CASCADE, null=True, blank=True)
     specialization = models.TextField(blank=True)
