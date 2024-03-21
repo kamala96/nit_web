@@ -31,8 +31,8 @@ class GalleryInline(admin.TabularInline):
     extra = 1
 
 
-class StaffInline(admin.TabularInline):
-    model = Staff
+class StaffDepartmentRelationshipInline(admin.TabularInline):
+    model = StaffDepartmentRelationship
     extra = 1
 
 
@@ -170,7 +170,7 @@ class DepartmentAdmin(admin.ModelAdmin):
     search_fields = ['name', 'short_name', 'slug']
     list_filter = ['unit', 'is_academic']
     readonly_fields = ('created_at', 'updated_at')
-    inlines = [StaffInline]
+    inlines = [StaffDepartmentRelationshipInline]
 
     def get_inline_instances(self, request, obj=None):
         inline_instances = super().get_inline_instances(request, obj)
