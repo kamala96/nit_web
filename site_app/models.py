@@ -366,6 +366,8 @@ class Department(models.Model):
     department_group = models.CharField(
         max_length=20, choices=DEPARTMENT_GROUP_CHOICES)
     is_academic = models.BooleanField(default=False)
+    has_prefix = models.BooleanField(
+        default=False, help_text='Whether a Department/Centre/Unit has to be prefixed with words - Department, Centre or Unit')
     about_note = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
