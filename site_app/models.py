@@ -473,6 +473,7 @@ class Staff(models.Model):
         ('legal-officer-2', 'Legal Officer II'),
 
         ('dean-students', 'Dean of Students'),
+        ('economist', 'Economist'),
 
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
