@@ -211,7 +211,7 @@
                         class="mt-16 mx-auto h-48 w-48 overflow-hidden square-full outline outline-offset-2 outline-primary">
 
                         <img src="
-                        {% if leader.profile_picture %}
+                        {% if leader.staff.profile_picture %}
                             {{ leader.staff.profile_picture.url }}
                         {% else %}
                             {% static 'img/profile_image.png' %}
