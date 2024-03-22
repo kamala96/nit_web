@@ -197,7 +197,7 @@ class StaffAdmin(admin.ModelAdmin):
     list_per_page = 10
     search_fields = ['name', 'designation',]
     list_filter = ['is_council_staff',
-                   'is_top_management_staff', 'is_top_management_staff',]
+                   'is_top_management_staff', 'is_management_staff',]
     readonly_fields = ('created_at', 'updated_at')
     inlines = [StaffDepartmentRelationshipInline]
 
