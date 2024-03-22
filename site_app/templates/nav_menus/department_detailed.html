@@ -36,9 +36,9 @@
                 <h1 class="crimson-text text-white text-4xl font-bold mx-2">
 
                     {% if department.has_prefix %}
-                    {{ department.get_department_group_display.upper }} OF&nbsp;
+                    {{ department.get_department_group_display.upper }}&nbsp;OF&nbsp;
                     {% endif %}
-                    {{ department.name.upper }} ({{ department.short_name.upper }})
+                    {{ department.name.upper }} ({{ department.short_name }})
                 </h1>
                 <span class="h-1 w-10 bg-white "></span>
             </div>
