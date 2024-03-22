@@ -40,9 +40,12 @@ class ProgramInline(admin.TabularInline):
     model = Program
     extra = 1
 
-# @admin.display(description='Associated Menu')
-# def menu_list(self, obj):
-#     return ", ".join([menu.title for menu in obj.menu_images.all()])
+
+# or admin.TabularInline for a more compact view
+class StaffRolesInline(admin.StackedInline):
+    model = StaffPremiumRoles
+    can_delete = True  # Set to True if you want to allow deleting inline objects
+    verbose_name_plural = 'Staff Roles'
 
 
 @admin.register(Menu)
@@ -197,7 +200,7 @@ class StaffAdmin(admin.ModelAdmin):
     list_per_page = 10
     search_fields = ['name', 'designation', 'staff_email', 'staff_phone']
     readonly_fields = ('created_at', 'updated_at')
-    inlines = [StaffDepartmentRelationshipInline]
+    inlines = [StaffDepartmentRelationshipInline, StaffRolesInline]
 
     @admin.display(description='Specializaion')
     def get_short_specialization(self, obj):

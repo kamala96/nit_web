@@ -594,6 +594,10 @@ class StaffPremiumRoles(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True, help_text='Do not use if you don\'t understand it')
 
+    class Meta:
+        verbose_name = 'Staff Premium Role'
+        verbose_name = 'Staff Premium Roles'
+
 
 class StaffDepartmentRelationship(models.Model):
     DEAN = 'dean'
