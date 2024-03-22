@@ -475,6 +475,8 @@ class Staff(models.Model):
         ('dean-students', 'Dean of Students'),
         ('economist', 'Economist'),
 
+        ('cheif-accountant', 'Chief Accountant'),
+
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
     )
