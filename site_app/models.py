@@ -492,7 +492,21 @@ class Staff(models.Model):
         ('principal-admim-mgt-officer-2',
          'Principal Administrative Management Officer II'),
 
+        ('principle-warden', 'Principle Warden'),
+        ('warden', 'Warden'),
+        ('games-tutor', 'Games Tutor'),
+        ('games-tutor', 'Games Tutor'),
+        ('loan-oficer', 'Loan Officer'),
+        ('loan-oficer-1', 'Loan Officer I'),
+        ('loan-oficer-2', 'Loan Officer II'),
+        ('assistant-loan-oficer-1', 'Assistant Loan Officer I'),
+        ('assistant-loan-oficer-2', 'Assistant Loan Officer II'),
+        ('records-management-officer', 'Records Management Officer'),
+
+        ('office-secretary', 'Office Secretary'),
+
         ('administrative-staff', 'Administrative Staff'),
+
         ('other', 'Other'),
     )
 
@@ -505,7 +519,7 @@ class Staff(models.Model):
     )
 
     name = models.CharField(max_length=100)
-    designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
+    designation = models.CharField(max_length=255, choices=DESIGNATION_CHOICES)
     staff_email = models.EmailField(null=True, blank=True)
     staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
     departments = models.ManyToManyField(
