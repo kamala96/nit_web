@@ -439,6 +439,7 @@ class Staff(models.Model):
         ('laboratory-technician-1', 'Laboratory Technician I'),
         ('laboratory-technician-2', 'Laboratory Technician II'),
 
+        ('chief-librarian', 'Chief Librarian'),
         ('senior-librarian', 'Senior Librarian'),
         ('principal-librarian', 'Principal Librarian'),
         ('librarian-1', 'Librarian I'),
@@ -471,7 +472,49 @@ class Staff(models.Model):
         ('legal-officer-1', 'Legal Officer I'),
         ('legal-officer-2', 'Legal Officer II'),
 
+        ('dean-students', 'Dean of Students'),
+        ('economist', 'Economist'),
+
+        ('cheif-accountant', 'Chief Accountant'),
+        ('principal-accountant-officer', 'Principal Accountant Officer'),
+        ('principal-accountant-officer-1', 'Principal Accountant Officer I'),
+        ('principal-accountant-officer-2', 'Principal Accountant Officer II'),
+        ('senior-accounts-officer-1', 'Senior Accounts Officer I'),
+        ('senior-accounts-officer-2', 'Senior Accounts Officer II'),
+        ('accounts-officer-1', 'Accounts Officer I'),
+        ('accounts-officer-2', 'Accounts Officer II'),
+        ('accountant-officer-1', 'Accountant Officer I'),
+        ('accountant-officer-2', 'Accountant Officer II'),
+
+
+        ('principal-planning-officer', 'Principal Planning Officer'),
+        ('planning-officer-1', 'Planning Officer I'),
+        ('planning-officer-2', 'Planning Officer II'),
+
+
+        ('principal-hrm-officer-1', 'Principal Human Resource Management Officer I'),
+        ('principal-hrm-officer-2', 'Principal Human Resource Management Officer II'),
+        ('senior-hrm-officer-1', 'Senior Human Resource Management Officer I'),
+        ('senior-hrm-officer-2', 'Senior Human Resource Management Officer II'),
+        ('principal-admim-mgt-officer-1',
+         'Principal Administrative Management Officer I'),
+        ('principal-admim-mgt-officer-2',
+         'Principal Administrative Management Officer II'),
+
+        ('principle-warden', 'Principle Warden'),
+        ('warden', 'Warden'),
+        ('games-tutor', 'Games Tutor'),
+        ('loan-oficer', 'Loan Officer'),
+        ('loan-oficer-1', 'Loan Officer I'),
+        ('loan-oficer-2', 'Loan Officer II'),
+        ('assistant-loan-oficer-1', 'Assistant Loan Officer I'),
+        ('assistant-loan-oficer-2', 'Assistant Loan Officer II'),
+        ('records-management-officer', 'Records Management Officer'),
+
+        ('office-secretary', 'Office Secretary'),
+
         ('administrative-staff', 'Administrative Staff'),
+
         ('other', 'Other'),
     )
 
@@ -484,7 +527,7 @@ class Staff(models.Model):
     )
 
     name = models.CharField(max_length=100)
-    designation = models.CharField(max_length=100, choices=DESIGNATION_CHOICES)
+    designation = models.CharField(max_length=255, choices=DESIGNATION_CHOICES)
     staff_email = models.EmailField(null=True, blank=True)
     staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
     departments = models.ManyToManyField(
@@ -492,6 +535,10 @@ class Staff(models.Model):
     specialization = models.TextField(blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
+
+    is_council_staff = models.BooleanField(default=False)
+    is_top_management_staff = models.BooleanField(default=False)
+    is_management_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
