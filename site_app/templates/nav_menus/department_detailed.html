@@ -185,7 +185,7 @@
                                     {% if item.is_acting %}
                                     Ag.&nbsp;
                                     {% endif %}
-                                    {{ item.leadership_title.upper }} {{ item.department.short_name.upper }},
+                                    {{ item.get_leadership_title_display }} {{ item.department.short_name }},
                                     {% endif %}
                                     {{ item.staff.get_designation_display }}
                                 </td>

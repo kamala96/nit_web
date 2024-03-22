@@ -27,7 +27,7 @@
     class="block w-full rounded-md border-gray-200 px-4 py-3 pr-9 text-sm focus:border-primary focus:ring-primary sm:hidden"
     aria-label="Tabs" role="tablist">
     {% for item, content in menu_item_contents.items %}
-    <option value="#hs-tab-to-select-{{ item.name }}">{{ item.name }}</option>
+    <option value="#hs-tab-to-select-{{ item.id }}">{{ item.name }}</option>
     {% endfor %}
 </select>
 
@@ -36,8 +36,8 @@
         {% for item, content in menu_item_contents.items %}
         <button type="button"
             class="{% if forloop.first %} active {% endif %} -mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary "
-            id="hs-tab-to-select-item-{{ item.name }}" data-hs-tab="#hs-tab-to-select-{{ item.name }}"
-            aria-controls="hs-tab-to-select-{{ item.name }}" role="tab">
+            id="hs-tab-to-select-item-{{ item.id }}" data-hs-tab="#hs-tab-to-select-{{ item.id }}"
+            aria-controls="hs-tab-to-select-{{ item.id }}" role="tab">
             {{ item.name }}
         </button>
         {% endfor %}
@@ -46,7 +46,8 @@
 
 <div class="html-content mt-3 p-3">
     {% for item, content in menu_item_contents.items %}
-    <div id="hs-tab-to-select-{{ item.name }}" {% if forloop.first %} class="active" {% else %} class="hidden" {% endif %} role="tabpanel" aria-labelledby="hs-tab-to-select-item-{{ item.name }}">
+    <div id="hs-tab-to-select-{{ item.name }}" {% if forloop.first %} class="active" {% else %} class="hidden" {% endif
+        %} role="tabpanel" aria-labelledby="hs-tab-to-select-item-{{ item.name }}">
         <p style="text-align: justify;" align="justify">
             {{ content.content }}
         </p>

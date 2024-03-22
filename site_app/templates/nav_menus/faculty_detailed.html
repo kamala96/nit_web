@@ -164,12 +164,12 @@
                                     {% if item.is_acting %}
                                     Ag.
                                     {% endif %}
-                                    {{ item.leadership_title.upper }} {{ item.department.unit.short_name.upper }},
+                                    {{ item.get_leadership_title_display }} {{ item.department.unit.short_name }},
                                     {% elif item.is_department_head %}
                                     {% if item.is_acting %}
                                     Ag.
                                     {% endif %}
-                                    {{ item.leadership_title.upper }} {{ item.department.short_name.upper }},
+                                    {{ item.get_leadership_title_display }} {{ item.department.short_name }},
                                     {% endif %}
                                     {{ item.staff.get_designation_display }}
                                 </td>
