@@ -77,7 +77,7 @@ def handle_nav_menu_click(request, menu_slug):
     management_staff = None
 
     # Get all MenuItem objects for the clicked menu
-    menu_items = MenuItem.objects.filter(heading=menu)
+    menu_items = MenuItem.objects.filter(heading=menu).order_by('order')
 
     # Create a dictionary to store MenuItemContent for each MenuItem
     menu_item_contents = {}
@@ -94,22 +94,23 @@ def handle_nav_menu_click(request, menu_slug):
 
     if menu.slug in ['about-us']:
         template_name = 'about_us.html'
-        
+
     if menu.slug in ['admission-info']:
         template_name = 'admission_info.html'
-        
+
     if menu.slug in ['fee-structure']:
         template_name = 'fee_structure.html'
-        
+
     if menu.slug in ['how-to-apply']:
         template_name = 'how_to_apply.html'
-        
+
     if menu.slug in ['programmes-offered']:
         template_name = 'programmes_offered.html'
-        
+
     if menu.slug in ['management-staff']:
-        management_staff = Staff.objects.filter(is_management_staff=True).order_by('-created_at')
-        template_name = 'management_staff.html'    
+        management_staff = Staff.objects.filter(
+            is_management_staff=True).order_by('-created_at')
+        template_name = 'management_staff.html'
 
     if menu.slug in ['rector-message']:
         accounting_officer = AccountingOfficer.load()

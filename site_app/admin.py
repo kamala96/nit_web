@@ -66,7 +66,7 @@ class MenuAdmin(admin.ModelAdmin):
 
 @admin.register(MenuItem)
 class MenuItemAdmin(admin.ModelAdmin):
-    list_display = ['heading', 'name', 'is_visible']
+    list_display = ['heading', 'name', 'is_visible', 'order']
     list_filter = ['heading']
     search_fields = ['heading', 'name']
     list_per_page = 50

@@ -138,13 +138,15 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu item is visible or not (draft)')
+    order = models.IntegerField(
+        default=0, help_text="Order in which Menu Item should be displayed.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Menu Item"
         verbose_name_plural = "Menu Items"
-        ordering = ['heading', 'name',]
+        ordering = ['order', 'heading',]
 
     def __str__(self):
         return self.name
