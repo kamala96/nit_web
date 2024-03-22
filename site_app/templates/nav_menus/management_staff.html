@@ -43,14 +43,14 @@
 
 <section class="flex flex-col md:flex-row">
 
-    <div class="w-full md:w-3/5 lg:w-3/5 xl:w-3/5 p-16">
 
-        <div class="col-span-12 p-3 lg:col-span-4">
+
+        
             {% for staff in management_staff  %}
-            <div>
+            <div class=" bg-purple-50 p-2 m-2">
 
                 <div
-                    class="mt-16 mx-auto h-48 w-48 overflow-hidden square-full outline outline-offset-2 outline-primary">
+                    class="mx-auto h-48 w-48 overflow-hidden square-full outline outline-offset-2 outline-primary">
                     <img src="{% if leader.staff.profile_picture %} {{ leader.staff.profile_picture.url}} {% else %} {% static 'img/profile_image.png' %} {% endif %}"
                         alt="Profile">
                 </div>
@@ -91,14 +91,10 @@
 
             {% endfor %}
 
-        </div>
+     
 
        
-    </div>
-
-    <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5 flex ">
-      
-    </div>
+   
   
 </section>
 
