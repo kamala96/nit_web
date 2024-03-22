@@ -539,7 +539,8 @@ class StaffDepartmentRelationship(models.Model):
     DIRECTOR = 'director'
     HEAD = 'head'
     COORDINATOR = 'coordinator'
-    CENTRE_LEADER = 'centre-leade'
+    CENTRE_LEADER = 'centre-leader'
+    MANAGER = 'manager'
 
     LEADERSHIP_CHOICES = (
         (DEAN, 'Dean'),
@@ -547,6 +548,7 @@ class StaffDepartmentRelationship(models.Model):
         (HEAD, 'Head'),
         (COORDINATOR, 'Coordinator'),
         (CENTRE_LEADER, 'Centre Leader'),
+        (MANAGER, 'Manager'),
     )
 
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
