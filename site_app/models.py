@@ -578,12 +578,12 @@ class StaffDepartmentRelationship(models.Model):
         if not (self.is_unit_head or self.is_department_head):
             self.is_acting = False  # If not a unit or department head, set is_acting to False
 
-        existing_relationships = StaffDepartmentRelationship.objects.filter(
-            staff=self.staff, department__unit=self.department.unit
-        ).exclude(id=self.id)  # Exclude current instance if it's being updated
-        if existing_relationships.exists():
-            raise ValidationError(
-                "Staff member is already associated with another department in the same Faculty/Directorate.")
+        # existing_relationships = StaffDepartmentRelationship.objects.filter(
+        #     staff=self.staff, department__unit=self.department.unit
+        # ).exclude(id=self.id)  # Exclude current instance if it's being updated
+        # if existing_relationships.exists():
+        #     raise ValidationError(
+        #         "Staff member is already associated with another department in the same Faculty/Directorate.")
 
     def save(self, *args, **kwargs):
         self.full_clean()  # Run full validation
