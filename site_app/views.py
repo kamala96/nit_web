@@ -108,7 +108,7 @@ def handle_nav_menu_click(request, menu_slug):
         template_name = 'programmes_offered.html'
         
     if menu.slug in ['management-staff']:
-        management_staff = Staff.objects.filter(is_management_staff=False).order_by('-created_at')
+        management_staff = Staff.objects.filter(is_management_staff=True).order_by('-created_at')
         template_name = 'management_staff.html'    
 
     if menu.slug in ['rector-message']:
