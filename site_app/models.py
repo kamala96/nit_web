@@ -415,10 +415,20 @@ class Staff(models.Model):
         ('tutor-1', 'Tutor I'),
         ('tutor-2', 'Tutor II'),
         ('researcher', 'Researcher'),
+
+        ('senir-ict-officer', 'Senior ICT Officer'),
+        ('senir-ict-officer-1', 'Senior ICT Officer I'),
+        ('senir-ict-officer-2', 'Senior ICT Officer II'),
+        ('principal-ict-officer', 'Principal ICT Officer'),
+        ('principal-ict-officer-1', 'Principal ICT Officer I'),
+        ('principal-ict-officer-2', 'Principal ICT Officer II'),
         ('ict-officer-1', 'ICT Officer I'),
         ('ict-officer-2', 'ICT Officer II'),
         ('assistant-ict-officer-1', 'Assistant ICT Officer I'),
         ('assistant-ict-officer-2', 'Assistant ICT Officer II'),
+        ('ict-assistant-1', 'ICT Assistant I'),
+        ('ict-assistant-2', 'ICT Assistant II'),
+
         ('instructor', 'Instructor'),
         ('instructors-facilitator', 'Instructor/Facilitator'),
 
@@ -426,6 +436,8 @@ class Staff(models.Model):
         ('senior-flight-operations-instructor',
          'Senior Flight Operations Instructor'),
         ('laboratory-technician', 'Laboratory Technician'),
+        ('laboratory-technician-1', 'Laboratory Technician I'),
+        ('laboratory-technician-2', 'Laboratory Technician II'),
 
         ('senior-librarian', 'Senior Librarian'),
         ('principal-librarian', 'Principal Librarian'),
