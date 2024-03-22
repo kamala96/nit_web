@@ -12,25 +12,13 @@
 
         <div class="mx-8 grid grid-cols-12 gap-3 pt-8 sm:mx-12">
 
-            <div class="col-span-12 pt-3 lg:col-span-4">
+            <div class="col-span-12 pt-3 lg:col-span-4 my-8 bg-primary opacity-90">
 
-                <div class="gap-3 pt-8 max-w-5xl mx-auto">
-                    <div class="col-span-12 pt-7">
-                        <div class="relative flex flex-col items-center justify-center py-3">
-                            <div class="h-32 w-32 overflow-hidden square-full outline outline-offset-2 outline-primary"style="width: 300px; height: 300px" >
-                                <img class="h-full w-full object-cover" src="{{ accounting_officer.image.url }}" alt="">
-                            </div>
-                            <h1 class="mt-3 text-xl font-bold text-primary"> {{ accounting_officer.full_name }}</h1>
-                            <h1 class="text-sm font-bold text-secondary"> {{ accounting_officer.title }}</h1>
-                            
-                        </div>
-                        
-                    </div>
-                </div>
+                {% include 'components/rector_image.html'%}
                 
             </div>
 
-
+            
             
             <div class="col-span-12 p-7 lg:col-span-8">
                 
