@@ -439,6 +439,7 @@ class Staff(models.Model):
         ('laboratory-technician-1', 'Laboratory Technician I'),
         ('laboratory-technician-2', 'Laboratory Technician II'),
 
+        ('chief-librarian', 'Chief Librarian'),
         ('senior-librarian', 'Senior Librarian'),
         ('principal-librarian', 'Principal Librarian'),
         ('librarian-1', 'Librarian I'),
