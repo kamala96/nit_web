@@ -539,7 +539,8 @@ class StaffDepartmentRelationship(models.Model):
     DIRECTOR = 'director'
     HEAD = 'head'
     COORDINATOR = 'coordinator'
-    CENTRE_LEADER = 'centre-leade'
+    CENTRE_LEADER = 'centre-leader'
+    MANAGER = 'manager'
 
     LEADERSHIP_CHOICES = (
         (DEAN, 'Dean'),
@@ -547,6 +548,7 @@ class StaffDepartmentRelationship(models.Model):
         (HEAD, 'Head'),
         (COORDINATOR, 'Coordinator'),
         (CENTRE_LEADER, 'Centre Leader'),
+        (MANAGER, 'Manager'),
     )
 
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
@@ -578,12 +580,12 @@ class StaffDepartmentRelationship(models.Model):
         if not (self.is_unit_head or self.is_department_head):
             self.is_acting = False  # If not a unit or department head, set is_acting to False
 
-        existing_relationships = StaffDepartmentRelationship.objects.filter(
-            staff=self.staff, department__unit=self.department.unit
-        ).exclude(id=self.id)  # Exclude current instance if it's being updated
-        if existing_relationships.exists():
-            raise ValidationError(
-                "Staff member is already associated with another department in the same Faculty/Directorate.")
+        # existing_relationships = StaffDepartmentRelationship.objects.filter(
+        #     staff=self.staff, department__unit=self.department.unit
+        # ).exclude(id=self.id)  # Exclude current instance if it's being updated
+        # if existing_relationships.exists():
+        #     raise ValidationError(
+        #         "Staff member is already associated with another department in the same Faculty/Directorate.")
 
     def save(self, *args, **kwargs):
         self.full_clean()  # Run full validation
