@@ -476,6 +476,15 @@ class Staff(models.Model):
         ('economist', 'Economist'),
 
         ('cheif-accountant', 'Chief Accountant'),
+        ('principal-accountant-officer', 'Principal Accountant Officer'),
+        ('principal-accountant-officer-1', 'Principal Accountant Officer I'),
+        ('principal-accountant-officer-2', 'Principal Accountant Officer II'),
+        ('senior-accounts-officer-1', 'Senior Accounts Officer I'),
+        ('senior-accounts-officer-2', 'Senior Accounts Officer II'),
+        ('accounts-officer-1', 'Accounts Officer I'),
+        ('accounts-officer-2', 'Accounts Officer II'),
+        ('accountant-officer-1', 'Accountant Officer I'),
+        ('accountant-officer-2', 'Accountant Officer II'),
 
 
         ('principal-planning-officer', 'Principal Planning Officer'),
@@ -494,7 +503,6 @@ class Staff(models.Model):
 
         ('principle-warden', 'Principle Warden'),
         ('warden', 'Warden'),
-        ('games-tutor', 'Games Tutor'),
         ('games-tutor', 'Games Tutor'),
         ('loan-oficer', 'Loan Officer'),
         ('loan-oficer-1', 'Loan Officer I'),
