@@ -198,6 +198,7 @@ class StaffAdmin(admin.ModelAdmin):
     search_fields = ['name', 'designation',]
     list_filter = ['designation']
     readonly_fields = ('created_at', 'updated_at')
+    inlines = [StaffDepartmentRelationshipInline]
 
     @admin.display(description='Specializaion')
     def get_short_specialization(self, obj):
