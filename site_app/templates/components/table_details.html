@@ -46,8 +46,8 @@
 
 <div class="html-content mt-3 p-3">
     {% for item, content in menu_item_contents.items %}
-    <div id="hs-tab-to-select-{{ item.name }}" {% if forloop.first %} class="active" {% else %} 
-    class="hidden" {% endif %} role="tabpanel" aria-labelledby="hs-tab-to-select-item-{{ item.name }}">
+    <div id="hs-tab-to-select-{{ item.id }}" {% if forloop.first %} class="active" {% else %} class="hidden" {% endif %}
+        role="tabpanel" aria-labelledby="hs-tab-to-select-item-{{ item.id }}">
         <p style="text-align: justify;" align="justify">
             {{ content.content }}
         </p>
