@@ -123,7 +123,7 @@ def handle_nav_menu_click(request, menu_slug):
         'menu_items': menu_items,
         'menu_item_contents': menu_item_contents,
         'nav_data': nav_data,
-        'departments_data': departments_data.filter(is_visible=True),
+        'departments_data': departments_data.filter(is_visible=True) if departments_data else None,
         'staff_members': staff_members,
         'leader': leader,
         'accounting_officer': accounting_officer

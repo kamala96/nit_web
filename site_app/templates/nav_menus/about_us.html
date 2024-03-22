@@ -8,17 +8,19 @@
 <div class="pt-2 lg:pt-0 font-sans text-gray-900 antialiased">
     <div>
 
-        <div class="mx-8 grid grid-cols-12 gap-3 pt-8 sm:mx-12">
+        <div class="mx-8 grid grid-cols-12 gap-3 pt- sm:mx-12">
 
-            <div class="col-span-12 pt-7 lg:col-span-8">
+            <div class="col-span-12 pt-7 lg:col-span-6">
 
                 {% include 'components/table_details.html' with menu_item_contents=menu_item_contents %} 
                 
             </div>
 
-            <div class="col-span-12 p-3 lg:col-span-4">
+            <div class="col-span-12 p-3 lg:col-span-6">
                 
-               <p class="bg-gray-200">Something here</p> 
+               <div class="m-8">
+                {% include 'about_nit_slide.html' with menu=menu %}
+               </div>
 
             </div>
         </div>
