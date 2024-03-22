@@ -93,6 +93,18 @@ def handle_nav_menu_click(request, menu_slug):
 
     if menu.slug in ['about-us']:
         template_name = 'about_us.html'
+        
+    if menu.slug in ['admission-info']:
+        template_name = 'admission_info.html'
+        
+    if menu.slug in ['fee-structure']:
+        template_name = 'fee_structure.html'
+        
+    if menu.slug in ['how-to-apply']:
+        template_name = 'how_to_apply.html'
+        
+    if menu.slug in ['programmes-offered']:
+        template_name = 'programmes_offered.html'    
 
     if menu.slug in ['rector-message']:
         accounting_officer = AccountingOfficer.load()
