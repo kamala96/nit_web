@@ -472,6 +472,8 @@ class Staff(models.Model):
         ('legal-officer-1', 'Legal Officer I'),
         ('legal-officer-2', 'Legal Officer II'),
 
+        ('dean-students', 'Dean of Students'),
+
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
     )
