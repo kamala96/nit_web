@@ -536,11 +536,16 @@ class Staff(models.Model):
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
 
-    is_council_staff = models.BooleanField(default=False)
-    is_top_management_staff = models.BooleanField(default=False)
-    is_management_staff = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    is_council_staff = models.BooleanField(
+        default=False, help_text='Do not use if you don\'t understand it')
+    is_top_management_staff = models.BooleanField(
+        default=False, help_text='Do not use if you don\'t understand it')
+    is_management_staff = models.BooleanField(
+        default=False, help_text='Do not use if you don\'t understand it')
+    created_at = models.DateTimeField(
+        auto_now_add=True, help_text='Do not use if you don\'t understand it')
+    updated_at = models.DateTimeField(
+        auto_now=True, help_text='Do not use if you don\'t understand it')
 
     class Meta:
         verbose_name_plural = 'Staff'
