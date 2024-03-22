@@ -1,6 +1,6 @@
 {% load static %} {% load tz %}
 
-<section class="flex flex-col md:flex-row mt-2">
+{% comment %} <section class="flex flex-col md:flex-row mt-2">
     <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5"></div>
     <div class="w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
         <div class="p-2 relative flex justify-center items-center">
@@ -10,16 +10,16 @@
             <span class="h-1 w-10 bg-primary "></span>
         </div>
     </div>
-</section>
+</section> {% endcomment %}
 
-<section class="flex flex-col md:flex-row mt-2 bg-primary opacity-90">
+<section class="flex flex-col md:flex-row mt-0 bg-primary opacity-90">
 
 
     <div class="relative overflow-hidden">
         <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
             style="background-image: url({% static 'img/bg_welcome_note_white.png' %});"></div>
         <div class="relative z-10 flex flex-wrap">
-            <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5">
+            <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5 pt-4">
                 
                 {% include 'components/rector_image.html'%}
 

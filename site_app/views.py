@@ -74,6 +74,7 @@ def handle_nav_menu_click(request, menu_slug):
     staff_members = []
     leader = None
     accounting_officer = None
+    management_staff = None
 
     # Get all MenuItem objects for the clicked menu
     menu_items = MenuItem.objects.filter(heading=menu)
@@ -104,7 +105,11 @@ def handle_nav_menu_click(request, menu_slug):
         template_name = 'how_to_apply.html'
         
     if menu.slug in ['programmes-offered']:
-        template_name = 'programmes_offered.html'    
+        template_name = 'programmes_offered.html'
+        
+    if menu.slug in ['management-staff']:
+        management_staff = Staff.objects.filter(is_management_staff=True).order_by('-created_at')
+        template_name = 'management_staff.html'    
 
     if menu.slug in ['rector-message']:
         accounting_officer = AccountingOfficer.load()
@@ -138,7 +143,8 @@ def handle_nav_menu_click(request, menu_slug):
         'departments_data': departments_data.filter(is_visible=True) if departments_data else None,
         'staff_members': staff_members,
         'leader': leader,
-        'accounting_officer': accounting_officer
+        'accounting_officer': accounting_officer,
+        'management_staff': management_staff
     }
 
     return render(request, f'nav_menus/{template_name}', context)
