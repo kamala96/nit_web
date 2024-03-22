@@ -73,6 +73,7 @@
 
 
   {% block custom_js_files %} {% endblock %}
+
   <script type="text/javascript">
 
     // ajax_setup with CSRF TOKEN
@@ -88,11 +89,7 @@
       });
     });
 
-  </script>
-
   
-
-  <script>
     function manageScrollableArea(scrollableAreaId, scrollIconId) {
       const scrollableArea = document.getElementById(scrollableAreaId);
       const scrollIcon = document.getElementById(scrollIconId);
@@ -131,5 +128,4 @@
 
   {% block scripts %} {% endblock %}
 </body>
-
 </html>
