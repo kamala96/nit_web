@@ -193,7 +193,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
     list_display = ['name', 'designation', 'display_departments', 'get_short_specialization',
-                    'profile_picture', 'staff_phone', 'staff_email']
+                    'profile_picture', 'staff_phone', 'staff_email', 'is_council_staff', 'is_top_management_staff', 'is_management_staff',]
     list_per_page = 10
     search_fields = ['name', 'designation',]
     list_filter = ['designation']

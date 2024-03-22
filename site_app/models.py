@@ -477,6 +477,21 @@ class Staff(models.Model):
 
         ('cheif-accountant', 'Chief Accountant'),
 
+
+        ('principal-planning-officer', 'Principal Planning Officer'),
+        ('planning-officer-1', 'Planning Officer I'),
+        ('planning-officer-2', 'Planning Officer II'),
+
+
+        ('principal-hrm-officer-1', 'Principal Human Resource Management Officer I'),
+        ('principal-hrm-officer-2', 'Principal Human Resource Management Officer II'),
+        ('senior-hrm-officer-1', 'Senior Human Resource Management Officer I'),
+        ('senior-hrm-officer-2', 'Senior Human Resource Management Officer II'),
+        ('principal-admim-mgt-officer-1',
+         'Principal Administrative Management Officer I'),
+        ('principal-admim-mgt-officer-2',
+         'Principal Administrative Management Officer II'),
+
         ('administrative-staff', 'Administrative Staff'),
         ('other', 'Other'),
     )
@@ -498,6 +513,10 @@ class Staff(models.Model):
     specialization = models.TextField(blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
+
+    is_council_staff = models.BooleanField(default=False)
+    is_top_management_staff = models.BooleanField(default=False)
+    is_management_staff = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
