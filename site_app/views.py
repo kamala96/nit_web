@@ -66,9 +66,6 @@ def handle_nav_menu_click(request, menu_slug):
     except Menu.DoesNotExist:
         raise Http404("Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
 
-    if menu.slug in ['home']:
-        return redirect('index')
-
     nav_data = []
     departments_data = []
     staff_members = []
@@ -92,31 +89,7 @@ def handle_nav_menu_click(request, menu_slug):
 
     template_name = '_default.html'
 
-    if menu.slug in ['about-us']:
-        template_name = 'about_us.html'
-
-    if menu.slug in ['admission-info']:
-        template_name = 'admission_info.html'
-
-    if menu.slug in ['fee-structure']:
-        template_name = 'fee_structure.html'
-
-    if menu.slug in ['how-to-apply']:
-        template_name = 'how_to_apply.html'
-
-    if menu.slug in ['programmes-offered']:
-        template_name = 'programmes_offered.html'
-
-    if menu.slug in ['management-staff']:
-        management_staff = Staff.objects.filter(
-            is_management_staff=True).order_by('-created_at')
-        template_name = 'management_staff.html'
-
-    if menu.slug in ['rector-message']:
-        accounting_officer = AccountingOfficer.load()
-        template_name = 'rector_message.html'
-
-    elif menu.page_type.upper() == 'A':
+    if menu.page_type.lower() == menu.FACULTIES_DIRECTORATES.lower():
 
         # Faculties/Directorates
         try:
@@ -132,9 +105,38 @@ def handle_nav_menu_click(request, menu_slug):
             raise Http404(
                 "Oops! It looks like this navigation menu is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
         template_name = 'faculty_detailed.html'
-    elif menu.page_type.upper() == 'B':
+    elif menu.page_type.lower() == menu.DEPARTMENTS_UNITS_CENTRES_SECTION.lower():
         # Units/Departments
         return redirect(reverse('view_department', args=[menu_slug]))
+    else:
+        # Other PAGE TYPES
+        if menu.slug in ['home']:
+            return redirect('index')
+
+        elif menu.slug in ['about-us']:
+            template_name = 'about_us.html'
+
+        elif menu.slug in ['admission-info']:
+            template_name = 'admission_info.html'
+
+        elif menu.slug in ['fee-structure']:
+            template_name = 'fee_structure.html'
+
+        elif menu.slug in ['how-to-apply']:
+            template_name = 'how_to_apply.html'
+
+        elif menu.slug in ['programmes-offered']:
+            template_name = 'programmes_offered.html'
+
+        elif menu.slug in ['management-staff']:
+            # Filter Staff instances where is_management_staff is True
+            management_staff = Staff.objects.filter(
+                staffpremiumroles__is_management_staff=True)
+            template_name = 'management_staff.html'
+
+        elif menu.slug in ['rector-message']:
+            accounting_officer = AccountingOfficer.load()
+            template_name = 'rector_message.html'
 
     context = {
         'menu': menu,

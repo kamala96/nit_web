@@ -537,13 +537,6 @@ class Staff(models.Model):
     specialization = models.TextField(blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
-
-    is_council_staff = models.BooleanField(
-        default=False, help_text='Do not use if you don\'t understand it')
-    is_top_management_staff = models.BooleanField(
-        default=False, help_text='Do not use if you don\'t understand it')
-    is_management_staff = models.BooleanField(
-        default=False, help_text='Do not use if you don\'t understand it')
     created_at = models.DateTimeField(
         auto_now_add=True, help_text='Do not use if you don\'t understand it')
     updated_at = models.DateTimeField(
@@ -586,6 +579,20 @@ class Staff(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.designation}'
+
+
+class StaffPremiumRoles(models.Model):
+    staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
+    is_council_staff = models.BooleanField(
+        default=False, help_text='Check if this staff member belongs to the council.')
+    is_top_management_staff = models.BooleanField(
+        default=False, help_text='Check if this staff member belongs to the top management.')
+    is_management_staff = models.BooleanField(
+        default=False, help_text='Check if this staff member belongs to the management team.')
+    created_at = models.DateTimeField(
+        auto_now_add=True, help_text='Do not use if you don\'t understand it')
+    updated_at = models.DateTimeField(
+        auto_now=True, help_text='Do not use if you don\'t understand it')
 
 
 class StaffDepartmentRelationship(models.Model):

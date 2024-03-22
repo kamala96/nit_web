@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, Module, ModuleProgram, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship
+from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, Module, ModuleProgram, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship, StaffPremiumRoles
 from site_app.utilities import get_short_description
 
 # Register your models here.
@@ -193,11 +193,9 @@ class DepartmentAdmin(admin.ModelAdmin):
 @admin.register(Staff)
 class StaffAdmin(admin.ModelAdmin):
     list_display = ['name', 'designation', 'display_departments', 'get_short_specialization',
-                    'profile_picture', 'staff_phone', 'staff_email', 'is_council_staff', 'is_top_management_staff', 'is_management_staff',]
+                    'profile_picture', 'staff_phone', 'staff_email',]
     list_per_page = 10
-    search_fields = ['name', 'designation',]
-    list_filter = ['is_council_staff',
-                   'is_top_management_staff', 'is_management_staff',]
+    search_fields = ['name', 'designation', 'staff_email', 'staff_phone']
     readonly_fields = ('created_at', 'updated_at')
     inlines = [StaffDepartmentRelationshipInline]
 
@@ -213,6 +211,15 @@ class StaffAdmin(admin.ModelAdmin):
             return ', '.join(department.name for department in departments)
         else:
             return 'No department associated'
+
+
+@admin.register(StaffPremiumRoles)
+class StaffPremiumRolesAdmin(admin.ModelAdmin):
+    list_display = ('staff', 'is_council_staff',
+                    'is_top_management_staff', 'is_management_staff')
+    list_filter = ('is_council_staff', 'is_top_management_staff',
+                   'is_management_staff')
+    search_fields = ('staff__name', 'staff__staff_email')
 
 
 @admin.register(StaffDepartmentRelationship)
