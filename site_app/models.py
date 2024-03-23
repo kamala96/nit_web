@@ -546,6 +546,10 @@ class Staff(models.Model):
         auto_now_add=True, help_text='Do not use if you don\'t understand it')
     updated_at = models.DateTimeField(
         auto_now=True, help_text='Do not use if you don\'t understand it')
+    
+    # New field to represent the manager of this staff
+    manager = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='subordinates')
+
 
     class Meta:
         verbose_name_plural = 'Staff'

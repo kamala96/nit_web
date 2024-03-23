@@ -75,6 +75,7 @@ def handle_nav_menu_click(request, menu_slug):
     leader = None
     accounting_officer = None
     management_staff = None
+    staff_by_manager = None
 
     # Get all MenuItem objects for the clicked menu
     menu_items = MenuItem.objects.filter(heading=menu)
@@ -109,7 +110,21 @@ def handle_nav_menu_click(request, menu_slug):
         
     if menu.slug in ['management-staff']:
         management_staff = Staff.objects.filter(is_management_staff=True).order_by('-created_at')
-        template_name = 'management_staff.html'    
+
+        # Organize staff members by manager_id
+        staff_by_manager = {}
+        for staff_member in management_staff:
+            manager_id = staff_member.manager_id
+            if manager_id is None:
+                manager_id = 0  # Set manager_id to 0 for the CEO
+            if manager_id not in staff_by_manager:
+                staff_by_manager[manager_id] = {'manager': None, 'subordinates': []}
+            if manager_id == 0:
+                staff_by_manager[manager_id]['manager'] = staff_member
+            else:
+                staff_by_manager[manager_id]['subordinates'].append(staff_member)
+
+        template_name = 'management_staff.html' 
 
     if menu.slug in ['rector-message']:
         accounting_officer = AccountingOfficer.load()
@@ -144,7 +159,7 @@ def handle_nav_menu_click(request, menu_slug):
         'staff_members': staff_members,
         'leader': leader,
         'accounting_officer': accounting_officer,
-        'management_staff': management_staff
+        'staff_by_manager': staff_by_manager
     }
 
     return render(request, f'nav_menus/{template_name}', context)
