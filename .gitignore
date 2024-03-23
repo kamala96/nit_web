@@ -35,3 +35,5 @@ migrations/
 **/migrations/
 site_app/migrations/
 site_app/__pycache__/
+
+site_app/management/backup_ds.py
