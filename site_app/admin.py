@@ -97,6 +97,7 @@ class PostAdmin(admin.ModelAdmin):
     list_per_page = 10
     list_filter = ['post_type']
     search_fields = ['title',]
+    readonly_fields = ('created_at', 'updated_at',)
 
     @admin.display(description='Title')
     def short_title(self, obj):

@@ -207,8 +207,8 @@ class Post(models.Model):
         upload_to=images_general_upload_to, max_length=255, verbose_name='Image', null=True, blank=True)
     cover_image = models.ImageField(
         upload_to=custom_cover_image_upload_to, verbose_name='Cover Image', max_length=255, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True, editable=True)
-    updated_at = models.DateTimeField(auto_now=True, editable=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def clean(self):
         if self.post_type == self.ANNOUNCEMENTS:
