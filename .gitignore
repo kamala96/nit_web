@@ -39,3 +39,4 @@ site_app/__pycache__/
 site_app/management/commands/backup_db.py
 **/backup_db.py
 **backup_db.py
+backups/
