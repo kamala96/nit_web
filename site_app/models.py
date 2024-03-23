@@ -9,6 +9,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from site_app.validators import validate_image_dimensions, validate_pdf_file
 
+from tinymce import models as tinymce_models
+
 # Create your models here.
 
 
@@ -397,7 +399,7 @@ class Department(models.Model):
         default=True, help_text='Whether a Department/Centre/Unit/Section has to be prefixed with words - Department, Centre or Unit')
     is_visible = models.BooleanField(
         default=True, help_text='Whether a Department/Centre/Unit/Section has to be displayed or not (reserved for system self purposes)')
-    about_note = models.TextField(
+    about_note = tinymce_models.HTMLField(
         blank=True, help_text='Enter About Note here')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

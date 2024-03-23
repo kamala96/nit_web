@@ -79,7 +79,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     aria-labelledby="hs-basic-heading-one" style="height: 0px;">
                                     <div class="pb-4 px-6">
                                         <p class="text-sm text-gray-600">
-                                            {{ program.program_specification|title }}
+                                            {{ program.program_specification|capfirst }}
                                         </p>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     aria-labelledby="hs-basic-heading-two" style="height: 0px;">
                                     <div class="pb-4 px-6">
                                         <p class="text-sm text-gray-600">
-                                            {{ program.admission_requirements|title }}
+                                            {{ program.admission_requirements|capfirst }}
                                         </p>
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     aria-labelledby="hs-basic-heading-three" style="height: 0px;">
                                     <div class="pb-4 px-6">
                                         <p class="text-sm text-gray-600">
-                                            {{ program.learning_outcomes }}
+                                            {{ program.learning_outcomes|capfirst }}
                                         </p>
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     aria-labelledby="hs-basic-heading-three" style="height: 0px;">
                                     <div class="pb-4 px-6">
                                         <p class="text-sm text-gray-600">
-                                            {{ program.assessment }}
+                                            {{ program.assessment|capfirst }}
                                         </p>
                                     </div>
                                 </div>
