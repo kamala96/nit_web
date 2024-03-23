@@ -695,10 +695,14 @@ class Program(models.Model):
     order = models.IntegerField(
         default=0, help_text="Order in which programs should be displayed in its Group.")
 
-    program_specification = models.TextField(blank=True)
-    admission_requirements = models.TextField(blank=True)
-    learning_outcomes = models.TextField(blank=True)
-    assessment = models.TextField(blank=True)
+    program_specification = models.TextField(
+        blank=True, help_text="Enter program specifications here.")
+    admission_requirements = models.TextField(
+        blank=True, help_text="Enter admission requirements here.")
+    learning_outcomes = models.TextField(
+        blank=True, help_text="Enter learning outcomes here.")
+    assessment = models.TextField(
+        blank=True, help_text="Enter assessment details here.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
