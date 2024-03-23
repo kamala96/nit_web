@@ -383,7 +383,7 @@ class Department(models.Model):
         (SECTION, 'Section'),
     )
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     short_name = models.CharField(max_length=20)
     slug = models.CharField(
         max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
