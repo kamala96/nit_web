@@ -596,7 +596,7 @@ class StaffPremiumRoles(models.Model):
 
     class Meta:
         verbose_name = 'Staff Premium Role'
-        verbose_name = 'Staff Premium Roles'
+        verbose_name_plural = 'Staff Premium Roles'
 
 
 class StaffDepartmentRelationship(models.Model):

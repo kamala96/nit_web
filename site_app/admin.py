@@ -45,7 +45,6 @@ class ProgramInline(admin.TabularInline):
 class StaffRolesInline(admin.StackedInline):
     model = StaffPremiumRoles
     can_delete = True  # Set to True if you want to allow deleting inline objects
-    verbose_name_plural = 'Staff Roles'
 
 
 @admin.register(Menu)
