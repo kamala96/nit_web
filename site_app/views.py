@@ -72,6 +72,8 @@ def handle_nav_menu_click(request, menu_slug):
     leader = None
     accounting_officer = None
     management_staff = None
+    council_members = None
+    top_leadership = None
     staff_by_manager = None
 
     # Get all MenuItem objects for the clicked menu
@@ -129,11 +131,21 @@ def handle_nav_menu_click(request, menu_slug):
         elif menu.slug in ['programmes-offered']:
             template_name = 'programmes_offered.html'
 
-        elif menu.slug in ['management-staff']:
-            # Filter Staff instances where is_management_staff is True
-            management_staff = Staff.objects.filter(
-                staffpremiumroles__is_management_staff=True)
-            template_name = 'management_staff.html'
+        elif menu.slug in ['management-staff', 'members-council', 'top-leadership']:
+            if menu.slug == 'management-staff':
+                # Management team members
+                management_staff = Staff.objects.filter(
+                    managementteam__isnull=False)
+                template_name = 'management_staff.html'
+            elif menu.slug == 'members-council':
+                # Council members
+                council_members = Staff.objects.filter(council__isnull=False)
+                template_name = 'council_members.html'
+            elif menu.slug == 'top-leadership':
+                # Top leadership
+                top_leadership = Staff.objects.filter(
+                    topmanagementteam__isnull=False)
+                template_name = 'top_leadership.html'
 
         elif menu.slug in ['rector-message']:
             accounting_officer = AccountingOfficer.load()

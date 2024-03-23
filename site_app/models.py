@@ -545,10 +545,6 @@ class Staff(models.Model):
         auto_now_add=True, help_text='Do not use if you don\'t understand it')
     updated_at = models.DateTimeField(
         auto_now=True, help_text='Do not use if you don\'t understand it')
-    
-    # New field to represent the manager of this staff
-    manager = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='subordinates')
-
 
     class Meta:
         verbose_name_plural = 'Staff'
@@ -589,22 +585,40 @@ class Staff(models.Model):
         return f'{self.name} - {self.designation}'
 
 
-class StaffPremiumRoles(models.Model):
+class Council(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
-    is_council_staff = models.BooleanField(
-        default=False, help_text='Check if this staff member belongs to the council.')
-    is_top_management_staff = models.BooleanField(
-        default=False, help_text='Check if this staff member belongs to the top management.')
-    is_management_staff = models.BooleanField(
-        default=False, help_text='Check if this staff member belongs to the management team.')
-    created_at = models.DateTimeField(
-        auto_now_add=True, help_text='Do not use if you don\'t understand it')
-    updated_at = models.DateTimeField(
-        auto_now=True, help_text='Do not use if you don\'t understand it')
+    manager = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='council_subordinates')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
-        verbose_name = 'Staff Premium Role'
-        verbose_name_plural = 'Staff Premium Roles'
+        verbose_name = 'Council Members'
+        verbose_name_plural = 'Council Members'
+
+
+class ManagementTeam(models.Model):
+    staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
+    manager = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='mgt_subordinates')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+
+    class Meta:
+        verbose_name = 'Management Team'
+        verbose_name_plural = 'Management Team'
+
+
+class TopManagementTeam(models.Model):
+    staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
+    manager = models.ForeignKey(
+        'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='top_mgt_subordinates')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+
+    class Meta:
+        verbose_name = 'Top Management Team'
+        verbose_name_plural = 'Top Management Team'
 
 
 class StaffDepartmentRelationship(models.Model):

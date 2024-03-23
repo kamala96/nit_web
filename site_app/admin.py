@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from site_app.models import AccountingOfficer, Department, Download, Event, Gallery, Menu, MenuImage, MenuItem, MenuItemContent, Module, ModuleProgram, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship, StaffPremiumRoles
+from site_app.models import AccountingOfficer, Council, Department, Download, Event, Gallery, ManagementTeam, Menu, MenuImage, MenuItem, MenuItemContent, Module, ModuleProgram, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship, TopManagementTeam
 from site_app.utilities import get_short_description
 
 # Register your models here.
@@ -41,10 +41,19 @@ class ProgramInline(admin.TabularInline):
     extra = 1
 
 
-# or admin.TabularInline for a more compact view
-class StaffRolesInline(admin.StackedInline):
-    model = StaffPremiumRoles
+class CouncilInline(admin.StackedInline):
+    model = Council
     can_delete = True  # Set to True if you want to allow deleting inline objects
+
+
+class ManagementTeamInline(admin.StackedInline):
+    model = ManagementTeam
+    can_delete = True
+
+
+class TopManagementTeamInline(admin.StackedInline):
+    model = TopManagementTeam
+    can_delete = True
 
 
 @admin.register(Menu)
@@ -200,7 +209,8 @@ class StaffAdmin(admin.ModelAdmin):
     list_per_page = 10
     search_fields = ['name', 'designation', 'staff_email', 'staff_phone']
     readonly_fields = ('created_at', 'updated_at')
-    inlines = [StaffDepartmentRelationshipInline, StaffRolesInline]
+    inlines = [StaffDepartmentRelationshipInline, CouncilInline,
+               ManagementTeamInline, TopManagementTeamInline]
 
     @admin.display(description='Specializaion')
     def get_short_specialization(self, obj):
@@ -216,22 +226,24 @@ class StaffAdmin(admin.ModelAdmin):
             return 'No department associated'
 
 
-@admin.register(StaffPremiumRoles)
-class StaffPremiumRolesAdmin(admin.ModelAdmin):
-    list_display = ('staff', 'is_council_staff',
-                    'is_top_management_staff', 'is_management_staff')
-    list_filter = ('is_council_staff', 'is_top_management_staff',
-                   'is_management_staff')
-    search_fields = ('staff__name', 'staff__staff_email')
+@admin.register(Council)
+class CouncilAdmin(admin.ModelAdmin):
+    list_display = ['staff', 'manager']
+    search_fields = ['staff__name', 'manager__name',]
+    readonly_fields = ['created_at', 'updated_at']
 
 
-@admin.register(StaffDepartmentRelationship)
-class StaffDepartmentRelationshipAdmin(admin.ModelAdmin):
-    list_display = ['staff', 'department', 'is_unit_head',
-                    'is_department_head', 'leadership_title', 'is_acting']
-    list_filter = ['is_unit_head', 'is_department_head', 'is_acting']
-    search_fields = ['staff__name',
-                     'department__name', 'department__short_name']
+@admin.register(ManagementTeam)
+class ManagementTeamAdmin(admin.ModelAdmin):
+    list_display = ['staff', 'manager']
+    search_fields = ['staff__name', 'manager__name',]
+    readonly_fields = ['created_at', 'updated_at']
+
+
+@admin.register(TopManagementTeam)
+class TopManagementTeamAdmin(admin.ModelAdmin):
+    list_display = ['staff', 'manager']
+    search_fields = ['staff__name', 'manager__name',]
     readonly_fields = ['created_at', 'updated_at']
 
 
