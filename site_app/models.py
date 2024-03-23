@@ -361,7 +361,7 @@ class OrganizationUnit(models.Model):
         max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
     unit_type = models.CharField(max_length=20, choices=UNIT_TYPE_CHOICES)
     unit_group = models.CharField(max_length=20, choices=UNIT_GROUP_CHOICES)
-    about_note = models.TextField(blank=True)
+    about_note = tinymce_models.HTMLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
