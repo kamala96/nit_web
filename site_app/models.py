@@ -120,7 +120,7 @@ class Menu(models.Model):
         max_length=1, choices=PAGE_TYPE_CHOICES, default="C")
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu is visible or not (draft)')
-    description = models.TextField(null=True, blank=True)
+    description = tinymce_models.HTMLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -156,7 +156,7 @@ class MenuItem(models.Model):
 
 class MenuItemContent(models.Model):
     menu_item = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
-    content = models.TextField(blank=True, null=True)
+    content = tinymce_models.HTMLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -172,7 +172,7 @@ class MenuItemContent(models.Model):
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = tinymce_models.HTMLField(max_length=255)
     address = models.CharField(
         max_length=200, verbose_name="Address/Location/Venue")
     image_url = models.ImageField(upload_to='uploads/events/', null=True)
@@ -201,7 +201,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post_type = models.CharField(max_length=1, choices=post_type_choices)
     title = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
+    description = tinymce_models.HTMLField(null=True, blank=True)
     file_url = models.FileField(
         upload_to=files_general_upload_to, max_length=255, verbose_name='File', null=True, blank=True)
 
@@ -292,7 +292,7 @@ class Download(models.Model):
 class Slider(models.Model):
     image = models.ImageField(
         upload_to=custom_slider_image_upload_to, max_length=255)
-    caption = models.CharField(max_length=100)
+    caption = tinymce_models.HTMLField(max_length=100)
     link = models.URLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -326,7 +326,7 @@ class SingletonModel(models.Model):
 class AccountingOfficer(SingletonModel):
     full_name = models.CharField(max_length=100)
     title = models.CharField(max_length=50)
-    welcome_note = models.TextField()
+    welcome_note = tinymce_models.HTMLField(max_length=255)
     image = models.ImageField(
         upload_to=files_accounting_officer_upload_to, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -538,7 +538,7 @@ class Staff(models.Model):
     staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
     departments = models.ManyToManyField(
         Department, through='StaffDepartmentRelationship', related_name='staff_memberships')
-    specialization = models.TextField(blank=True)
+    specialization = tinymce_models.HTMLField(blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
     created_at = models.DateTimeField(
@@ -701,13 +701,13 @@ class Program(models.Model):
     order = models.IntegerField(
         default=0, help_text="Order in which programs should be displayed in its Group.")
 
-    program_specification = models.TextField(
+    program_specification = tinymce_models.HTMLField(
         blank=True, help_text="Enter program specifications here.")
-    admission_requirements = models.TextField(
+    admission_requirements = tinymce_models.HTMLField(
         blank=True, help_text="Enter admission requirements here.")
-    learning_outcomes = models.TextField(
+    learning_outcomes = tinymce_models.HTMLField(
         blank=True, help_text="Enter learning outcomes here.")
-    assessment = models.TextField(
+    assessment = tinymce_models.HTMLField(
         blank=True, help_text="Enter assessment details here.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

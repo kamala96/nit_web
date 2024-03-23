@@ -16,6 +16,7 @@ handler404 = views.catch_non_existing_paths
 urlpatterns = [
     path(config('SECRET_ADMIN_URL') + '/admin/', admin.site.urls),
     path('', include('site_app.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 # Only for development
