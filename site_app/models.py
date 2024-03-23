@@ -681,8 +681,10 @@ class Program(models.Model):
         (LONG, 'Long Program'),
     ]
 
-    name = models.CharField(max_length=100)
-    short_name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100, unique=True,
+                            help_text="Enter the program name. This field must be unique.")
+    short_name = models.CharField(
+        max_length=20, help_text="Enter a short name or abbreviation")
     department = models.ForeignKey(
         Department, on_delete=models.CASCADE, related_name='programs')
     duration = models.DecimalField(max_digits=5, decimal_places=2,
