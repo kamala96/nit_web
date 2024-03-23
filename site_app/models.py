@@ -9,6 +9,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 from site_app.validators import validate_image_dimensions, validate_pdf_file
 
+from tinymce import models as tinymce_models
+
 # Create your models here.
 
 
@@ -118,7 +120,7 @@ class Menu(models.Model):
         max_length=1, choices=PAGE_TYPE_CHOICES, default="C")
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu is visible or not (draft)')
-    description = models.TextField(null=True, blank=True)
+    description = tinymce_models.HTMLField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -138,13 +140,15 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100)
     is_visible = models.BooleanField(
         default=False, help_text='Whether a menu item is visible or not (draft)')
+    order = models.IntegerField(
+        default=0, help_text="Order in which Menu Item should be displayed.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Menu Item"
         verbose_name_plural = "Menu Items"
-        ordering = ['heading', 'name',]
+        ordering = ['order', 'heading',]
 
     def __str__(self):
         return self.name
@@ -152,7 +156,7 @@ class MenuItem(models.Model):
 
 class MenuItemContent(models.Model):
     menu_item = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
-    content = models.TextField(blank=True, null=True)
+    content = tinymce_models.HTMLField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -168,7 +172,7 @@ class MenuItemContent(models.Model):
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
-    description = models.TextField()
+    description = tinymce_models.HTMLField(max_length=255)
     address = models.CharField(
         max_length=200, verbose_name="Address/Location/Venue")
     image_url = models.ImageField(upload_to='uploads/events/', null=True)
@@ -197,7 +201,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     post_type = models.CharField(max_length=1, choices=post_type_choices)
     title = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
+    description = tinymce_models.HTMLField(null=True, blank=True)
     file_url = models.FileField(
         upload_to=files_general_upload_to, max_length=255, verbose_name='File', null=True, blank=True)
 
@@ -288,7 +292,7 @@ class Download(models.Model):
 class Slider(models.Model):
     image = models.ImageField(
         upload_to=custom_slider_image_upload_to, max_length=255)
-    caption = models.CharField(max_length=100)
+    caption = tinymce_models.HTMLField(max_length=100)
     link = models.URLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -322,7 +326,7 @@ class SingletonModel(models.Model):
 class AccountingOfficer(SingletonModel):
     full_name = models.CharField(max_length=100)
     title = models.CharField(max_length=50)
-    welcome_note = models.TextField()
+    welcome_note = tinymce_models.HTMLField(max_length=255)
     image = models.ImageField(
         upload_to=files_accounting_officer_upload_to, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -357,7 +361,7 @@ class OrganizationUnit(models.Model):
         max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
     unit_type = models.CharField(max_length=20, choices=UNIT_TYPE_CHOICES)
     unit_group = models.CharField(max_length=20, choices=UNIT_GROUP_CHOICES)
-    about_note = models.TextField(blank=True)
+    about_note = tinymce_models.HTMLField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -381,7 +385,8 @@ class Department(models.Model):
         (SECTION, 'Section'),
     )
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True,
+                            help_text='Enter Department name')
     short_name = models.CharField(max_length=20)
     slug = models.CharField(
         max_length=20, help_text="To be used internally to link this model with Menu", unique=True)
@@ -394,7 +399,8 @@ class Department(models.Model):
         default=True, help_text='Whether a Department/Centre/Unit/Section has to be prefixed with words - Department, Centre or Unit')
     is_visible = models.BooleanField(
         default=True, help_text='Whether a Department/Centre/Unit/Section has to be displayed or not (reserved for system self purposes)')
-    about_note = models.TextField(blank=True)
+    about_note = tinymce_models.HTMLField(
+        blank=True, help_text='Enter About Note here')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -532,16 +538,9 @@ class Staff(models.Model):
     staff_phone = PhoneNumberField(region="TZ", null=True, blank=True)
     departments = models.ManyToManyField(
         Department, through='StaffDepartmentRelationship', related_name='staff_memberships')
-    specialization = models.TextField(blank=True)
+    specialization = tinymce_models.HTMLField(blank=True)
     profile_picture = models.ImageField(
         upload_to=profile_pictures_upload_to, blank=True, null=True)
-
-    is_council_staff = models.BooleanField(
-        default=False, help_text='Do not use if you don\'t understand it')
-    is_top_management_staff = models.BooleanField(
-        default=False, help_text='Do not use if you don\'t understand it')
-    is_management_staff = models.BooleanField(
-        default=False, help_text='Do not use if you don\'t understand it')
     created_at = models.DateTimeField(
         auto_now_add=True, help_text='Do not use if you don\'t understand it')
     updated_at = models.DateTimeField(
@@ -588,6 +587,24 @@ class Staff(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.designation}'
+
+
+class StaffPremiumRoles(models.Model):
+    staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
+    is_council_staff = models.BooleanField(
+        default=False, help_text='Check if this staff member belongs to the council.')
+    is_top_management_staff = models.BooleanField(
+        default=False, help_text='Check if this staff member belongs to the top management.')
+    is_management_staff = models.BooleanField(
+        default=False, help_text='Check if this staff member belongs to the management team.')
+    created_at = models.DateTimeField(
+        auto_now_add=True, help_text='Do not use if you don\'t understand it')
+    updated_at = models.DateTimeField(
+        auto_now=True, help_text='Do not use if you don\'t understand it')
+
+    class Meta:
+        verbose_name = 'Staff Premium Role'
+        verbose_name_plural = 'Staff Premium Roles'
 
 
 class StaffDepartmentRelationship(models.Model):
@@ -672,8 +689,10 @@ class Program(models.Model):
         (LONG, 'Long Program'),
     ]
 
-    name = models.CharField(max_length=100)
-    short_name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100, unique=True,
+                            help_text="Enter the program name. This field must be unique.")
+    short_name = models.CharField(
+        max_length=20, help_text="Enter a short name or abbreviation")
     department = models.ForeignKey(
         Department, on_delete=models.CASCADE, related_name='programs')
     duration = models.DecimalField(max_digits=5, decimal_places=2,
@@ -686,10 +705,14 @@ class Program(models.Model):
     order = models.IntegerField(
         default=0, help_text="Order in which programs should be displayed in its Group.")
 
-    program_specification = models.TextField(blank=True)
-    admission_requirements = models.TextField(blank=True)
-    learning_outcomes = models.TextField(blank=True)
-    assessment = models.TextField(blank=True)
+    program_specification = tinymce_models.HTMLField(
+        blank=True, help_text="Enter program specifications here.")
+    admission_requirements = tinymce_models.HTMLField(
+        blank=True, help_text="Enter admission requirements here.")
+    learning_outcomes = tinymce_models.HTMLField(
+        blank=True, help_text="Enter learning outcomes here.")
+    assessment = tinymce_models.HTMLField(
+        blank=True, help_text="Enter assessment details here.")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

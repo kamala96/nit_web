@@ -130,7 +130,7 @@
                                         {{ forloop.counter }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
-                                        {{ program.name|title }} ({{ program.short_name.upper }})
+                                        {{ program.name|capfirst }} ({{ program.short_name.upper }})
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
                                         {{ program.formatted_duration }}
@@ -185,7 +185,7 @@
                                     {% if item.is_acting %}
                                     Ag.&nbsp;
                                     {% endif %}
-                                    {{ item.leadership_title.upper }} {{ item.department.short_name.upper }},
+                                    {{ item.get_leadership_title_display }} {{ item.department.short_name }},
                                     {% endif %}
                                     {{ item.staff.get_designation_display }}
                                 </td>
@@ -226,7 +226,7 @@
                             {% if leader.is_acting %}
                             Ag.&nbsp;
                             {% endif %}
-                            {{ leader.get_leadership_title_display|title }}, {{ department.name }}
+                            {{ leader.get_leadership_title_display|capfirst }}, {{ department.name }}
                         </h2>
                         <p class="mt-2">
                             <a class="hover:text-primary" href="mailto: {{ leader.staff.staff_email }}">
