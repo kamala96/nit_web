@@ -45,7 +45,7 @@ class Command(BaseCommand):
         # Transfer the gzipped file to the backup server
         backup_server_absolute_path = '/home/backup_ds/backup/nit_web'
         backup_server_path = f"backup_ds@192.168.38.6:{backup_server_absolute_path}"
-        transfer_cmd = f"scp -i /home/nit_web/.ssh/id_rsa {gzipped_file} {self.remote_user}@{self.remote_server}:{self.remote_backup_dir}"
+        transfer_cmd = f"scp -i /home/fyp/.ssh/id_rsa {gzipped_file} {self.remote_user}@{self.remote_server}:{self.remote_backup_dir}"
         os.system(transfer_cmd)
 
         # Clean up the gzipped file on your server
