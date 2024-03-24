@@ -35,7 +35,7 @@
     <nav class="flex space-x-2" aria-label="Tabs" role="tablist" hs-data-tab-select="#tab-select">
         {% for item, content in menu_item_contents.items %}
         <button type="button"
-            class="{% if forloop.first %} active {% endif %} -mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-tab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary "
+            class="{% if forloop.first %} active {% endif %} -mb-px inline-flex items-center gap-2 rounded-t-lg border border-b-primary bg-gray-50 px-4 py-3 text-center text-sm font-bold text-gray-500 hover:text-gray-700 hs-about-ustab-active:border-primary hs-tab-active:border-b-transparent hs-tab-active:bg-white hs-tab-active:text-primary "
             id="hs-tab-to-select-item-{{ item.id }}" data-hs-tab="#hs-tab-to-select-{{ item.id }}"
             aria-controls="hs-tab-to-select-{{ item.id }}" role="tab">
             {{ item.name }}
@@ -49,7 +49,7 @@
     <div id="hs-tab-to-select-{{ item.id }}" {% if forloop.first %} class="active" {% else %} class="hidden" {% endif %}
         role="tabpanel" aria-labelledby="hs-tab-to-select-item-{{ item.id }}">
         <p style="text-align: justify;" align="justify">
-            {{ content.content }}
+            {{ content.content|safe }}
         </p>
     </div>
     {% endfor %}
