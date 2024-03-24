@@ -767,7 +767,7 @@ class Program(models.Model):
             if self.duration >= 30:  # Assuming 30 days for a month
                 months = self.duration / 30
                 formatted_number = "{:.0f}".format(months)
-                return f"{months} month{'s' if months > 1 else ''}"
+                return f"{formatted_number} month{'s' if months > 1 else ''}"
             else:
                 return f"{int(self.duration)} day{'s' if self.duration > 1 else ''}"
 
