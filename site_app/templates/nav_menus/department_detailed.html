@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
 {% block title %} {{ department.name.upper }} ({{ department.short_name }}) {% endblock title %}
 
@@ -130,10 +131,10 @@
                                         {{ forloop.counter }}
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
-                                        {{ program.name|capfirst }} ({{ program.short_name.upper }})
+                                        {{ program.name|capfirst }} ({{ program.short_name }})
                                     </td>
                                     <td class="px-6 py-4 text-sm font-medium text-gray-800">
-                                        {{ program.formatted_duration }}
+                                        {{ program.formatted_duration|floatformat }}
                                     </td>
                                     <td class="text-primary px-6 py-4 text-sm font-medium">
                                         <a href="{% url 'view_program' program.id %}">View</a>
