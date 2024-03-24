@@ -34,6 +34,10 @@
             secondary: "#EA0606",
           },
         },
+        listStyleType: {
+          // Set the default style for unordered lists to 'disc'
+          'disc': 'disc',
+        },
       },
     };
   </script>
@@ -87,45 +91,53 @@
           xhr.setRequestHeader('X-CSRFToken', csrftoken);
         }
       });
-    });
 
-  
-    function manageScrollableArea(scrollableAreaId, scrollIconId) {
-      const scrollableArea = document.getElementById(scrollableAreaId);
-      const scrollIcon = document.getElementById(scrollIconId);
-  
-      // Check if content is scrollable
-      if (scrollableArea.scrollHeight > scrollableArea.clientHeight) {
-        // Show the scroll icon if content is scrollable
-        scrollIcon.classList.remove('hidden');
-      }
-  
-      scrollableArea.addEventListener('scroll', () => {
-        if (scrollableArea.scrollHeight - scrollableArea.scrollTop === scrollableArea.clientHeight) {
-          // Hide the scroll icon when scrolled to the bottom
-          scrollIcon.classList.add('hidden');
-        } else {
-          // Show the scroll icon when not at the bottom
+      // Add Tailwind CSS class to all <ul> elements if not already present
+      $('ul').not('.list-disc').addClass('list-disc'); // Add Tailwind class for unordered lists
+      // Add Tailwind CSS class to all <ol> elements if not already present
+      $('ol').not('.list-decimal').addClass('list-decimal'); // Add Tailwind class for ordered lists
+
+
+      function manageScrollableArea(scrollableAreaId, scrollIconId) {
+        const scrollableArea = document.getElementById(scrollableAreaId);
+        const scrollIcon = document.getElementById(scrollIconId);
+
+        // Check if content is scrollable
+        if (scrollableArea.scrollHeight > scrollableArea.clientHeight) {
+          // Show the scroll icon if content is scrollable
           scrollIcon.classList.remove('hidden');
         }
-      });
-  
-      // Add click event listener to scroll icon
-      scrollIcon.addEventListener('click', () => {
-        // Scroll the scrollable area to the bottom
-        scrollableArea.scrollTop = scrollableArea.scrollHeight;
-      });
-    }
-  
-    // Call the function for each scrollable area
-    manageScrollableArea('scrollable-area-hot-news', 'scroll-icon-hot-news');
-    manageScrollableArea('scrollable-area-announcement', 'scroll-icon-announcement');
-    manageScrollableArea('scrollable-area-event', 'scroll-icon-event');
-    manageScrollableArea('scrollable-area-download', 'scroll-icon-download');
-    manageScrollableArea('scrollable-area-latest-news', 'scroll-icon-latest-news');
-    manageScrollableArea('scrollable-area-latest-news-detail', 'scroll-icon-latest-news-detail');
+
+        scrollableArea.addEventListener('scroll', () => {
+          if (scrollableArea.scrollHeight - scrollableArea.scrollTop === scrollableArea.clientHeight) {
+            // Hide the scroll icon when scrolled to the bottom
+            scrollIcon.classList.add('hidden');
+          } else {
+            // Show the scroll icon when not at the bottom
+            scrollIcon.classList.remove('hidden');
+          }
+        });
+
+        // Add click event listener to scroll icon
+        scrollIcon.addEventListener('click', () => {
+          // Scroll the scrollable area to the bottom
+          scrollableArea.scrollTop = scrollableArea.scrollHeight;
+        });
+      }
+
+      // Call the function for each scrollable area
+      manageScrollableArea('scrollable-area-hot-news', 'scroll-icon-hot-news');
+      manageScrollableArea('scrollable-area-announcement', 'scroll-icon-announcement');
+      manageScrollableArea('scrollable-area-event', 'scroll-icon-event');
+      manageScrollableArea('scrollable-area-download', 'scroll-icon-download');
+      manageScrollableArea('scrollable-area-latest-news', 'scroll-icon-latest-news');
+      manageScrollableArea('scrollable-area-latest-news-detail', 'scroll-icon-latest-news-detail');
+
+
+    });
   </script>
 
   {% block scripts %} {% endblock %}
 </body>
+
 </html>

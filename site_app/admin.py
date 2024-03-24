@@ -171,7 +171,7 @@ class OrganizationUnitAdmin(admin.ModelAdmin):
 
     @admin.display(description='About Note')
     def about_note_text(self, obj):
-        return get_short_description(obj, field_name='about_note')
+        return get_short_description(obj, field_name='about_note', max_length=500)
 
 
 @admin.register(Department)
