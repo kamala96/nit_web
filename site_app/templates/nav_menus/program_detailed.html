@@ -79,7 +79,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                                     aria-labelledby="hs-basic-heading-one" style="height: 0px;">
                                     <div class="pb-4 px-6">
                                         <p class="text-sm text-gray-600">
-                                            {{ program.program_specification|capfirst }}
+                                            {{ program.program_specification|safe|capfirst }}
                                         </p>
                                     </div>
                                 </div>
