@@ -129,7 +129,7 @@ def handle_nav_menu_click(request, menu_slug):
             template_name = 'how_to_apply.html'
 
         elif menu.slug in ['programmes-offered']:
-            template_name = 'programmes_offered.html'
+            return redirect('programmes-offered')
 
         elif menu.slug in ['management-staff', 'members-council', 'top-management']:
             if menu.slug == 'management-staff':
@@ -230,3 +230,10 @@ def handle_event_click(request, event_id):
     }
 
     return render(request, 'pages/event_details.html', context)
+
+
+def programmes_offered(request):
+    if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        pass
+    else:
+        return render(request, 'nav_menus/programmes_offered.html')

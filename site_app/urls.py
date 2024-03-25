@@ -16,6 +16,8 @@ urlpatterns = [
          name='handle_news_click'),
     path('event/<int:event_id>/', views.handle_event_click,
          name='handle_event_click'),
+    path('programmes-offered/', views.programmes_offered,
+         name='programmes_offered'),
 
     # robots.txt path below
     path("robots.txt", TemplateView.as_view(
