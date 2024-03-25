@@ -582,7 +582,7 @@ class Staff(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'{self.name} - {self.designation}'
+        return f'{self.name} - {self.designation.capitalize()}'
 
 
 class Council(models.Model):
@@ -596,6 +596,9 @@ class Council(models.Model):
         verbose_name = 'Council Members'
         verbose_name_plural = 'Council Members'
 
+    def __str__(self):
+        return f'{self.staff}'
+
 
 class ManagementTeam(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
@@ -608,6 +611,9 @@ class ManagementTeam(models.Model):
         verbose_name = 'Management Team'
         verbose_name_plural = 'Management Team'
 
+    def __str__(self):
+        return f'{self.staff}'
+
 
 class TopManagementTeam(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
@@ -619,6 +625,9 @@ class TopManagementTeam(models.Model):
     class Meta:
         verbose_name = 'Top Management Team'
         verbose_name_plural = 'Top Management Team'
+
+    def __str__(self):
+        return f'{self.staff}'
 
 
 class StaffDepartmentRelationship(models.Model):

@@ -129,7 +129,7 @@ def handle_nav_menu_click(request, menu_slug):
             template_name = 'how_to_apply.html'
 
         elif menu.slug in ['programmes-offered']:
-            return redirect('programmes-offered')
+            return redirect('programmes_offered')
 
         elif menu.slug in ['management-staff', 'members-council', 'top-management']:
             if menu.slug == 'management-staff':
@@ -234,6 +234,7 @@ def handle_event_click(request, event_id):
 
 def programmes_offered(request):
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-        pass
+        # Search queries
+        search_query = request.GET.get('search_query', '')
     else:
         return render(request, 'nav_menus/programmes_offered.html')
