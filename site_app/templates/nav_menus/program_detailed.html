@@ -190,11 +190,11 @@ program.short_name }}) {% endblock title %} {% block styles %}
                     {% if program.program_type == program.LONG %}
                     {% regroup modules by year as year_list %}
                     {% for year in year_list %}
-                    <div class="hs-accordion" id="hs-basic-heading-year{{ year }}">
+                    <div class="hs-accordion" id="hs-basic-heading-year-{{ year }}">
                         <button
                             class="hs-accordion-toggle
                             bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
-                            aria-controls="hs-basic-collapse-year1">
+                            aria-controls="hs-basic-collapse-year-{{ year }}">
                             <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -210,7 +210,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                             </svg>
                             Year: {{ year.grouper }}
                         </button>
-                        <div id="hs-basic-collapse-year1"
+                        <div id="hs-basic-collapse-year-{{ year }}"
                             class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
                             aria-labelledby="hs-basic-heading-year{{ year }}" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
@@ -242,7 +242,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                     </div>
                     {% endfor %}
                     {% else %}
-                    <div class="hs-accordion" id="hs-basic-heading-year-no-grouping">
+                    <div class="hs-accordion" id="hs-basic-heading-year1">
                         <button
                             class="hs-accordion-toggle
                                         bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
@@ -264,7 +264,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                         </button>
                         <div id="hs-basic-collapse-year1"
                             class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
-                            aria-labelledby="hs-basic-heading-year-no-grouping" style="height: 0px;">
+                            aria-labelledby="hs-basic-heading-year14" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
                                 <p class="text-sm text-gray-600"></p>
                                 {% for module in modules %}
