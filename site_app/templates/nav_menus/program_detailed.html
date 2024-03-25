@@ -190,7 +190,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                     {% if program.program_type == program.LONG %}
                     {% regroup modules by year as year_list %}
                     {% for year in year_list %}
-                    <div class="hs-accordion" id="hs-basic-heading-year1">
+                    <div class="hs-accordion" id="hs-basic-heading-year{{ year }}">
                         <button
                             class="hs-accordion-toggle
                             bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
@@ -212,7 +212,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                         </button>
                         <div id="hs-basic-collapse-year1"
                             class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
-                            aria-labelledby="hs-basic-heading-year14" style="height: 0px;">
+                            aria-labelledby="hs-basic-heading-year{{ year }}" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
                                 <p class="text-sm text-gray-600">
                                     <!--[if BLOCK]><![endif]-->
@@ -242,7 +242,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                     </div>
                     {% endfor %}
                     {% else %}
-                    <div class="hs-accordion" id="hs-basic-heading-year1">
+                    <div class="hs-accordion" id="hs-basic-heading-year-no-grouping">
                         <button
                             class="hs-accordion-toggle
                                         bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
@@ -264,7 +264,7 @@ program.short_name }}) {% endblock title %} {% block styles %}
                         </button>
                         <div id="hs-basic-collapse-year1"
                             class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
-                            aria-labelledby="hs-basic-heading-year14" style="height: 0px;">
+                            aria-labelledby="hs-basic-heading-year-no-grouping" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
                                 <p class="text-sm text-gray-600"></p>
                                 {% for module in modules %}
