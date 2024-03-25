@@ -160,7 +160,7 @@ def handle_nav_menu_click(request, menu_slug):
         'staff_members': staff_members,
         'leader': leader,
         'accounting_officer': accounting_officer,
-        'staff_by_manager': staff_by_manager
+        'management_staff': management_staff
     }
 
     return render(request, f'nav_menus/{template_name}', context)
