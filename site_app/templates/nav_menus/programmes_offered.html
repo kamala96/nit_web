@@ -6,19 +6,74 @@
 
 {% block content %}
 
-{% include 'components/header_details.html' with title=menu.title %}
+{% include 'components/header_details.html' with  title=menu.title %}
 
 
 <section class="flex flex-col md:flex-row">
+          
+                <div class="pt-5 pb-5 sm:mx-12" id="programmesOfferedComponent" data-v-app="">
+                    <div class="p-3">
+                        <div class="grid grid-cols-12 gap-3 ">
+                            <div class="col-span-12 flex justify-between items-center">
+                                <h1 class="font-bold text-xl text-primary">Filter Programmes</h1><span
+                                    class="text-primary cursor-pointer">Clear filters</span>
+                            </div>
 
-    <div class="w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
-
-    </div>
-
-    <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5 flex ">
-
-    </div>
-
+                            <div class="input-group col-span-12 lg:col-span-3 flex flex-col">
+                                <label for="course-name">Course name</label>
+                                <span><input type="text" placeholder="What do you want to learn?"
+                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary">
+                                </span>
+                            </div>
+                            
+                            <div class="input-group col-span-12 lg:col-span-3 flex flex-col"><label for="course-name">Study
+                                    Level</label><select id=""
+                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary">
+                                    <option>Choose level</option>
+                                    <option value="6">Certificate</option>
+                                    <option value="7">Diploma</option>
+                                    <option value="4">Bachelor</option>
+                                    <option value="3">Postgraduate Diploma</option>
+                                    <option value="2">Master's</option>
+                                </select></div>
+                            
+                        </div>
+                        <table
+                            class="mt-2 min-w-full rounded-xl overflow-hidden shadow-md divide-y divide-gray-200">
+                            <thead class="bg-gray-200">
+                                <tr>
+                                    <th class="th">SN.</th>
+                                    <th class="th">Programme Name</th>
+                                    <th class="th hidden lg:table-cell ">Fee</th>
+                                    <th class="th hidden lg:table-cell ">Mode of Study</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="odd:bg-sky-100 ">
+                                    <td
+                                        class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
+                                        1</td>
+                                    <td class="px-6 py-3 text-sm font-medium text-gray-800"><a
+                                            href="/admission/programmes-offered/bachelor-of-agribusiness-management-and-technology"><span>Bachelor
+                                                of Agribusiness Management and Technology</span><span class="block"><b>Fee:</b>
+                                                700,000TZS</span><span class="block"><b>Mode of study:</b> Full Time</span></a>
+                                    </td>
+                                    <td
+                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
+                                        700,000TZS</td>
+                                    <td
+                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
+                                        Full Time</td>
+                                </tr>
+                               
+                               
+        
+                            </tbody>
+                        </table>
+                    </div>
+                
+      
+  
 </section>
 
 
