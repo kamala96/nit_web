@@ -131,7 +131,7 @@ def handle_nav_menu_click(request, menu_slug):
         elif menu.slug in ['programmes-offered']:
             template_name = 'programmes_offered.html'
 
-        elif menu.slug in ['management-staff', 'members-council', 'top-leadership']:
+        elif menu.slug in ['management-staff', 'members-council', 'top-management']:
             if menu.slug == 'management-staff':
                 # Management team members
                 management_staff = Staff.objects.filter(
@@ -141,11 +141,11 @@ def handle_nav_menu_click(request, menu_slug):
                 # Council members
                 council_members = Staff.objects.filter(council__isnull=False)
                 template_name = 'council_members.html'
-            elif menu.slug == 'top-leadership':
-                # Top leadership
+            elif menu.slug == 'top-management':
+                # Top management
                 top_leadership = Staff.objects.filter(
                     topmanagementteam__isnull=False)
-                template_name = 'top_leadership.html'
+                template_name = 'top_management.html'
 
         elif menu.slug in ['rector-message']:
             accounting_officer = AccountingOfficer.load()
