@@ -807,8 +807,8 @@ class ModuleProgram(models.Model):
         default=0, help_text="Order in which module should be displayed.")
 
     class Meta:
-        # ordering = ['semester', 'order', 'program']
-        ordering = ['semester', 'order',]
+        ordering = ['semester', 'order', 'program']
+        # ordering = ['semester', 'order',]
         verbose_name = 'Module Program (Intermediate)'
         verbose_name_plural = 'Module Program (Intermediate)'
 
