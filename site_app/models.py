@@ -808,7 +808,6 @@ class ModuleProgram(models.Model):
 
     class Meta:
         ordering = ['semester', 'order', 'program']
-        # ordering = ['semester', 'order',]
         verbose_name = 'Module Program (Intermediate)'
         verbose_name_plural = 'Module Program (Intermediate)'
 
