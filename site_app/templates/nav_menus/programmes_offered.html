@@ -6,17 +6,9 @@
 
 {% block content %}
 
-{% include 'components/header_details.html' with  title=menu.title %}
+{% include 'components/header_details.html' with title=menu.title %}
 
 <section class="flex flex-col md:flex-row">
-          
-                <div class="pt-5 pb-5 sm:mx-12" id="programmesOfferedComponent" data-v-app="">
-                    <div class="p-3">
-                        <div class="grid grid-cols-12 gap-3 ">
-                            <div class="col-span-12 flex justify-between items-center">
-                                <h1 class="font-bold text-xl text-primary">Filter Programmes</h1><span
-                                    class="text-primary cursor-pointer">Clear filters</span>
-                            </div>
 
                             <div class="input-group col-span-12 lg:col-span-3 flex flex-col">
                                 <label for="course-name">Course name</label>

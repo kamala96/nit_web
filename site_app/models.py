@@ -589,8 +589,8 @@ class Council(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
     manager = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='council_subordinates')
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'Council Members'
@@ -601,8 +601,8 @@ class ManagementTeam(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
     manager = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='mgt_subordinates')
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'Management Team'
@@ -613,8 +613,8 @@ class TopManagementTeam(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
     manager = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='top_mgt_subordinates')
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = 'Top Management Team'
