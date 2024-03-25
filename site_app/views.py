@@ -257,7 +257,7 @@ def programmes_offered(request, menu_id=None):
         if study_level:
             programmes = programmes.filter(program_group=study_level)
 
-        per_page = 1
+        per_page = 10
 
         paginator = Paginator(programmes, per_page)
         page = request.GET.get('page')
