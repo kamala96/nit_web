@@ -10,40 +10,25 @@
 
 
 <section class="flex flex-col md:flex-row">
-
-    <div class="w-full md:w-3/5 lg:w-3/5 xl:w-3/5">
-
-        <div class="dark:bg-gray-800 pt-2 lg:pt-0 font-sans text-gray-900 antialiased dark:text-gray-100">
-            <div class="py-12">
-                <div class="space-y-3 text-center">
-                    <h1 class="crimson-text text-3xl font-bold text-gray-800 dark:text-gray-50   sm:text-4xl">Admission -
-                        Programmes Offered</h1>
-                    <div>
-                        <a href="/" class="text-primary">Home</a> |
-                        <span href="/">Programmes Offered</span>
-                    </div>
-                </div>
+          
                 <div class="pt-5 pb-5 sm:mx-12" id="programmesOfferedComponent" data-v-app="">
                     <div class="p-3">
-                        <div class="grid grid-cols-12 gap-3">
+                        <div class="grid grid-cols-12 gap-3 ">
                             <div class="col-span-12 flex justify-between items-center">
-                                <h1 class="font-bold text-lg">Filter Programmes</h1><span
+                                <h1 class="font-bold text-xl text-primary">Filter Programmes</h1><span
                                     class="text-primary cursor-pointer">Clear filters</span>
                             </div>
-                            <div class="input-group col-span-12 lg:col-span-3 flex flex-col"><label for="course-name">Course
-                                    name</label><input type="text" placeholder="What do you want to learn?"
-                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary dark:border-primary dark:bg-slate-900 dark:text-gray-100 dark:placeholder:text-gray-100 dark:focus:border-none dark:focus:ring-primary">
+
+                            <div class="input-group col-span-12 lg:col-span-3 flex flex-col">
+                                <label for="course-name">Course name</label>
+                                <span><input type="text" placeholder="What do you want to learn?"
+                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary">
+                                </span>
                             </div>
-                            <div class="input-group col-span-12 lg:col-span-3 flex flex-col"><label for="course-name">Study
-                                    Type</label><select id=""
-                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary dark:border-primary dark:bg-slate-900 dark:text-gray-100 dark:placeholder:text-gray-100 dark:focus:border-none dark:focus:ring-primary">
-                                    <option>Choose study type</option>
-                                    <option value="Undergraduate">Undergraduate</option>
-                                    <option value="Postgraduate">Postgraduate</option>
-                                </select></div>
+                            
                             <div class="input-group col-span-12 lg:col-span-3 flex flex-col"><label for="course-name">Study
                                     Level</label><select id=""
-                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary dark:border-primary dark:bg-slate-900 dark:text-gray-100 dark:placeholder:text-gray-100 dark:focus:border-none dark:focus:ring-primary">
+                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary">
                                     <option>Choose level</option>
                                     <option value="6">Certificate</option>
                                     <option value="7">Diploma</option>
@@ -51,104 +36,43 @@
                                     <option value="3">Postgraduate Diploma</option>
                                     <option value="2">Master's</option>
                                 </select></div>
-                            <div class="input-group col-span-12 lg:col-span-3 flex flex-col"><label for="mode-of-study">Mode of
-                                    Study</label><select id="mode-of-study"
-                                    class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary dark:border-primary dark:bg-slate-900 dark:text-gray-100 dark:placeholder:text-gray-100 dark:focus:border-none dark:focus:ring-primary">
-                                    <option>Choose mode of study</option>
-                                    <option value="Full Time">Full Time</option>
-                                    <option value="Blended Learning">Blended Learning</option>
-                                    <option value="Evening Classes">Evening Classes</option>
-                                </select></div>
+                            
                         </div>
                         <table
-                            class="mt-2 min-w-full rounded-xl overflow-hidden shadow-md divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-700">
+                            class="mt-2 min-w-full rounded-xl overflow-hidden shadow-md divide-y divide-gray-200">
+                            <thead class="bg-gray-200">
                                 <tr>
                                     <th class="th">SN.</th>
                                     <th class="th">Programme Name</th>
-                                    <th class="th hidden lg:table-cell">Fee</th>
-                                    <th class="th hidden lg:table-cell">Mode of Study</th>
+                                    <th class="th hidden lg:table-cell ">Fee</th>
+                                    <th class="th hidden lg:table-cell ">Mode of Study</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                <tr class="odd:bg-slate-50 dark:odd:bg-slate-700">
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="odd:bg-sky-100 ">
                                     <td
-                                        class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
                                         1</td>
-                                    <td class="px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200"><a
+                                    <td class="px-6 py-3 text-sm font-medium text-gray-800"><a
                                             href="/admission/programmes-offered/bachelor-of-agribusiness-management-and-technology"><span>Bachelor
                                                 of Agribusiness Management and Technology</span><span class="block"><b>Fee:</b>
                                                 700,000TZS</span><span class="block"><b>Mode of study:</b> Full Time</span></a>
                                     </td>
                                     <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
                                         700,000TZS</td>
                                     <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
                                         Full Time</td>
                                 </tr>
-                                <tr class="odd:bg-slate-50 dark:odd:bg-slate-700">
-                                    <td
-                                        class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        2</td>
-                                    <td class="px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200"><a
-                                            href="/admission/programmes-offered/bachelor-of-business-administration"><span>Bachelor
-                                                of Business Administration</span><span class="block"><b>Fee:</b>
-                                                0TZS</span><span class="block"><b>Mode of study:</b> Full Time</span></a></td>
-                                    <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        0TZS</td>
-                                    <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        Full Time</td>
-                                </tr>
-        
-                                <tr class="odd:bg-slate-50 dark:odd:bg-slate-700">
-                                    <td
-                                        class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        3</td>
-                                    <td class="px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200"><a
-                                            href="/admission/programmes-offered/masters-of-science-in-civil-engineering"><span>Masters
-                                                of Science in Civil Engineering </span><span class="block"><b>Fee:</b>
-                                                2,500,000TZS</span><span class="block"><b>Mode of study:</b> Full
-                                                Time</span></a></td>
-                                    <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        2,500,000TZS</td>
-                                    <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        Full Time</td>
-                                </tr>
-                                <tr class="odd:bg-slate-50 dark:odd:bg-slate-700">
-                                    <td
-                                        class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        4</td>
-                                    <td class="px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200"><a
-                                            href="/admission/programmes-offered/masters-of-science-in-energy-engineering"><span>Masters
-                                                of Science in Energy Engineering</span><span class="block"><b>Fee:</b>
-                                                2,500,000TZS</span><span class="block"><b>Mode of study:</b> Full
-                                                Time</span></a></td>
-                                    <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        2,500,000TZS</td>
-                                    <td
-                                        class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        Full Time</td>
-                                </tr>
+                               
+                               
         
                             </tbody>
                         </table>
                     </div>
-                </div>
-              
-            </div>
-        </div>
-       
-    </div>
-
-    <div class="w-full md:w-2/5 lg:w-2/5 xl:w-2/5 flex ">
+                
       
-    </div>
   
 </section>
 
