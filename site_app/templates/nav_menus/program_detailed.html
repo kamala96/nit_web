@@ -214,9 +214,6 @@ program.short_name }}) {% endblock title %} {% block styles %}
                             class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
                             aria-labelledby="hs-basic-heading-year{{ year.grouper }}" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
-                                <p class="text-sm text-gray-600">
-                                    <!--[if BLOCK]><![endif]-->
-                                </p>
 
                                 {% regroup year.list by semester as semester_list %}
                                 {% for semester in semester_list %}
