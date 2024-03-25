@@ -808,7 +808,7 @@ class ModuleProgram(models.Model):
 
     class Meta:
         ordering = ['semester', 'order', 'program']
-        unique_together = ['module', 'program', 'year']
+        unique_together = ['module', 'program',]
         verbose_name = 'Module Program (Intermediate)'
         verbose_name_plural = 'Module Program (Intermediate)'
 

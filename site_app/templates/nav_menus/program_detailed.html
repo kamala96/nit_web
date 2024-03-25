@@ -189,6 +189,9 @@ program.short_name }}) {% endblock title %} {% block styles %}
 
                     {% if program.program_type == program.LONG %}
                     {% regroup modules by year as year_list %}
+                    <!-- Debug output -->
+                    Debug:
+                    {{ year_list }}
                     {% for year in year_list %}
                     <div class="hs-accordion" id="hs-basic-heading-year-{{ year.grouper }}">
                         <button
