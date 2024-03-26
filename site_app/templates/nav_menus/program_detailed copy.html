@@ -1,11 +1,5 @@
-{% extends 'base.html' %}
-{% load humanize %}
-
-{% block title %}
-{{ program.name.upper }} ({{program.short_name }})
-{% endblock title %}
-
-{% block styles %}
+{% extends 'base.html' %} {% block title %} {{ program.name.upper }} ({{
+program.short_name }}) {% endblock title %} {% block styles %}
 
 <style>
     [data-hs-tab].active.hs-tab-active\:text-primary {
@@ -28,9 +22,7 @@
     }
 </style>
 
-{% endblock styles %}
-
-{% block content %}
+{% endblock styles %} {% block content %}
 
 <div class="pt-2 lg:pt-0 pb-10 font-sans text-gray-900 antialiased ">
     <div wire:snapshot="">
@@ -194,13 +186,18 @@
                 <h1 class="mt-6 border-b py-3 text-primary font-bold text-xl mb-3">What you will learn.</h1>
                 <div class="hs-accordion-group space-y-6">
 
+
                     {% if program.program_type == program.LONG %}
-                    {% for year, semesters in modules.items %}
-                    <div class="hs-accordion" id="hs-basic-heading-year-{{ year }}">
+                    {% regroup modules by year as year_list %}
+                    <!-- Debug output -->
+                    Debug year:
+                    {{ year_list }}
+                    {% for year in year_list %}
+                    <div class="hs-accordion" id="hs-basic-heading-year-{{ year.grouper }}">
                         <button
                             class="hs-accordion-toggle
                             bg-primary/10 hs-accordion-active:text-primary px-6 py-3 inline-flex items-center gap-x-3 text-sm w-full font-semibold text-start text-gray-800 hover:text-gray-500 rounded-lg disabled:opacity-50 disabled:pointer-events-none"
-                            aria-controls="hs-basic-collapse-year-{{ year }}">
+                            aria-controls="hs-basic-collapse-year-{{ year.grouper }}">
                             <svg class="hs-accordion-active:hidden hs-accordion-active:text-primary hs-accordion-active:group-hover:text-primary block size-4 text-gray-600 group-hover:text-gray-500"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -214,18 +211,19 @@
                                 stroke-linejoin="round">
                                 <path d="M5 12h14"></path>
                             </svg>
-                            {{ year|ordinal }} Year
+                            Year: {{ year.grouper }}
                         </button>
-                        <div id="hs-basic-collapse-year-{{ year }}"
-                            class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-                            aria-labelledby="hs-basic-heading-year-{{ year }}" style="height: 0px;">
+                        <div id="hs-basic-collapse-year-{{ year.grouper }}"
+                            class="hs-accordion-content  w-full overflow-hidden transition-[height] duration-300"
+                            aria-labelledby="hs-basic-heading-year{{ year.grouper }}" style="height: 0px;">
                             <div class="pb-4 pl-6 mt-3">
 
-                                {% for semester, modules in semesters.items %}
+                                {% regroup year.list by semester as semester_list %}
+                                {% for semester in semester_list %}
                                 <div class="mb-3">
-                                    <h1 class="font-bold text-primary mb-3">Semester {{ semester }}</h1>
+                                    <h1 class="font-bold text-primary mb-3">Semester:{{ semester.grouper }}</h1>
 
-                                    {% for module in modules %}
+                                    {% for module in semester.list %}
                                     <div class="flex items-start text-left"><svg xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 20 20" fill="currentColor"
                                             class="pt-1 w-5 h-5 inline-block shrink-0">

@@ -1,3 +1,4 @@
+from collections import defaultdict
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.views.decorators.cache import cache_page
@@ -197,6 +198,23 @@ def handle_view_program(request, program_id):
     try:
         program = Program.objects.get(pk=program_id)
         modules = program.moduleprogram_set.all()
+
+        if program.program_type == program.LONG:
+            modules = modules.order_by('year')
+
+            # Preprocess modules to organize them by year and semester
+            modules_by_year_and_semester = {}
+
+            # Iterate over modules and organize them by year and semester
+            for module in modules:
+                if module.year not in modules_by_year_and_semester:
+                    modules_by_year_and_semester[module.year] = {}
+                if module.semester not in modules_by_year_and_semester[module.year]:
+                    modules_by_year_and_semester[module.year][module.semester] = [
+                    ]
+                modules_by_year_and_semester[module.year][module.semester].append(
+                    module)
+            modules = modules_by_year_and_semester
     except (Department.DoesNotExist, Staff.DoesNotExist):
         raise Http404(
             "Oops! It looks like this navigation is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
@@ -205,6 +223,7 @@ def handle_view_program(request, program_id):
 
     context = {
         'program': program,
+        'modules': modules,
         'modules': modules,
     }
     return render(request, 'nav_menus/program_detailed.html', context)
