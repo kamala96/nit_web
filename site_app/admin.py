@@ -56,6 +56,11 @@ class TopManagementTeamInline(admin.StackedInline):
     can_delete = True
 
 
+class MenuItemContentInline(admin.StackedInline):
+    model = MenuItemContent
+    can_delete = True
+
+
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ['title', 'slug', 'url', 'order', 'parent_menu',
@@ -80,6 +85,7 @@ class MenuItemAdmin(admin.ModelAdmin):
     list_display = ['heading', 'name', 'is_visible', 'order']
     list_filter = ['heading']
     search_fields = ['heading', 'name']
+    inlines = [MenuItemContentInline]
     list_per_page = 50
 
 
