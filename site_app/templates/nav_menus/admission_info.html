@@ -21,7 +21,7 @@
             <div id="hs-tab-to-select-{{ item.id }}" {% if forloop.first %} class="active" {% else %} class="hidden" {% endif %}
                 role="tabpanel" aria-labelledby="hs-tab-to-select-item-{{ item.id }}">
                 <p style="text-align: justify;" align="justify">
-                    {{ content.content }}
+                    {{ content.content|safe }}
                 </p>
             </div>
             {% endfor %}
