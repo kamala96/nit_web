@@ -167,13 +167,6 @@ def handle_nav_menu_click(request, menu_slug):
                     staff_by_manager[manager_id].append(staff_member)
                     
               
-                    
-                # Calculate the width of the border lines based on the depth
-                staff_with_width = []
-                for manager_id, staff_members in staff_by_manager.items():
-                    for i, staff_member in enumerate(staff_members):
-                        width = 16 * (i + 1)
-                        staff_with_width.append((staff_member, width))
                         
                 template_name = 'management_staff.html'
                 
@@ -202,7 +195,6 @@ def handle_nav_menu_click(request, menu_slug):
         'accounting_officer': accounting_officer,
         'management_staff': management_staff,
         'staff_by_manager': staff_by_manager,
-        'staff_with_width': staff_with_width,
     }
 
     return render(request, f'nav_menus/{template_name}', context)
