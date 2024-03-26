@@ -589,6 +589,7 @@ class Council(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
     manager = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='council_subordinates')
+    role = models.CharField(max_length=255, verbose_name='Optional Staff Role', null=True, blank=True, help_text='Enter Role (Optional)')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -604,6 +605,7 @@ class ManagementTeam(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
     manager = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='mgt_subordinates')
+    role = models.CharField(max_length=255, verbose_name='Optional Staff Role', null=True, blank=True, help_text='Enter Role (Optional)')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -619,6 +621,7 @@ class TopManagementTeam(models.Model):
     staff = models.OneToOneField(Staff, on_delete=models.CASCADE)
     manager = models.ForeignKey(
         'self', on_delete=models.SET_NULL, null=True, blank=True, related_name='top_mgt_subordinates')
+    role = models.CharField(max_length=255, verbose_name='Optional Staff Role', null=True, blank=True, help_text='Enter Role (Optional)')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

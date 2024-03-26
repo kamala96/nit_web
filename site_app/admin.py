@@ -234,21 +234,21 @@ class StaffAdmin(admin.ModelAdmin):
 
 @admin.register(Council)
 class CouncilAdmin(admin.ModelAdmin):
-    list_display = ['staff', 'manager']
+    list_display = ['staff', 'manager', 'role']
     search_fields = ['staff__name', 'manager__name',]
     readonly_fields = ['created_at', 'updated_at']
 
 
 @admin.register(ManagementTeam)
 class ManagementTeamAdmin(admin.ModelAdmin):
-    list_display = ['staff', 'manager']
+    list_display = ['staff', 'manager', 'role']
     search_fields = ['staff__name', 'manager__name',]
     readonly_fields = ['created_at', 'updated_at']
 
 
 @admin.register(TopManagementTeam)
 class TopManagementTeamAdmin(admin.ModelAdmin):
-    list_display = ['staff', 'manager']
+    list_display = ['staff', 'manager', 'role']
     search_fields = ['staff__name', 'manager__name',]
     readonly_fields = ['created_at', 'updated_at']
 
