@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ menu.title }}
+{{ menu.title|default:"Programmes Offered" }}
 {% endblock title %}
 
 {% block content %}
 
-{% include 'components/header_details.html' with title=menu.title %}
+{% include 'components/header_details.html' with title=menu.title|default:"Default Title" %}
 
 <section class="flex flex-col md:flex-row">
 
@@ -14,36 +14,26 @@
         <div class="p-3">
             <div class="grid grid-cols-12 gap-3 ">
                 <div class="col-span-12 flex justify-between items-center">
-                    <h1 class="font-bold text-xl text-primary">Filter Programmes</h1><span
+                    <h1 class="font-bold text-xl text-primary">Filter Programmes</h1><span id="clear-filters"
                         class="text-primary cursor-pointer">Clear filters</span>
                 </div>
 
                 <div class="input-group col-span-12 lg:col-span-3 flex flex-col">
-                    <label for="course-name">Course name</label>
-                    <span><input type="text" placeholder="What do you want to learn?"
+                    <label for="programme-name">Programmes/Course Name</label>
+                    <span>
+                        <input type="text" id="programme-name" placeholder="What do you want to learn?"
                             class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary">
                     </span>
                 </div>
 
-                <div class="input-group col-span-12 lg:col-span-3 flex flex-col"><label for="course-name">Study
-                        Level</label><select id=""
+                <div class="input-group col-span-12 lg:col-span-3 flex flex-col"><label for="study-level">Study
+                        Level</label>
+                    <select id="study-level"
                         class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary">
-                        <option>Choose level</option>
-                        <option value="diploma">Certificate</option>
-                        <option value="diploma">Diploma</option>
-                        <option value="bachelor-degree">Bachelor's Degree</option>
-                        <option value="postgraduate-diploma">Postgraduate Diploma</option>
-                        <option value="masters">Master's</option>
-                    </select>
-                </div>
-
-                <div class="input-group col-span-12 lg:col-span-3 flex flex-col">
-                    <label for="course-name">Mode of Study</label>
-                    <select id=""
-                        class="h-12 w-full rounded-xl border-gray-200 px-4 py-3 pr-9 text-sm shadow-sm placeholder:text-gray-800 focus:border-none focus:ring-primary">
-                        <option>Choose model of study</option>
-                        <option value="6">Long Course</option>
-                        <option value="6">Short Course</option>
+                        <option value="">Choose level</option>
+                        {% for study_level, study_level_label in study_levels %}
+                        <option value="{{ study_level }}">{{ study_level_label }}</option>
+                        {% endfor %}
                     </select>
                 </div>
 
@@ -53,34 +43,183 @@
                     <tr>
                         <th class="th">SN.</th>
                         <th class="th">Programme Name</th>
-                        <th class="th hidden lg:table-cell ">Fee</th>
-                        <th class="th hidden lg:table-cell ">Mode of Study</th>
+                        <th class="th">Study Level</th>
+                        <th class="th">Option</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="odd:bg-sky-100 ">
-                        <td class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
-                            1</td>
-                        <td class="px-6 py-3 text-sm font-medium text-gray-800"><a
-                                href="/admission/programmes-offered/bachelor-of-agribusiness-management-and-technology"><span>Bachelor
-                                    of Agribusiness Management and Technology</span><span class="block"><b>Fee:</b>
-                                    700,000TZS</span><span class="block"><b>Mode of study:</b> Full Time</span></a>
-                        </td>
-                        <td class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
-                            700,000TZS</td>
-                        <td class="hidden lg:table-cell whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
-                            Full Time</td>
-                    </tr>
-
-
-
-                </tbody>
+                <tbody id="programmes-list" class="divide-y divide-gray-200"></tbody>
             </table>
         </div>
 
+        <p id="programmes-total" class="mb-4">0 programme</p>
+
+        <!-- Pagination controls -->
+        <nav aria-label="Programmes Pagination" class="flex items-center justify-center">
+            <ul class="flex" id="pagination">
+                <li id="first-button" class="hidden">
+                    <a href="#" class="block p-2 text-gray-600 hover:text-gray-800"
+                        aria-label="First">&laquo;&laquo;</a>
+                </li>
+                <li id="prev-button" class="hidden">
+                    <a href="#" class="block p-2 text-gray-600 hover:text-gray-800" aria-label="Previous">&laquo;</a>
+                </li>
+                <li id="current-page" class="hidden">
+                    <span class="block p-2 text-gray-600"></span>
+                </li>
+                <li id="next-button" class="hidden">
+                    <a href="#" class="block p-2 text-gray-600 hover:text-gray-800" aria-label="Next">&raquo;</a>
+                </li>
+                <li id="last-button" class="hidden">
+                    <a href="#" class="block p-2 text-gray-600 hover:text-gray-800" aria-label="Last">&raquo;&raquo;</a>
+                </li>
+            </ul>
+        </nav>
 
 
 </section>
 
 
 {% endblock content %}
+
+
+{% block scripts %}
+<script type="text/javascript">
+    $(function () {
+
+        var currentPage = 1;  // Track the current page number
+        var totalPages = 1;   // Track the total number of pages
+
+        // Function to load students based on selected academic year and program
+        function loadProgrammes() {
+            var programme_name = $('#programme-name').val();
+            var study_level = $('#study-level').val();
+
+            $.ajax({
+                url: "{% url 'programmes_offered' %}",
+                type: 'GET',
+                data: {
+                    programme_name: programme_name,
+                    study_level: study_level,
+                    page: currentPage,
+                },
+                success: function (response) {
+                    var programmes = response.programmes;
+                    var has_next = response.has_next;
+                    var programmes_total = response.total;
+
+                    // Update the total number of pages
+                    totalPages = response.num_pages;
+
+                    // Clear the student table body
+                    $('#programmes-list').empty();
+
+                    // Populate the table with filtered students
+                    $.each(programmes, function (key, programme) {
+                        let viewUrl = "{% url 'view_program' 0 %}".replace("0", programme.id);
+
+                        $('#programmes-list').append(`<tr class="odd:bg-sky-100">
+                                <td class="whitespace-nowrap px-6 py-3 text-sm font-medium text-gray-800">
+                                    ${key + 1}
+                                </td>
+                                <td class="px-6 py-3 text-sm font-medium text-gray-800">
+                                    <a href="${viewUrl}"><span>${programme.name} (${programme.short_name})</span></a>
+                                </td>
+
+                                <td class="px-6 py-3 text-sm font-medium text-gray-800">
+                                    <span>${programme.study_level}</span>
+                                </td>
+
+                                <td class="px-6 py-3 text-sm font-medium text-gray-800">
+                                    <a href="${viewUrl}"><span>View</span></a>
+                                </td>
+                            </tr>`);
+                    });
+
+                    // Update pagination controls
+                    if (programmes_total > 0) {
+                        $('#current-page').show();
+                        $('#current-page span').text(`Page ${currentPage} of ${totalPages}`);
+                        $('#programmes-total').text(`${programmes_total} Programmes`);
+                    } else {
+                        $('#current-page').hide();
+                        $('#programmes-total').text(`0 Programmes`);
+                    }
+
+                    if (has_next) {
+                        $('#next-button').show();
+                    } else {
+                        $('#next-button').hide();
+                    }
+
+                    if (currentPage > 1) {
+                        $('#prev-button').show();
+                        $('#first-button').show();
+                    } else {
+                        $('#prev-button').hide();
+                        $('#first-button').hide();
+                    }
+
+                    if (currentPage < totalPages) {
+                        $('#last-button').show();
+                    } else {
+                        $('#last-button').hide();
+                    }
+
+                },
+            });
+        }
+
+        // Initial load
+        loadProgrammes();
+
+        // Handle changes in programmes changes
+        $('#study-level').on('change', function () {
+            currentPage = 1;  // Reset to the first page when selections change
+            loadProgrammes();
+        });
+
+
+        // Handle live search
+        $('#programme-name').on('input', function () {
+            currentPage = 1;  // Reset to the first page when search input changes
+            loadProgrammes();
+        });
+
+        // Handle pagination - Next button
+        $('#next-button').on('click', function () {
+            currentPage++;
+            loadProgrammes();
+        });
+
+        // Handle pagination - Previous button
+        $('#prev-button').on('click', function () {
+            currentPage--;
+            loadProgrammes();
+        });
+
+        // Handle pagination - First button
+        $('#first-button').on('click', function () {
+            currentPage = 1;
+            loadProgrammes();
+        });
+
+        // Handle pagination - Last button
+        $('#last-button').on('click', function () {
+            currentPage = totalPages;
+            loadProgrammes();
+        });
+
+
+
+        // Add click event listener to the "Clear filters" span
+        $('#clear-filters').click(function () {
+            // Clear the input field and select dropdown
+            $('#programme-name').val('');
+            $('#study-level').val('');
+            loadProgrammes();
+        });
+    });
+
+</script>
+
+{% endblock scripts %}

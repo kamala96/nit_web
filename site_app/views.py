@@ -1,3 +1,7 @@
+from collections import defaultdict
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
+from django.views.decorators.cache import cache_page
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -129,7 +133,7 @@ def handle_nav_menu_click(request, menu_slug):
             template_name = 'how_to_apply.html'
 
         elif menu.slug in ['programmes-offered']:
-            return redirect('programmes_offered')
+            return redirect('programmes_offered_2', menu_id=menu.id)
 
         elif menu.slug in ['management-staff', 'members-council', 'top-management']:
             if menu.slug == 'management-staff':
@@ -232,6 +236,23 @@ def handle_view_program(request, program_id):
     try:
         program = Program.objects.get(pk=program_id)
         modules = program.moduleprogram_set.all()
+
+        if program.program_type == program.LONG:
+            modules = modules.order_by('year')
+
+            # Preprocess modules to organize them by year and semester
+            modules_by_year_and_semester = {}
+
+            # Iterate over modules and organize them by year and semester
+            for module in modules:
+                if module.year not in modules_by_year_and_semester:
+                    modules_by_year_and_semester[module.year] = {}
+                if module.semester not in modules_by_year_and_semester[module.year]:
+                    modules_by_year_and_semester[module.year][module.semester] = [
+                    ]
+                modules_by_year_and_semester[module.year][module.semester].append(
+                    module)
+            modules = modules_by_year_and_semester
     except (Department.DoesNotExist, Staff.DoesNotExist):
         raise Http404(
             "Oops! It looks like this navigation is empty. There's no content to display at the moment. Please check back later or navigate elsewhere on the site.")
@@ -240,6 +261,7 @@ def handle_view_program(request, program_id):
 
     context = {
         'program': program,
+        'modules': modules,
         'modules': modules,
     }
     return render(request, 'nav_menus/program_detailed.html', context)
@@ -263,16 +285,65 @@ def handle_news_click(request, news_id):
 def handle_event_click(request, event_id):
     event = get_object_or_404(Event, pk=event_id)
 
-    context = {
-        'event': event
-    }
+    context = {'event': event}
 
     return render(request, 'pages/event_details.html', context)
 
 
-def programmes_offered(request):
+@cache_page(60)
+def programmes_offered(request, menu_id=None):
+    menu = None
+    if menu_id:
+        try:
+            menu = Menu.objects.get(pk=menu_id)
+        except Menu.DoesNotExist:
+            menu = None
+
     if request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         # Search queries
-        search_query = request.GET.get('search_query', '')
+        programme_name = request.GET.get('programme_name', '')
+        study_level = request.GET.get('study_level', '')
+
+        programmes = Program.objects.all()
+        if programme_name:
+            programmes = programmes.filter(
+                Q(name__icontains=programme_name) |
+                Q(short_name__icontains=programme_name),
+            )
+
+        if study_level:
+            programmes = programmes.filter(program_group=study_level)
+
+        per_page = 10
+
+        paginator = Paginator(programmes, per_page)
+        page = request.GET.get('page')
+
+        try:
+            programmes_page = paginator.page(page)
+        except PageNotAnInteger:
+            programmes_page = paginator.page(1)
+        except EmptyPage:
+            programmes_page = paginator.page(paginator.num_pages)
+
+        programmes_data = [
+            {
+                'id': programme.id,
+                'name': programme.name,
+                'short_name': programme.short_name,
+                'study_level': programme.get_program_group_display(),
+            } for programme in programmes_page]
+
+        return JsonResponse({
+            'programmes': programmes_data,
+            'total': paginator.count,
+            'has_next': programmes_page.has_next(),
+            'num_pages': paginator.num_pages
+        })
     else:
-        return render(request, 'nav_menus/programmes_offered.html')
+        study_levels = Program.PROGRAM_GROUP_CHOICES
+        context = {
+            'menu': menu,
+            'study_levels': study_levels,
+        }
+        return render(request, 'nav_menus/programmes_offered.html', context)
