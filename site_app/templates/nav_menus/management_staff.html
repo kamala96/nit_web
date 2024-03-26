@@ -37,8 +37,7 @@
 
 
 
-
-
+{% comment %} 
         <div class="container mx-auto my-4 text-center">
          
             <div class="grid grid-cols-0 gap-1">
@@ -46,13 +45,8 @@
                     <div class="box bg-gray-200 p-4 rounded ">
                         
                      
-                        {% if manager_data.manager.profile_picture %}
-                        
-                        {% comment %} <div class="mx-auto my-1 h-24 w-24 overflow-hidden rounded-full outline outline-offset-2 outline-gray-50">
-                            <img src="{% if manager_data.manager.profile_picture %} {{ manager_data.manager.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile" class="w-full h-full object-cover" />
-                        </div> {% endcomment %}
-
-
+                        {% if manager_data.manager.staff.profile_picture %}
+                      
                         
                         <div class="relative mx-auto my-1 items-center justify-center bg-transparent" style="width:130px; height:128px">
                             
@@ -62,14 +56,14 @@
 
                             <div style="width:130px; height:130px;" class="absolute inset-0 flex items-center justify-center  rounded-l-2xl">
                                 <div class="mx-auto my-1 h-28 w-28 p-1  overflow-hidden rounded-2xl border-2 border-primary bg-white">
-                                    <img class="w-full h-full object-cover rounded-2xl" src="{% if manager_data.manager.profile_picture %} {{ manager_data.manager.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
+                                    <img class="w-full h-full object-cover rounded-2xl" src="{% if manager_data.manager.staff.profile_picture %} {{ manager_data.manager.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
                                 </div> 
                             </div> 
                         </div>
                 
                         {% endif %}
-                        <h2 class="font-bold text-secondary">{{ manager_data.manager.designation }}</h2>
-                        <p>{{ manager_data.manager.name }}</p>
+                        <h2 class="font-bold text-secondary">{{ manager_data.manager.staff.designation }}</h2>
+                        <p>{{ manager_data.manager.staff.name }}</p>
 
                
                         
@@ -92,14 +86,14 @@
                 
                                             <div style="width:130px; height:130px;" class="absolute inset-0 flex items-center justify-center  rounded-l-2xl">
                                                 <div class="mx-auto my-1 h-28 w-28 p-1  overflow-hidden rounded-2xl border-2 border-primary bg-white">
-                                                    <img class="w-full h-full object-cover rounded-2xl" src="{% if subordinate.profile_picture %} {{ subordinate.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
+                                                    <img class="w-full h-full object-cover rounded-2xl" src="{% if subordinate.staff.profile_picture %} {{ subordinate.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
                                                 </div> 
                                             </div> 
                                         </div>
 
 
-                                        <h3 class="font-bold text-secondary">{{ subordinate.designation }}</h3>
-                                        <p>{{ subordinate.name }}</p>
+                                        <h3 class="font-bold text-secondary">{{ subordinate.staff.designation }}</h3>
+                                        <p>{{ subordinate.staff.name }}</p>
                                         <!-- Add more levels as needed -->
                                     </div>
                                 {% endfor %}
@@ -108,8 +102,148 @@
                     </div>
                 {% endfor %}
             </div>
+        </div> {% endcomment %}
+
+
+        <div class="flex flex-col justify-center items-center">
+           
+            <div class="container mx-auto text-center pt-24">
+                <div class="items-center justify-center flex">
+                    <div class="text-center">
+                        
+                        {% for manager_id, staff_members in staff_by_manager.items %}
+
+                        {% if forloop.first %}
+                        <div class="flex flex-col justify-center items-center">
+                            <div class="w-16">
+                            
+                                    <img class="block rounded-full m-auto shadow-md" src="{% if staff_members.0.staff.profile_picture %} {{ staff_members.0.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
+                            </div>
+                            <div class="text-gray-600">
+                                <p>{{ staff_members.0.staff.name }}</p>
+                                <p>{{ staff_members.0.staff.designation }}</p>
+                            </div>
+                        </div>
+                        {% else %}
+                        
+                        <ul class="flex flex-row mt-10 justify-center">
+                            <div class="-mt-10 -mr-1 border-l-2 absolute h-10 border-gray-400"></div>
+                            {% for staff_member in staff_members %}
+
+
+                            {% if forloop.first %}
+                            <!-- Code for the first element -->
+
+                            {% if staff_members|length == 1 %}
+
+                            <li class="relative p-6">
+                                
+                                
+                                <div class="relative flex justify-center">
+                                    
+                                    
+                                    <div class="text-center">
+                                        <div class="flex flex-col justify-center items-center">
+                                            <div class="w-16">
+                                                
+                                                    <img class="block rounded-full m-auto shadow-md" src="{% if staff_member.staff.profile_picture %} {{ staff_member.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
+                                            </div>
+                                            <div class="text-black">
+                                                <p>{{ staff_member.staff.name }}</p>
+                                                <p>{{ staff_member.staff.designation }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                                
+                            {% else %}
+                            <li class="relative p-6">
+                                
+                                <div class="border-t-2 absolute h-8 border-red-400 top-0" style="left: 50%; right: 0px;"></div>
+                                <div class="relative flex justify-center">
+                                    <div class="-mt-6 border-l-2 absolute h-6 border-gray-400 top-0"></div>
+                                    
+                                    <div class="text-center">
+                                        <div class="flex flex-col justify-center items-center">
+                                            <div class="w-16">
+                                                
+                                                    <img class="block rounded-full m-auto shadow-md" src="{% if staff_member.staff.profile_picture %} {{ staff_member.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
+                                            </div>
+                                            <div class="text-black">
+                                                <p>{{ staff_member.staff.name }}</p>
+                                                <p>{{ staff_member.staff.designation }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endif %}
+
+                            
+
+                            {% if not forloop.last %}
+                                <!-- Code for when it's not the last element -->
+                                
+
+                            {% endif %}
+                            {% elif not forloop.last %}
+                                <!-- Code for when it's not the last element, but not the first either -->
+                                <li class="relative p-6">
+                                    <div class="border-t-2 absolute h-8 border-gray-400 top-0" style="left: 0px; right: 0px;"></div>
+                                    <div class="border-t-2 absolute h-8 border-gray-400 top-0" style="left: 0px; right: 0px;"></div>
+                                  
+                                    <div class="relative flex justify-center">
+                                        <div class="-mt-6 border-l-2 absolute h-6 border-gray-400 top-0"></div>
+                                        
+                                        <div class="text-center">
+                                            <div class="flex flex-col justify-center items-center">
+                                                <div class="w-16">
+                                                    <img class="block rounded-full m-auto shadow-md" src="{% if staff_member.staff.profile_picture %} {{ staff_member.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
+                                                </div>
+                                                <div class="text-black">
+                                                    <p>{{ staff_member.staff.name }}</p>
+                                                    <p>{{ staff_member.staff.designation }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <!-- Code for the last element -->
+                                <li class="relative p-6">
+                                    <div class="border-t-2 absolute h-8 border-gray-400 top-0" style="left: 0px; right: 50%;"></div>
+                                    <div class="relative flex justify-center">
+                                        <div class="-mt-6 border-l-2 absolute h-6 border-gray-400 top-0"></div>
+                                        
+                                        <div class="text-center">
+                                            <div class="flex flex-col justify-center items-center">
+                                                <div class="w-16">
+                                                    <img class="block rounded-full m-auto shadow-md" src="{% if staff_member.staff.profile_picture %} {{ staff_member.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
+                                                <div class="text-black">
+                                                    <p>{{ staff_member.staff.name }}</p>
+                                                    <p>{{ staff_member.staff.designation }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endif %}
+
+                            {% endfor %}
+                        </ul>
+
+                        {% endif %}
+                        
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
         </div>
-        
+
+      
+
   
 
 
