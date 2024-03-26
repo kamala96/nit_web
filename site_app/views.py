@@ -1,7 +1,7 @@
 from django.http import Http404, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
-from .models import AccountingOfficer, Department, Download, Event, Menu, MenuItem, MenuItemContent, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship
+from .models import AccountingOfficer, Department, Download, Event, ManagementTeam, Menu, MenuItem, MenuItemContent, OrganizationUnit, Post, Program, QuickLink, Slider, Staff, StaffDepartmentRelationship
 from site_app.models import Menu
 
 
@@ -134,9 +134,45 @@ def handle_nav_menu_click(request, menu_slug):
         elif menu.slug in ['management-staff', 'members-council', 'top-management']:
             if menu.slug == 'management-staff':
                 # Management team members
-                management_staff = Staff.objects.filter(
-                    managementteam__isnull=False)
+                # management_staff = Staff.objects.filter(
+                #     managementteam__isnull=False)
+                
+                management_staff = ManagementTeam.objects.all()
+                
+                
+
+                # staff_by_manager = {}
+                # for staff_member in management_staff:
+                #     manager = staff_member.manager
+                #     if manager is None:
+                #         manager_id = 0  # Set manager_id to 0 for the CEO
+                #     else:
+                #         manager_id = manager.id
+                #     if manager_id not in staff_by_manager:
+                #         staff_by_manager[manager_id] = {'manager': None, 'subordinates': []}
+                #     if manager_id == 0:
+                #         staff_by_manager[manager_id]['manager'] = staff_member
+                #     else:
+                #         staff_by_manager[manager_id]['subordinates'].append(staff_member)
+                
+                staff_by_manager = {}
+                for staff_member in management_staff:
+                    manager_id = staff_member.manager_id
+                    if manager_id not in staff_by_manager:
+                        staff_by_manager[manager_id] = []
+                    staff_by_manager[manager_id].append(staff_member)
+                    
+              
+                    
+                # Calculate the width of the border lines based on the depth
+                staff_with_width = []
+                for manager_id, staff_members in staff_by_manager.items():
+                    for i, staff_member in enumerate(staff_members):
+                        width = 16 * (i + 1)
+                        staff_with_width.append((staff_member, width))
+                        
                 template_name = 'management_staff.html'
+                
             elif menu.slug == 'members-council':
                 # Council members
                 council_members = Staff.objects.filter(council__isnull=False)
@@ -160,7 +196,9 @@ def handle_nav_menu_click(request, menu_slug):
         'staff_members': staff_members,
         'leader': leader,
         'accounting_officer': accounting_officer,
-        'management_staff': management_staff
+        'management_staff': management_staff,
+        'staff_by_manager': staff_by_manager,
+        'staff_with_width': staff_with_width,
     }
 
     return render(request, f'nav_menus/{template_name}', context)
