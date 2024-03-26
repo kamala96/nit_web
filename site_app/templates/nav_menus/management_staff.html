@@ -149,7 +149,7 @@
                                             </div>
                                             <div class="text-black">
                                                 <p>{{ staff_member.staff.name }}</p>
-                                                <p>{{ staff_member.staff.designation }}</p>
+                                                <p>{{ staff_member.role }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -171,7 +171,7 @@
                                             </div>
                                             <div class="text-black">
                                                 <p>{{ staff_member.staff.name }}</p>
-                                                <p>{{ staff_member.staff.designation }}</p>
+                                                <p>{{ staff_member.role }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -202,7 +202,7 @@
                                                 </div>
                                                 <div class="text-black">
                                                     <p>{{ staff_member.staff.name }}</p>
-                                                    <p>{{ staff_member.staff.designation }}</p>
+                                                    <p>{{ staff_member.role }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -221,7 +221,7 @@
                                                     <img class="block rounded-full m-auto shadow-md" src="{% if staff_member.staff.profile_picture %} {{ staff_member.staff.profile_picture }} {% else %} {% static 'img/profile_image.png' %} {% endif %}" alt="Profile"  />
                                                 <div class="text-black">
                                                     <p>{{ staff_member.staff.name }}</p>
-                                                    <p>{{ staff_member.staff.designation }}</p>
+                                                    <p>{{ staff_member.role }}</p>
                                                 </div>
                                             </div>
                                         </div>
